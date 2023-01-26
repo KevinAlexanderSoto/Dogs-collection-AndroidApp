@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.kalex.dogescollection.FirstFragment"
+        android:name="com.kalex.dogescollection.dogList.DogListFragment"
         android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
+        tools:layout="@layout/dog_list_view">
 
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
