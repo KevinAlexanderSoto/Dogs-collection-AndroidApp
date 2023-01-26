@@ -1,11 +1,13 @@
 package com.kalex.dogescollection.dogList
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import com.kalex.dogescollection.R
 import com.kalex.dogescollection.databinding.DogListViewBinding
 
@@ -31,10 +33,12 @@ class DogListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+            val dogAdapter = DogAdapter()
+            binding.doglistRecycler.layoutManager = GridLayoutManager(view.context,2)
+            binding.doglistRecycler.adapter = dogAdapter
+        dogAdapter.submitList(getFakeDogs())
 
-            binding.doglistRecycler.adapter
-
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+            //findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
 
 
     }
