@@ -1,4 +1,4 @@
-package com.kalex.dogescollection.dogList
+package com.kalex.dogescollection.dogList.presentation.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,9 +6,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kalex.dogescollection.databinding.DogListItemBinding
+import com.kalex.dogescollection.dogList.Dog
 
 
-class DogAdapter() : ListAdapter<Dog,DogAdapter.ViewHolder>(DiffUtilCallback) {
+class DogAdapter() : ListAdapter<Dog, DogAdapter.ViewHolder>(DiffUtilCallback) {
 
     class ViewHolder(val view: DogListItemBinding) : RecyclerView.ViewHolder(view.root) {
         fun bind(dog: Dog) {

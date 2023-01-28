@@ -1,15 +1,13 @@
-package com.kalex.dogescollection.dogList
+package com.kalex.dogescollection.dogList.presentation.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.kalex.dogescollection.R
 import com.kalex.dogescollection.databinding.DogListViewBinding
+import com.kalex.dogescollection.dogList.Dog
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.

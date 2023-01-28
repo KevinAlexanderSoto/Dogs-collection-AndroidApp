@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.kalex.dogescollection.dogList.DogListFragment"
+        android:name="com.kalex.dogescollection.dogList.presentation.ui.DogListFragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/dog_list_view">
 
