@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.kalex.dogescollection.databinding.DogListViewBinding
 import com.kalex.dogescollection.dogList.model.data.dto.Dog
+import com.kalex.dogescollection.dogList.presentation.viewmodel.DogsViewModel
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -15,7 +16,7 @@ import com.kalex.dogescollection.dogList.model.data.dto.Dog
 class DogListFragment : Fragment() {
 
     private var _binding: DogListViewBinding? = null
-
+    private val dogsViewModel : DogsViewModel by In
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!

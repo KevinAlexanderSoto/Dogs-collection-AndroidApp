@@ -12,9 +12,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
-class DogsViewModel(private val dogsUseCase: DogsUseCase): ViewModel() {
+class DogsViewModel @Inject constructor(
+    private val dogsUseCase: DogsUseCase
+    ) : ViewModel() {
 
     private val _dogState = MutableStateFlow(LatestNewsUiState.Success(Data(emptyList())))
     val dogState : StateFlow<LatestNewsUiState>
