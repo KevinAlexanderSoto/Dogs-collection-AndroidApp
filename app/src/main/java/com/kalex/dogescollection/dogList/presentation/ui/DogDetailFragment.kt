@@ -1,4 +1,4 @@
-package com.kalex.dogescollection
+package com.kalex.dogescollection.dogList.presentation.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,14 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.kalex.dogescollection.databinding.FragmentSecondBinding
+import com.kalex.dogescollection.R
+import com.kalex.dogescollection.databinding.DogDetailFragmentBinding
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
-class SecondFragment : Fragment() {
+class DogDetailFragment : Fragment() {
 
-    private var _binding: FragmentSecondBinding? = null
+    private var _binding: DogDetailFragmentBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -24,7 +25,7 @@ class SecondFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = FragmentSecondBinding.inflate(inflater, container, false)
+        _binding = DogDetailFragmentBinding.inflate(inflater, container, false)
         return binding.root
 
     }

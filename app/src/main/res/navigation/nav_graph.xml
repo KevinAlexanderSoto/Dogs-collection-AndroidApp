@@ -9,7 +9,7 @@
         android:id="@+id/DogListFragment"
         android:name="com.kalex.dogescollection.dogList.presentation.ui.DogListFragment"
         android:label="@string/first_fragment_label"
-        tools:layout="@layout/dog_list_view">
+        tools:layout="@layout/dog_list_fragment">
 
         <action
             android:id="@+id/action_DogListFragment_to_DogListDetailFragment"
@@ -17,9 +17,9 @@
     </fragment>
     <fragment
         android:id="@+id/DogListDetailFragment"
-        android:name="com.kalex.dogescollection.SecondFragment"
+        android:name="com.kalex.dogescollection.dogList.presentation.ui.DogDetailFragment"
         android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
+        tools:layout="@layout/dog_detail_fragment">
 
         <action
             android:id="@+id/action_DogListDetailFragment_to_DogListFragment"
