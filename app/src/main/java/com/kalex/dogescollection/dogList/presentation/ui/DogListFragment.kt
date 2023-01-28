@@ -43,9 +43,17 @@ class DogListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val dogAdapter = DogAdapter()
-        binding.doglistRecycler.layoutManager = GridLayoutManager(view.context, 2)
-        binding.doglistRecycler.adapter = dogAdapter
+        setUpRecycler(dogAdapter)
+
         dogsViewModel.getAllDogs()
+
+        getDogsViewModel(dogAdapter)
+
+        //findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+
+    }
+
+    private fun getDogsViewModel(dogAdapter: DogAdapter) {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 dogsViewModel.dogState.collectLatest {
@@ -56,11 +64,12 @@ class DogListFragment : Fragment() {
                     }
                 }
             }
-
         }
+    }
 
-        //findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-
+    private fun setUpRecycler(dogAdapter: DogAdapter) {
+        binding.doglistRecycler.layoutManager = GridLayoutManager(context, 2)
+        binding.doglistRecycler.adapter = dogAdapter
     }
 
     override fun onDestroyView() {
