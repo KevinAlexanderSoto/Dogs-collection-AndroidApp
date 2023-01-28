@@ -1,22 +1,32 @@
 package com.kalex.dogescollection.dogList.presentation.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import com.kalex.dogescollection.databinding.DogListViewBinding
-import com.kalex.dogescollection.dogList.model.data.dto.Dog
 import com.kalex.dogescollection.dogList.presentation.viewmodel.DogsViewModel
+import com.kalex.dogescollection.dogList.presentation.viewmodel.LatestNewsUiState
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
+@AndroidEntryPoint
 class DogListFragment : Fragment() {
 
     private var _binding: DogListViewBinding? = null
-    private val dogsViewModel : DogsViewModel by In
+    private val dogsViewModel: DogsViewModel by viewModels()
+
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -32,58 +42,25 @@ class DogListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-            val dogAdapter = DogAdapter()
-            binding.doglistRecycler.layoutManager = GridLayoutManager(view.context,2)
-            binding.doglistRecycler.adapter = dogAdapter
-        dogAdapter.submitList(getFakeDogs())
+        val dogAdapter = DogAdapter()
+        binding.doglistRecycler.layoutManager = GridLayoutManager(view.context, 2)
+        binding.doglistRecycler.adapter = dogAdapter
+        dogsViewModel.getAllDogs()
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                dogsViewModel.dogState.collectLatest {
+                    when (it) {
+                        is LatestNewsUiState.Error -> TODO()
+                        is LatestNewsUiState.Loading -> Log.d("KEVS", "LOADING")
+                        is LatestNewsUiState.Success -> dogAdapter.submitList(it.dog.dogs)
+                    }
+                }
+            }
 
-            //findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+        }
 
+        //findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
 
-    }
-    private fun getFakeDogs(): MutableList<Dog> {
-        val dogList = mutableListOf<Dog>()
-        dogList.add(
-            Dog(
-                1,
-                1,
-                "Chihuahua",
-                "Toy",
-                5.4,
-                6.7,
-                "",
-                "12 - 15",
-                "",
-                10.5,
-                12.3
-            )
-        )
-        dogList.add(
-            Dog(
-                2, 1, "Labrador", "Toy", 5.4, 6.7, "", "12 - 15", "", 10.5, 12.3
-            )
-        )
-        dogList.add(
-            Dog(
-                3, 1, "Retriever", "Toy", 5.4, 6.7, "", "12 - 15", "", 10.5, 12.3
-            )
-        )
-        dogList.add(
-            Dog(
-                4, 1, "San Bernardo", "Toy", 5.4, 6.7, "", "12 - 15", "", 10.5, 12.3
-            )
-        )
-        dogList.add(
-            Dog(
-                5, 1, "Husky", "Toy", 5.4, 6.7, "", "12 - 15", "", 10.5, 12.3
-            )
-        )
-        dogList.add(
-            Dog(
-                6, 1, "Xoloscuincle", "Toy", 5.4, 6.7, "", "12 - 15", "", 10.5, 12.3
-            )
-        )
-        return dogList
     }
 
     override fun onDestroyView() {

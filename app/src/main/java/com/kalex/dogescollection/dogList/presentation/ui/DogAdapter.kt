@@ -14,7 +14,7 @@ class DogAdapter() : ListAdapter<Dog, DogAdapter.ViewHolder>(DiffUtilCallback) {
     class ViewHolder(val view: DogListItemBinding) : RecyclerView.ViewHolder(view.root) {
         fun bind(dog: Dog) {
             with(view) {
-                itemtitle.text = dog.dog_type
+                itemtitle.text = dog.name_es
             }
         }
     }
