@@ -1,0 +1,39 @@
+package com.kalex.dogescollection.dogList.presentation.viewmodel
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.kalex.dogescollection.dogList.model.data.dto.Data
+import com.kalex.dogescollection.dogList.model.data.dto.Dog
+import com.kalex.dogescollection.dogList.model.usecase.DogsFlowStatus
+import com.kalex.dogescollection.dogList.model.usecase.DogsUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.launch
+
+@HiltViewModel
+class DogsViewModel(private val dogsUseCase: DogsUseCase): ViewModel() {
+
+    private val _dogState = MutableStateFlow(LatestNewsUiState.Success(Data(emptyList())))
+    val dogState : StateFlow<LatestNewsUiState>
+        get() = _dogState
+
+    fun getAllDogs() = flow<String> {
+        viewModelScope.launch {
+            dogsUseCase.getAllDogs().collectLatest {
+                when(it){
+                    is DogsFlowStatus.Error -> TODO()
+                    is DogsFlowStatus.Success -> _dogState.value = LatestNewsUiState.Success(it.dogsList)
+                }
+            }
+        }
+    }
+
+}
+
+sealed class LatestNewsUiState {
+    data class Success(val dog: Data): LatestNewsUiState()
+    data class Error(val exception: Throwable): LatestNewsUiState()
+}
