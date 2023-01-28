@@ -19,5 +19,6 @@ object DogModule {
     fun provideDogApi(): DogsApi = Retrofit.Builder()
         .baseUrl(Constants.BASE_URL)
         .addConverterFactory(MoshiConverterFactory.create())
-        .build().create(DogsApi::class.java)
+        .build()
+        .create(DogsApi::class.java)
 }

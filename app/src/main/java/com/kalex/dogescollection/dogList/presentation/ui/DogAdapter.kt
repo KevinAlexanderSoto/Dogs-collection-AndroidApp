@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kalex.dogescollection.databinding.DogListItemBinding
-import com.kalex.dogescollection.dogList.Dog
+import com.kalex.dogescollection.dogList.model.data.dto.Dog
 
 
 class DogAdapter() : ListAdapter<Dog, DogAdapter.ViewHolder>(DiffUtilCallback) {
@@ -14,7 +14,7 @@ class DogAdapter() : ListAdapter<Dog, DogAdapter.ViewHolder>(DiffUtilCallback) {
     class ViewHolder(val view: DogListItemBinding) : RecyclerView.ViewHolder(view.root) {
         fun bind(dog: Dog) {
             with(view) {
-                itemtitle.text = dog.name
+                itemtitle.text = dog.dog_type
             }
         }
     }

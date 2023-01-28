@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.kalex.dogescollection.databinding.DogListViewBinding
-import com.kalex.dogescollection.dogList.Dog
+import com.kalex.dogescollection.dogList.model.data.dto.Dog
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
