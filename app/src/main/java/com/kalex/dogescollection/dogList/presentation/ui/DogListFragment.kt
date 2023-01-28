@@ -11,7 +11,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
-import com.kalex.dogescollection.databinding.DogListViewBinding
+import com.kalex.dogescollection.databinding.DogListFragmentBinding
 import com.kalex.dogescollection.dogList.presentation.viewmodel.DogsViewModel
 import com.kalex.dogescollection.dogList.presentation.viewmodel.LatestNewsUiState
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,7 +24,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class DogListFragment : Fragment() {
 
-    private var _binding: DogListViewBinding? = null
+    private var _binding: DogListFragmentBinding? = null
     private val dogsViewModel: DogsViewModel by viewModels()
 
     // This property is only valid between onCreateView and
@@ -35,41 +35,41 @@ class DogListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
 
-        _binding = DogListViewBinding.inflate(inflater, container, false)
+        _binding = DogListFragmentBinding.inflate(inflater, container, false)
         return binding.root
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val dogAdapter = DogAdapter()
-        setUpRecycler(dogAdapter)
+        val dogListAdapter = DogListAdapter()
+        setUpRecycler(dogListAdapter)
 
         dogsViewModel.getAllDogs()
 
-        getDogsViewModel(dogAdapter)
+        getDogsViewModel(dogListAdapter)
 
         //findNavController().navigate(R.id.action_DogListFragment_to_DogListDetailFragment)
 
     }
 
-    private fun getDogsViewModel(dogAdapter: DogAdapter) {
+    private fun getDogsViewModel(dogListAdapter: DogListAdapter) {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 dogsViewModel.dogState.collectLatest {
                     when (it) {
                         is LatestNewsUiState.Error -> TODO()
                         is LatestNewsUiState.Loading -> Log.d("KEVS", "LOADING")
-                        is LatestNewsUiState.Success -> dogAdapter.submitList(it.dog.dogs)
+                        is LatestNewsUiState.Success -> dogListAdapter.submitList(it.dog.dogs)
                     }
                 }
             }
         }
     }
 
-    private fun setUpRecycler(dogAdapter: DogAdapter) {
+    private fun setUpRecycler(dogListAdapter: DogListAdapter) {
         binding.doglistRecycler.layoutManager = GridLayoutManager(context, 2)
-        binding.doglistRecycler.adapter = dogAdapter
+        binding.doglistRecycler.adapter = dogListAdapter
     }
 
     override fun onDestroyView() {

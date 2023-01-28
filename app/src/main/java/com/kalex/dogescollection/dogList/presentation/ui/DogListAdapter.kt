@@ -9,7 +9,7 @@ import com.kalex.dogescollection.databinding.DogListItemBinding
 import com.kalex.dogescollection.dogList.model.data.dto.Dog
 
 
-class DogAdapter() : ListAdapter<Dog, DogAdapter.ViewHolder>(DiffUtilCallback) {
+class DogListAdapter() : ListAdapter<Dog, DogListAdapter.ViewHolder>(DiffUtilCallback) {
 
     class ViewHolder(val view: DogListItemBinding) : RecyclerView.ViewHolder(view.root) {
         fun bind(dog: Dog) {
