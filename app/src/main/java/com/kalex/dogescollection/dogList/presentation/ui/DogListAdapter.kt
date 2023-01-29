@@ -7,9 +7,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kalex.dogescollection.databinding.DogListItemBinding
 import com.kalex.dogescollection.dogList.model.data.dto.Dog
+import javax.inject.Inject
 
 
-class DogListAdapter() : ListAdapter<Dog, DogListAdapter.ViewHolder>(DiffUtilCallback) {
+class DogListAdapter @Inject constructor() : ListAdapter<Dog, DogListAdapter.ViewHolder>(DiffUtilCallback) {
 
     class ViewHolder(val view: DogListItemBinding) : RecyclerView.ViewHolder(view.root) {
         fun bind(dog: Dog) {

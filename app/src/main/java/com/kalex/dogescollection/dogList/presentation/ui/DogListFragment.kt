@@ -17,6 +17,7 @@ import com.kalex.dogescollection.dogList.presentation.viewmodel.LatestNewsUiStat
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -27,6 +28,8 @@ class DogListFragment : Fragment() {
     private var _binding: DogListFragmentBinding? = null
     private val dogsViewModel: DogsViewModel by viewModels()
 
+    @Inject
+    lateinit var dogListAdapter :DogListAdapter
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -42,7 +45,7 @@ class DogListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val dogListAdapter = DogListAdapter()
+
         setUpRecycler(dogListAdapter)
 
         dogsViewModel.getAllDogs()
