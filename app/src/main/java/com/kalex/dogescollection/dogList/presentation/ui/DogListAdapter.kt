@@ -12,10 +12,13 @@ import javax.inject.Inject
 
 class DogListAdapter @Inject constructor() : ListAdapter<Dog, DogListAdapter.ViewHolder>(DiffUtilCallback) {
 
-    class ViewHolder(val view: DogListItemBinding) : RecyclerView.ViewHolder(view.root) {
+    var onItemClick: ((Dog) -> Unit)? = null
+
+    inner class ViewHolder(val view: DogListItemBinding) : RecyclerView.ViewHolder(view.root) {
         fun bind(dog: Dog) {
             with(view) {
                 itemtitle.text = dog.name_es
+                dogListCard.setOnClickListener{onItemClick?.invoke(dog)}
             }
         }
     }

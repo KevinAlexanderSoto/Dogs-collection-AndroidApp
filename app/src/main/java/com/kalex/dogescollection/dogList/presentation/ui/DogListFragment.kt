@@ -73,6 +73,9 @@ class DogListFragment : Fragment() {
     private fun setUpRecycler(dogListAdapter: DogListAdapter) {
         binding.doglistRecycler.layoutManager = GridLayoutManager(context, 2)
         binding.doglistRecycler.adapter = dogListAdapter
+        dogListAdapter.onItemClick = {dog ->
+            TODO("navigate")
+        }
     }
 
     override fun onDestroyView() {
