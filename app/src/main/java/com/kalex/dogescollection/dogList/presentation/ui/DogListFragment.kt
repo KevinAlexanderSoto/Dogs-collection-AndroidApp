@@ -10,7 +10,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.kalex.dogescollection.R
 import com.kalex.dogescollection.databinding.DogListFragmentBinding
 import com.kalex.dogescollection.dogList.presentation.viewmodel.DogsViewModel
 import com.kalex.dogescollection.dogList.presentation.viewmodel.LatestNewsUiState
@@ -52,7 +54,7 @@ class DogListFragment : Fragment() {
 
         getDogsViewModel(dogListAdapter)
 
-        //findNavController().navigate(R.id.action_DogListFragment_to_DogListDetailFragment)
+        //
 
     }
 
@@ -74,7 +76,7 @@ class DogListFragment : Fragment() {
         binding.doglistRecycler.layoutManager = GridLayoutManager(context, 2)
         binding.doglistRecycler.adapter = dogListAdapter
         dogListAdapter.onItemClick = {dog ->
-            TODO("navigate")
+            findNavController().navigate(R.id.action_DogListFragment_to_DogListDetailFragment)
         }
     }
 

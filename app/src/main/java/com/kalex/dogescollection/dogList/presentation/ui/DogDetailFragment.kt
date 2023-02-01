@@ -31,9 +31,7 @@ class DogDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.buttonSecond.setOnClickListener {
-            findNavController().navigate(R.id.action_DogListDetailFragment_to_DogListFragment)
-        }
+
     }
 
     override fun onDestroyView() {
