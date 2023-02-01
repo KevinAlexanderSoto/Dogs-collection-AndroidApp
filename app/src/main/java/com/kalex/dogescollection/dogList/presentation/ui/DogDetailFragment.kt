@@ -7,17 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.kalex.dogescollection.R
-import com.kalex.dogescollection.databinding.DogDetailFragmentBinding
+import com.kalex.dogescollection.databinding.DogListDetailFragmentBinding
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
 class DogDetailFragment : Fragment() {
 
-    private var _binding: DogDetailFragmentBinding? = null
+    private var _binding: DogListDetailFragmentBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -25,7 +23,7 @@ class DogDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = DogDetailFragmentBinding.inflate(inflater, container, false)
+        _binding = DogListDetailFragmentBinding.inflate(inflater, container, false)
         return binding.root
 
     }
