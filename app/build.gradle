@@ -61,7 +61,12 @@ dependencies {
     //Material3
     implementation 'com.google.android.material:material:1.8.0'
 
+    //Epoxy
+    implementation "com.airbnb.android:epoxy:5.1.1"
+    // Add the annotation processor if you are using Epoxy's annotations (recommended)
+    kapt  "com.airbnb.android:epoxy-processor:5.1.1"
+
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }

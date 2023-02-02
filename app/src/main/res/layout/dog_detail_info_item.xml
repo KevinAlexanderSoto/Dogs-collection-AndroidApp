@@ -22,7 +22,7 @@
         tools:text=" Feliz y contento" />
 
     <TextView
-        android:id="@+id/dog_description_text"
+        android:id="@+id/dog_weight_value"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
@@ -35,7 +35,7 @@
         app:layout_constraintTop_toBottomOf="@+id/dog_name_text"
         tools:text=" Feliz y contento" />
     <TextView
-        android:id="@+id/dog_description_text"
+        android:id="@+id/dog_weight_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
@@ -48,7 +48,7 @@
         app:layout_constraintTop_toBottomOf="@+id/dog_name_text"
         tools:text=" Feliz y contento" />
     <TextView
-        android:id="@+id/dog_description_text"
+        android:id="@+id/dog_height_value"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
@@ -61,7 +61,7 @@
         app:layout_constraintTop_toBottomOf="@+id/dog_name_text"
         tools:text=" Feliz y contento" />
     <TextView
-        android:id="@+id/dog_description_text"
+        android:id="@+id/dog_height_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
