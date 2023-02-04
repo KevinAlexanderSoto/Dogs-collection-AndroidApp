@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:layout_marginTop="8dp"
     >
     <TextView
         android:id="@+id/dog_description_title"
@@ -14,62 +15,32 @@
         android:fontFamily="sans-serif-medium"
         android:gravity="center"
         android:padding="8dp"
-        
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dog_name_text"
+        android:textSize="16sp"
         tools:text=" Feliz y contento" />
 
     <TextView
         android:id="@+id/dog_weight_value"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-medium"
-        android:gravity="center"
-        android:padding="8dp"
-        
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dog_name_text"
+        style="@style/content_bold_text"
         tools:text=" Feliz y contento" />
     <TextView
         android:id="@+id/dog_weight_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-medium"
-        android:gravity="center"
-        android:padding="8dp"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dog_name_text"
+        style="@style/content_text"
         tools:text=" Feliz y contento" />
     <TextView
         android:id="@+id/dog_height_value"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-medium"
-        android:gravity="center"
-        android:padding="8dp"
-        
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dog_name_text"
+        style="@style/content_bold_text"
         tools:text=" Feliz y contento" />
     <TextView
         android:id="@+id/dog_height_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-medium"
-        android:gravity="center"
-        android:padding="8dp"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dog_name_text"
-        tools:text=" Feliz y contento" />
+        style="@style/content_text"
+        tools:text="Feliz y contento" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

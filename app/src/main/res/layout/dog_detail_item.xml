@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,12 +16,8 @@
         android:id="@+id/left_divider"
         android:layout_width="1dp"
         android:layout_height="40dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
-
-        android:background="@color/black" />
+        style="@style/line_divide"
+         />
 
         <TextView
             android:id="@+id/dog_item_title"
@@ -33,17 +28,13 @@
             android:gravity="center"
             android:padding="8dp"
             android:text="dog.name"
-            android:textSize="16sp"
+            android:textSize="14sp"
             tools:text=" Feliz y contento" />
 
     <View
         android:id="@+id/right_divider"
         android:layout_width="1dp"
         android:layout_height="40dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
-        android:background="@color/black" />
+        style="@style/line_divide" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.appcompat.widget.LinearLayoutCompat>
