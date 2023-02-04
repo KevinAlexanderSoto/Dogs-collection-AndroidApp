@@ -66,15 +66,13 @@
             app:layout_constraintTop_toBottomOf="@+id/dog_list_divider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:elevation="8dp"
+            android:elevation="10dp"
             >
 
-            <TextView
+            <com.airbnb.epoxy.EpoxyRecyclerView
+                android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="female"
-                android:textColor="@color/black" />
+                android:layout_height="match_parent" />
 
 
         </com.google.android.material.card.MaterialCardView>

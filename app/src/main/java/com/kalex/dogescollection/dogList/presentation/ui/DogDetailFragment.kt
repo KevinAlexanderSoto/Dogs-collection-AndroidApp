@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.airbnb.epoxy.group
 import com.kalex.dogescollection.R
 import com.kalex.dogescollection.databinding.DogListDetailFragmentBinding
+import com.kalex.dogescollection.dogList.presentation.epoxy.dogDetailInfo
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -30,7 +32,41 @@ class DogDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.recyclerView.withModels {
+            group {
+                id("epoxyModelGroupDsl")
+                layout(R.layout.vertical_linear_group)
+                dogDetailInfo{
+                    id(1)
+                    detailsTitle("HOLA MUNDO")
 
+                    heightValue("content")
+                    heightTitle("content")
+                    weightValue("content")
+                    weightTitle("content")
+                }
+                dogDetailInfo{
+                    id(1)
+                    detailsTitle("HOLA MUNDO")
+
+                    heightValue("content")
+                    heightTitle("content")
+                    weightValue("content")
+                    weightTitle("content")
+                }
+                dogDetailInfo{
+                    id(1)
+                    detailsTitle("HOLA MUNDO")
+
+                    heightValue("content")
+                    heightTitle("content")
+                    weightValue("content")
+                    weightTitle("content")
+                }
+            }
+
+
+        }
 
     }
 
