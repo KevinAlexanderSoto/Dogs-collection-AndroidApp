@@ -8,46 +8,42 @@
     android:orientation="horizontal"
     android:layout_centerVertical="true"
     >
-
-    <View
-        android:id="@+id/left_divider"
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
-
-        android:background="@color/black" />
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         >
+    <View
+        android:id="@+id/left_divider"
+        android:layout_width="1dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+
+        android:background="@color/black" />
+
         <TextView
             android:id="@+id/dog_item_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
-            android:gravity="center_vertical"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
             android:padding="8dp"
             android:text="dog.name"
             android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dog_name_text"
             tools:text=" Feliz y contento" />
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <View
         android:id="@+id/right_divider"
         android:layout_width="1dp"
-        android:layout_height="match_parent"
+        android:layout_height="40dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
         android:background="@color/black" />
-
+    </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.appcompat.widget.LinearLayoutCompat>
