@@ -10,6 +10,7 @@ import com.airbnb.epoxy.group
 import com.kalex.dogescollection.R
 import com.kalex.dogescollection.databinding.DogListDetailFragmentBinding
 import com.kalex.dogescollection.dogList.presentation.epoxy.dogDetailInfo
+import com.kalex.dogescollection.dogList.presentation.epoxy.dogDetailItem
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -45,17 +46,12 @@ class DogDetailFragment : Fragment() {
                     weightValue("content")
                     weightTitle("content")
                 }
-                dogDetailInfo{
-                    id(1)
-                    detailsTitle("HOLA MUNDO")
-
-                    heightValue("content")
-                    heightTitle("content")
-                    weightValue("content")
-                    weightTitle("content")
+                dogDetailItem{
+                    id(2)
+                    detailsTitle("Medio")
                 }
                 dogDetailInfo{
-                    id(1)
+                    id(3)
                     detailsTitle("HOLA MUNDO")
 
                     heightValue("content")
