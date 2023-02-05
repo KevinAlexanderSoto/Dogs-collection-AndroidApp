@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp">
+        android:padding="8dp">
 <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/doglist_recycler"
     android:layout_width="match_parent"
