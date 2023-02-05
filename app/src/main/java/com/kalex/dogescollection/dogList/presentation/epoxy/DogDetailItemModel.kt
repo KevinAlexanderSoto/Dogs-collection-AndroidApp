@@ -5,7 +5,7 @@ import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.kalex.dogescollection.R
-import com.kalex.dogescollection.dogList.epoxyhelpers.KotlinEpoxyHolder
+import com.kalex.dogescollection.common.epoxyhelpers.KotlinEpoxyHolder
 
 @EpoxyModelClass(layout = R.layout.dog_detail_item)
 abstract class DogDetailItemModel : EpoxyModelWithHolder<DogDetailItemModel.Holder>() {

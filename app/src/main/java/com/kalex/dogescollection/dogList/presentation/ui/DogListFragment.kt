@@ -14,10 +14,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kalex.dogescollection.R
+import com.kalex.dogescollection.common.networkstates.ViewModelNewsUiState
 import com.kalex.dogescollection.databinding.DogListFragmentBinding
 import com.kalex.dogescollection.dogList.model.data.dto.Dog
 import com.kalex.dogescollection.dogList.presentation.viewmodel.DogsViewModel
-import com.kalex.dogescollection.dogList.presentation.viewmodel.LatestNewsUiState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.dog_list_fragment.*
 import kotlinx.coroutines.flow.collectLatest
@@ -65,9 +65,9 @@ class DogListFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 dogsViewModel.dogState.collectLatest {
                     when (it) {
-                        is LatestNewsUiState.Error -> handleErrorStatus(it.exception)
-                        is LatestNewsUiState.Loading -> handleLoadingStatus(it.isLoading)
-                        is LatestNewsUiState.Success -> handleSuccessStatus(it.dog.dogs,dogListAdapter)
+                        is ViewModelNewsUiState.Error -> handleErrorStatus(it.exception)
+                        is ViewModelNewsUiState.Loading -> handleLoadingStatus(it.isLoading)
+                        is ViewModelNewsUiState.Success -> handleSuccessStatus(it.data.dogs,dogListAdapter)
                     }
                 }
             }

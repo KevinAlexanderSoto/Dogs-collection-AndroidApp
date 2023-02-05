@@ -1,4 +1,4 @@
-package com.kalex.dogescollection.dogList.epoxyhelpers
+package com.kalex.dogescollection.common.epoxyhelpers
 
 import android.view.View
 import com.airbnb.epoxy.EpoxyHolder
