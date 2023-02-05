@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import coil.load
 import com.airbnb.epoxy.group
 import com.kalex.dogescollection.R
 import com.kalex.dogescollection.databinding.DogDetailFragmentBinding
@@ -35,6 +36,9 @@ class DogDetailFragment : Fragment() {
         val bundle = arguments
         val args = bundle?.let { DogDetailFragmentArgs.fromBundle(it) }
 with(binding){
+    dogimage.load(args?.dog?.image_url){
+        crossfade(true)
+    }
     dognametext.text = args?.dog?.name_es
     dogdescriptiontext.text = args?.dog?.temperament_en
     recyclerView.withModels {
