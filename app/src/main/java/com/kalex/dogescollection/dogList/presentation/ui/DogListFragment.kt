@@ -78,7 +78,6 @@ class DogListFragment : Fragment() {
         binding.doglistRecycler.adapter = dogListAdapter
         dogListAdapter.onItemClick = {dog ->
             val bundle = DogListFragmentDirections.actionDogListFragmentToDogListDetailFragment(dog)
-
             findNavController().navigate(bundle)
         }
     }

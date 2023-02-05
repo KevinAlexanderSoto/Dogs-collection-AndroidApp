@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp">
+        android:padding="8dp">
 
         <ImageView
             android:id="@+id/dog_image"
@@ -55,7 +55,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/dog_name_text"
 
-            style="@style/title_text_32"
+            style="@style/title_text_18"
             tools:text=" Feliz y contento" />
         <View
             android:id="@+id/dog_list_divider"
@@ -72,6 +72,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_constraintTop_toBottomOf="@+id/dog_list_divider"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

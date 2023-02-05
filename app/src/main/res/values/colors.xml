@@ -2,4 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="CyanProcess" >#30BCED</color>
+    <color name="Aquamarine"  >#A5FFD6</color>
+    <color name="RedSalsa">#F05D5E</color>
+    <color name="OldGold" >#D5B942</color>
+    <color name="OuterSpaceCrayola" >#1F363D</color>
 </resources>
