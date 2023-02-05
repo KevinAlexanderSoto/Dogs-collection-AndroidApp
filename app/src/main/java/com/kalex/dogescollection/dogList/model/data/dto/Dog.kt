@@ -1,5 +1,9 @@
 package com.kalex.dogescollection.dogList.model.data.dto
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class Dog(
     val created_at: String,
     val dog_type: String,
@@ -17,4 +21,4 @@ data class Dog(
     val updated_at: String,
     val weight_female: String,
     val weight_male: String
-)
+):Parcelable

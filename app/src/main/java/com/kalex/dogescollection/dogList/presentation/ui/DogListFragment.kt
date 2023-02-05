@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -76,7 +77,9 @@ class DogListFragment : Fragment() {
         binding.doglistRecycler.layoutManager = GridLayoutManager(context, 2)
         binding.doglistRecycler.adapter = dogListAdapter
         dogListAdapter.onItemClick = {dog ->
-            findNavController().navigate(R.id.action_DogListFragment_to_DogListDetailFragment)
+            val bundle = DogListFragmentDirections.actionDogListFragmentToDogListDetailFragment(dog)
+
+            findNavController().navigate(bundle)
         }
     }
 

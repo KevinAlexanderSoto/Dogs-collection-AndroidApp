@@ -2,7 +2,9 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'kotlin-android-extensions'
     id 'com.google.dagger.hilt.android'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
@@ -65,6 +67,8 @@ dependencies {
     implementation "com.airbnb.android:epoxy:5.1.1"
     // Add the annotation processor if you are using Epoxy's annotations (recommended)
     kapt  "com.airbnb.android:epoxy-processor:5.1.1"
+
+
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

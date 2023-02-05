@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.airbnb.epoxy.group
 import com.kalex.dogescollection.R
 import com.kalex.dogescollection.databinding.DogListDetailFragmentBinding
+import com.kalex.dogescollection.dogList.model.data.dto.Dog
 import com.kalex.dogescollection.dogList.presentation.epoxy.dogDetailInfo
 import com.kalex.dogescollection.dogList.presentation.epoxy.dogDetailItem
 
@@ -30,21 +32,24 @@ class DogDetailFragment : Fragment() {
         return binding.root
 
     }
-
+   // private val args: DogDetailFragmentArgs by navArgs()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val bundle = arguments
+        val args = bundle?.let { DogDetailFragmentArgs.fromBundle(it) }
+
         binding.recyclerView.withModels {
             group {
                 id("epoxyModelGroupDsl")
                 layout(R.layout.vertical_linear_group)
                 dogDetailInfo{
                     id(1)
-                    detailsTitle("HOLA MUNDO")
+                    detailsTitle("Famale")
 
-                    heightValue("content")
-                    heightTitle("content")
-                    weightValue("content")
-                    weightTitle("content")
+                    heightValue(args?.dog?.height_female)
+                    heightTitle("Height")
+                    weightValue(args?.dog?.weight_female)
+                    weightTitle("Weight")
                 }
                 dogDetailItem{
                     id(2)
@@ -52,12 +57,12 @@ class DogDetailFragment : Fragment() {
                 }
                 dogDetailInfo{
                     id(3)
-                    detailsTitle("HOLA MUNDO")
+                    detailsTitle("Male")
 
-                    heightValue("content")
-                    heightTitle("content")
-                    weightValue("content")
-                    weightTitle("content")
+                    heightValue(args?.dog?.height_male)
+                    heightTitle("Height")
+                    weightValue(args?.dog?.weight_male)
+                    weightTitle("Weight")
                 }
             }
 

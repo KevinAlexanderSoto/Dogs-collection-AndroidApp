@@ -13,7 +13,13 @@
 
         <action
             android:id="@+id/action_DogListFragment_to_DogListDetailFragment"
-            app:destination="@id/DogListDetailFragment" />
+            app:destination="@id/DogListDetailFragment" >
+            <argument
+                android:name="dog"
+                app:argType="com.kalex.dogescollection.dogList.model.data.dto.Dog"
+                app:nullable="true"
+                android:defaultValue="@null" />
+        </action>
     </fragment>
 
     <fragment
@@ -25,5 +31,10 @@
         <action
             android:id="@+id/action_DogListDetailFragment_to_DogListFragment"
             app:destination="@id/DogListFragment" />
+        <argument
+            android:name="dog"
+            app:argType="com.kalex.dogescollection.dogList.model.data.dto.Dog"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
 </navigation>
