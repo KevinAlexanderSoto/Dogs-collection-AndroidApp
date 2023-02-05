@@ -14,8 +14,8 @@ class DogsUseCase @Inject constructor(
 
      fun getAllDogs() : Flow<DogsFlowStatus> = flow {
          try {
-             val result = dogRepository.getDogs()
              emit(DogsFlowStatus.Loading(""))
+             val result = dogRepository.getDogs()
              when(result.is_success){
                  true -> emit(DogsFlowStatus.Success(result.body_data))
                  false -> emit(DogsFlowStatus.Error(result.message))
@@ -23,8 +23,6 @@ class DogsUseCase @Inject constructor(
          }catch (e:Exception){
              emit( DogsFlowStatus.Error(e.message ?: "Unknown"))
          }
-
-
      }
 
 

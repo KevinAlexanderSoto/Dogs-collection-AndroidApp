@@ -81,7 +81,7 @@ class DogListFragment : Fragment() {
             .setMessage(exception)
             .setPositiveButton(resources.getString(R.string.ErrorbuttonText)) { dialog, which ->
                 dogsViewModel.getAllDogs()
-                getDogsByViewModel(dogListAdapter)
+
             }
             .show()
     }
