@@ -3,6 +3,11 @@ package com.kalex.dogescollection.common.networkstates
 import kotlinx.coroutines.flow.flow
 import java.net.UnknownHostException
 
+/**
+ * Function to handler network call and errors, this return a flow of type UseCaseFlowStatus <T>
+ * @author Kevin Alexander Soto
+ *  @param call this is a function to make the request and pass the result or throw an Exception
+ * **/
 fun <T> makeNetworkCallHandler(
     call : suspend () -> T
 ) = flow<UseCaseFlowStatus<T>> {
