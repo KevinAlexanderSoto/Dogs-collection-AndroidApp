@@ -1,5 +1,6 @@
 package com.kalex.dogescollection.dogList.presentation.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.kalex.dogescollection.R
 import com.kalex.dogescollection.databinding.DogListFragmentBinding
 import com.kalex.dogescollection.dogList.model.data.dto.Dog
 import com.kalex.dogescollection.dogList.presentation.viewmodel.DogsViewModel
@@ -53,7 +56,6 @@ class DogListFragment : Fragment() {
         dogsViewModel.getAllDogs()
 
         getDogsByViewModel(dogListAdapter)
-
         //
 
     }
@@ -63,13 +65,25 @@ class DogListFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 dogsViewModel.dogState.collectLatest {
                     when (it) {
-                        is LatestNewsUiState.Error -> TODO()
+                        is LatestNewsUiState.Error -> handleErrorStatus(it.exception)
                         is LatestNewsUiState.Loading -> handleLoadingStatus(it.isLoading)
                         is LatestNewsUiState.Success -> handleSuccessStatus(it.dog.dogs,dogListAdapter)
                     }
                 }
             }
         }
+    }
+
+    private fun handleErrorStatus(exception: String) {
+        handleLoadingStatus(false)
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(resources.getString(R.string.ErrorTitle))
+            .setMessage(exception)
+            .setPositiveButton(resources.getString(R.string.ErrorbuttonText)) { dialog, which ->
+                dogsViewModel.getAllDogs()
+                getDogsByViewModel(dogListAdapter)
+            }
+            .show()
     }
 
     private fun handleSuccessStatus(dogList: List<Dog>, dogListAdapter: DogListAdapter) {

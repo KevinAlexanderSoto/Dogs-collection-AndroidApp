@@ -21,7 +21,7 @@ class DogsUseCase @Inject constructor(
                  false -> emit(DogsFlowStatus.Error(result.message))
              }
          }catch (e:Exception){
-             DogsFlowStatus.Error(e.message ?: "Unknown")
+             emit( DogsFlowStatus.Error(e.message ?: "Unknown"))
          }
 
 

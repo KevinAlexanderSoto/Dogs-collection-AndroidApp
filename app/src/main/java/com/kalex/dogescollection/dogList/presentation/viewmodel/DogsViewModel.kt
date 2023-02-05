@@ -25,7 +25,7 @@ class DogsViewModel @Inject constructor(
         viewModelScope.launch {
             dogsUseCase.getAllDogs().collectLatest {
                 when (it) {
-                    is DogsFlowStatus.Error -> TODO()
+                    is DogsFlowStatus.Error -> _dogState.value = LatestNewsUiState.Error(it.exception)
                     is DogsFlowStatus.Success ->{
                         _dogState.value =
                             LatestNewsUiState.Success(it.dogsList)
@@ -41,5 +41,5 @@ class DogsViewModel @Inject constructor(
 sealed class LatestNewsUiState {
     data class Success(val dog: Data) : LatestNewsUiState()
     data class Loading(val isLoading: Boolean) : LatestNewsUiState()
-    data class Error(val exception: Throwable) : LatestNewsUiState()
+    data class Error(val exception: String) : LatestNewsUiState()
 }

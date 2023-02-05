@@ -5,22 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.airbnb.epoxy.group
 import com.kalex.dogescollection.R
-import com.kalex.dogescollection.databinding.DogListDetailFragmentBinding
-import com.kalex.dogescollection.dogList.model.data.dto.Dog
+import com.kalex.dogescollection.databinding.DogDetailFragmentBinding
 import com.kalex.dogescollection.dogList.presentation.epoxy.dogDetailInfo
 import com.kalex.dogescollection.dogList.presentation.epoxy.dogDetailItem
-import kotlinx.android.synthetic.main.dog_list_detail_fragment.*
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
 class DogDetailFragment : Fragment() {
 
-    private var _binding: DogListDetailFragmentBinding? = null
+    private var _binding: DogDetailFragmentBinding? = null
 
     private val binding get() = _binding!!
 
@@ -29,7 +25,7 @@ class DogDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = DogListDetailFragmentBinding.inflate(inflater, container, false)
+        _binding = DogDetailFragmentBinding.inflate(inflater, container, false)
         return binding.root
 
     }
@@ -39,8 +35,8 @@ class DogDetailFragment : Fragment() {
         val bundle = arguments
         val args = bundle?.let { DogDetailFragmentArgs.fromBundle(it) }
 with(binding){
-    dog_name_text.text = args?.dog?.name_es
-    dog_description_text.text = args?.dog?.temperament_en
+    dognametext.text = args?.dog?.name_es
+    dogdescriptiontext.text = args?.dog?.temperament_en
     recyclerView.withModels {
         group {
             id("epoxyModelGroupDsl")
