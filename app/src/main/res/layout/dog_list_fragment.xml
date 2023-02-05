@@ -20,14 +20,13 @@
         <!-- Linear progress indicator -->
         <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/linear_progress"
-            style="Widget.ProgressBar.Inverse"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:indeterminate="true"
-            android:orientation="vertical"
             android:visibility="gone"
+            android:rotation="-270"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/doglist_recycler"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:visibility="visible" />
 
