@@ -5,7 +5,7 @@
        <item name="android:layout_marginStart">8dp</item>
        <item name="android:layout_marginTop">8dp</item>
        <item name="android:layout_marginEnd">8dp</item>
-       <item name="android:layout_marginBottom">8dp</item>
+       <item name="android:layout_marginBottom">16dp</item>
        <item name="android:background">@color/OuterSpaceCrayola</item>
     </style>
 
