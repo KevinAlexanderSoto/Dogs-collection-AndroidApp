@@ -26,7 +26,7 @@
         android:id="@+id/DogListDetailFragment"
         android:name="com.kalex.dogescollection.dogList.presentation.ui.DogDetailFragment"
         android:label="@string/second_fragment_label"
-        tools:layout="@layout/dog_list_detail_fragment">
+        tools:layout="@layout/dog_detail_fragment">
 
         <action
             android:id="@+id/action_DogListDetailFragment_to_DogListFragment"
