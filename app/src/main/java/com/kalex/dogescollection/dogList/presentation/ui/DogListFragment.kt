@@ -27,7 +27,7 @@ import javax.inject.Inject
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-@AndroidEntryPoint
+
 class DogListFragment : Fragment() {
 
     private var _binding: DogListFragmentBinding? = null

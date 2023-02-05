@@ -4,10 +4,9 @@ import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.kalex.dogescollection.R
 import com.kalex.dogescollection.common.epoxyhelpers.KotlinEpoxyHolder
-import com.kalex.dogescollection.dogList.presentation.epoxy.DogDetailInfoModel
 
-@EpoxyModelClass()
-abstract class EpoxyImputField  : EpoxyModelWithHolder<EpoxyImputField.Holder>() {
+@EpoxyModelClass(layout = R.layout.authentication_imput_field)
+abstract class EpoxyImputFieldModel  : EpoxyModelWithHolder<EpoxyImputFieldModel.Holder>() {
 
 
 
