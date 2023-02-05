@@ -5,8 +5,8 @@ import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.kalex.dogescollection.R
 import com.kalex.dogescollection.common.epoxyhelpers.KotlinEpoxyHolder
 
-@EpoxyModelClass(layout = R.layout.authentication_imput_field)
-abstract class EpoxyImputFieldModel  : EpoxyModelWithHolder<EpoxyImputFieldModel.Holder>() {
+@EpoxyModelClass(layout = R.layout.authentication_input_field)
+abstract class EpoxyInputFieldModel  : EpoxyModelWithHolder<EpoxyInputFieldModel.Holder>() {
 
 
 
