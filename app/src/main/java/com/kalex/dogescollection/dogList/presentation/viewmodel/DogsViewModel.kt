@@ -26,8 +26,11 @@ class DogsViewModel @Inject constructor(
             dogsUseCase.getAllDogs().collectLatest {
                 when (it) {
                     is DogsFlowStatus.Error -> TODO()
-                    is DogsFlowStatus.Success -> _dogState.value =
-                        LatestNewsUiState.Success(it.dogsList)
+                    is DogsFlowStatus.Success ->{
+                        _dogState.value =
+                            LatestNewsUiState.Success(it.dogsList)
+                    }
+                    is DogsFlowStatus.Loading ->_dogState.value = LatestNewsUiState.Loading(true)
                 }
             }
         }
