@@ -9,11 +9,12 @@ import coil.load
 import com.airbnb.epoxy.group
 import com.kalex.dogescollection.R
 import com.kalex.dogescollection.databinding.DogDetailFragmentBinding
+import com.kalex.dogescollection.dogList.model.data.dto.Dog
 import com.kalex.dogescollection.dogList.presentation.epoxy.dogDetailInfo
 import com.kalex.dogescollection.dogList.presentation.epoxy.dogDetailItem
 
 /**
- * A simple [Fragment] subclass as the second destination in the navigation.
+ * A simple [Fragment] subclass for the Dog detail.
  */
 class DogDetailFragment : Fragment() {
 
@@ -24,7 +25,7 @@ class DogDetailFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         _binding = DogDetailFragmentBinding.inflate(inflater, container, false)
         return binding.root
@@ -33,46 +34,51 @@ class DogDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val bundle = arguments
-        val args = bundle?.let { DogDetailFragmentArgs.fromBundle(it) }
-with(binding){
-    dogimage.load(args?.dog?.image_url){
-        crossfade(true)
-    }
-    dognametext.text = args?.dog?.name_es
-    dogdescriptiontext.text = args?.dog?.temperament_en
-    recyclerView.withModels {
-        group {
-            id("epoxyModelGroupDsl")
-            layout(R.layout.vertical_linear_group)
-            dogDetailInfo{
-                id(1)
-                detailsTitle("Famale")
 
-                heightValue(args?.dog?.height_female)
-                heightTitle("Height")
-                weightValue(args?.dog?.weight_female)
-                weightTitle("Weight")
-            }
-            dogDetailItem{
-                id(2)
-                detailsTitle(args?.dog?.dog_type)
-            }
-            dogDetailInfo{
-                id(3)
-                detailsTitle("Male")
+        val args = arguments?.let { DogDetailFragmentArgs.fromBundle(it) }
 
-                heightValue(args?.dog?.height_male)
-                heightTitle("Height")
-                weightValue(args?.dog?.weight_male)
-                weightTitle("Weight")
-            }
+        if (args != null) {
+            setUpViews(args.dog!!)
         }
 
     }
-}
-
-
+    private fun setUpViews(dog: Dog) {
+        with(binding) {
+            dogimage.load(dog.image_url) {
+                crossfade(true)
+            }
+            dognametext.text = dog.name_es
+            dogdescriptiontext.text = dog.temperament_en
+            //Epoxy SetUp
+            recyclerView.withModels {
+                group {
+                    id("epoxyModelGroupDsl")
+                    layout(R.layout.vertical_linear_group)
+                    dogDetailInfo {
+                        id(1)
+                        detailsTitle("Famale")
+                        //TODO : ADD STRINGS RESOURCES
+                        heightValue(dog.height_female)
+                        heightTitle("Height")
+                        weightValue(dog.weight_female)
+                        weightTitle("Weight")
+                    }
+                    dogDetailItem {
+                        id(2)
+                        detailsTitle(dog.dog_type)
+                    }
+                    dogDetailInfo {
+                        id(3)
+                        detailsTitle("Male")
+                        //TODO : ADD STRINGS RESOURCES
+                        heightValue(dog.height_male)
+                        heightTitle("Height")
+                        weightValue(dog.weight_male)
+                        weightTitle("Weight")
+                    }
+                }
+            }
+        }
     }
 
     override fun onDestroyView() {
