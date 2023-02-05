@@ -6,6 +6,7 @@
     tools:context=".authentication.login.presentation.ui.LoginFragment">
 
     <com.airbnb.epoxy.EpoxyRecyclerView
+        android:id="@+id/loginEpoxyRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="8dp"
