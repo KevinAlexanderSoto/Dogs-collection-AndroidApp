@@ -29,6 +29,7 @@ class LoginFragment : Fragment() {
         binding.loginEpoxyRecyclerView.withModels {
             epoxyInputField{
                 id(1)
+                texthint("Usuario")
             }
             epoxyInputPassword{
                 id(2)
