@@ -3,26 +3,53 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/LoginFragment">
+    <fragment
+        android:id="@+id/LoginFragment"
+        android:name="com.kalex.dogescollection.authentication.login.presentation.ui.LoginFragment"
+        android:label="@string/second_fragment_label"
+        tools:layout="@layout/fragment_login">
+
+        <action
+            android:id="@+id/action_DogListDetailFragment_to_DogListFragment"
+            app:destination="@id/DogListFragment" />
+        <argument
+            android:name="dog"
+            app:argType="com.kalex.dogescollection.dogList.model.data.dto.Dog"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
 
     <fragment
-        android:id="@+id/FirstFragment"
+        android:id="@+id/DogListFragment"
         android:name="com.kalex.dogescollection.dogList.presentation.ui.DogListFragment"
         android:label="@string/first_fragment_label"
-        tools:layout="@layout/dog_list_view">
+        tools:layout="@layout/dog_list_fragment">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_DogListFragment_to_DogListDetailFragment"
+            app:destination="@id/DogListDetailFragment" >
+            <argument
+                android:name="dog"
+                app:argType="com.kalex.dogescollection.dogList.model.data.dto.Dog"
+                app:nullable="true"
+                android:defaultValue="@null" />
+        </action>
     </fragment>
+
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.kalex.dogescollection.SecondFragment"
+        android:id="@+id/DogListDetailFragment"
+        android:name="com.kalex.dogescollection.dogList.presentation.ui.DogDetailFragment"
         android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
+        tools:layout="@layout/dog_detail_fragment">
 
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            android:id="@+id/action_DogListDetailFragment_to_DogListFragment"
+            app:destination="@id/DogListFragment" />
+        <argument
+            android:name="dog"
+            app:argType="com.kalex.dogescollection.dogList.model.data.dto.Dog"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
 </navigation>

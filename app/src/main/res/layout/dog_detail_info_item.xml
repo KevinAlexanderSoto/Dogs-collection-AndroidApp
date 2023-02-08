@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="8dp"
+    >
+    <TextView
+        android:id="@+id/dog_description_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:padding="8dp"
+        android:textSize="16sp"
+        tools:text=" Feliz y contento" />
+
+    <TextView
+        android:id="@+id/dog_weight_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/content_bold_text"
+        tools:text=" Feliz y contento" />
+    <TextView
+        android:id="@+id/dog_weight_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        style="@style/content_text"
+        tools:text=" Feliz y contento" />
+    <TextView
+        android:id="@+id/dog_height_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/content_bold_text"
+        tools:text=" Feliz y contento" />
+    <TextView
+        android:id="@+id/dog_height_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/content_text"
+        tools:text="Feliz y contento" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="line_divide">
+       <item name="android:layout_marginStart">8dp</item>
+       <item name="android:layout_marginTop">8dp</item>
+       <item name="android:layout_marginEnd">8dp</item>
+       <item name="android:layout_marginBottom">16dp</item>
+       <item name="android:background">@color/OuterSpaceCrayola</item>
+    </style>
+
+    <style name="content_text">
+       <item name="android:gravity"> center</item>
+       <item name="android:padding"> 4dp</item>
+       <item name="android:textSize"> 14sp</item>
+       <item name="android:fontFamily">sans-serif-medium</item>
+
+    </style>
+    <style name="title_text_32" parent="content_text">
+       <item name="android:padding"> 8dp</item>
+       <item name="android:textSize"> 32sp</item>
+    </style>
+    <style name="title_text_24" parent="content_text">
+
+       <item name="android:padding"> 8dp</item>
+       <item name="android:textSize"> 24sp</item>
+
+    </style>
+    <style name="title_text_18" parent="content_text">
+       <item name="android:padding"> 8dp</item>
+       <item name="android:textSize"> 18sp</item>
+    </style>
+
+    <style name="content_bold_text" parent="content_text">
+       <item name="android:textStyle">bold</item>
+    </style>
+
+</resources>
