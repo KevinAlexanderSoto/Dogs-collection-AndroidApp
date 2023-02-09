@@ -33,9 +33,11 @@ class LoginFragment : Fragment() {
         binding.loginEpoxyRecyclerView.withModels {
             epoxyInputField{
                 id(1)
-                texthint("Usuario")
+                //TODO: Add strings resources
+                textHint("Usuario")
                 regexValidation(Regex(""))
                 onValidationResult(){ valid ->
+                    //TODO: implement
                     if (!valid){
                         Toast.makeText(context,"No empty input",LENGTH_LONG).show()
                     }
@@ -43,6 +45,14 @@ class LoginFragment : Fragment() {
             }
             epoxyInputPassword{
                 id(2)
+                textHint("Password")
+                regexValidation(Regex(""))
+                onValidationResult(){ valid ->
+                    //TODO: implement
+                    if (!valid){
+                        Toast.makeText(context,"No empty input",LENGTH_LONG).show()
+                    }
+                }
             }
             epoxyButton{
                 id(3)
