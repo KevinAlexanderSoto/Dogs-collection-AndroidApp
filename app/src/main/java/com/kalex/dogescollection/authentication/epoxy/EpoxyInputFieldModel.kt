@@ -1,6 +1,8 @@
 package com.kalex.dogescollection.authentication.epoxy
 
-import android.widget.TextView
+import androidx.core.content.ContextCompat.getColor
+import androidx.core.graphics.red
+import androidx.core.graphics.toColor
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
@@ -16,17 +18,67 @@ abstract class EpoxyInputFieldModel  : EpoxyModelWithHolder<EpoxyInputFieldModel
     lateinit var texthint : String
 
     @EpoxyAttribute
-    lateinit var validation : () -> Unit
+    lateinit var regexValidation : Regex
 
+    @EpoxyAttribute
+    lateinit var onValidationResult : (result:Boolean) -> Unit
+
+    @JvmField
+    @EpoxyAttribute
+    var isOptional: Boolean = false
+
+    private var currentText : String = ""
+    private lateinit var textFieldLayoutView : TextInputLayout
     override fun bind(holder: Holder) {
         super.bind(holder)
-        holder.textfieldlayoutview.hint = texthint
-        holder.textfieldeditview.setOnFocusChangeListener{ view,focus ->
+        textFieldLayoutView = holder.textFieldLayoutView
+        holder.textFieldLayoutView.hint = texthint
+        holder.textFieldEditView.setOnFocusChangeListener{ _ ,focus :Boolean ->
+            currentText = holder.textFieldEditView.text.toString()
+            if(!focus) {
+                handleOptional{
+                    handleNullOrEmpty(currentText){
+                        handleRegex()
+                    }
+                }
+            }else{
+                textFieldLayoutView.error = null
+            }
 
         }
     }
+
+    private fun onValidationError(textFieldLayoutView: TextInputLayout) {
+        textFieldLayoutView.error = "error"
+    }
+
+    private fun handleNullOrEmpty(currentText: String, nextStep: () -> Unit){
+        if(currentText.isNotEmpty()){
+            nextStep()
+        }else{
+            handleError()
+        }
+    }
+    private fun handleError(){
+        onValidationError(textFieldLayoutView)
+        onValidationResult.invoke(false)
+    }
+    private fun handleRegex(){
+        if ( regexValidation.matches(currentText)){
+            onValidationResult.invoke(true)
+        }else{
+            handleError()
+        }
+    }
+    private fun handleOptional( nextStep: () -> Unit){
+        if(!isOptional ){
+            nextStep()
+        }else{
+            handleRegex()
+        }
+    }
     inner class Holder():  KotlinEpoxyHolder(){
-        val textfieldlayoutview by bind<TextInputLayout>(R.id.textFieldlayout)
-        val textfieldeditview by bind<TextInputEditText>(R.id.textFieldEdit)
+        val textFieldLayoutView by bind<TextInputLayout>(R.id.textFieldlayout)
+        val textFieldEditView by bind<TextInputEditText>(R.id.textFieldEdit)
     }
 }
