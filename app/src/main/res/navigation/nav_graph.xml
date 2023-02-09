@@ -11,13 +11,24 @@
         tools:layout="@layout/fragment_login">
 
         <action
-            android:id="@+id/action_DogListDetailFragment_to_DogListFragment"
+            android:id="@+id/action_LoginFragment_to_DogListFragment"
             app:destination="@id/DogListFragment" />
-        <argument
-            android:name="dog"
-            app:argType="com.kalex.dogescollection.dogList.model.data.dto.Dog"
-            app:nullable="true"
-            android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_LoginFragment_to_CreateAccountFragment"
+            app:destination="@id/CreateAccountFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/CreateAccountFragment"
+        android:name="com.kalex.dogescollection.authentication.login.presentation.ui.LoginFragment"
+        android:label="@string/second_fragment_label"
+        tools:layout="@layout/fragment_login">
+
+        <action
+            android:id="@+id/action_LoginFragment_to_DogListFragment"
+            app:destination="@id/DogListFragment" />
+
     </fragment>
 
     <fragment
