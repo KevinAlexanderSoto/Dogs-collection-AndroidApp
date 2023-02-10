@@ -6,13 +6,10 @@ import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import android.widget.Toast.LENGTH_LONG
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.airbnb.epoxy.DiffResult
 import com.google.android.material.button.MaterialButton
 import com.kalex.dogescollection.authentication.epoxy.epoxyButton
 import com.kalex.dogescollection.authentication.epoxy.epoxyInputField
@@ -32,8 +29,7 @@ class LoginFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-
+    ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
 
@@ -81,7 +77,7 @@ class LoginFragment : Fragment() {
                     updateInputPasswordState(valid)
                 }
                 onIsFocus{
-                    updateInputFieldState(false)
+                    updateInputPasswordState(false)
                 }
             }
             epoxyButton {
