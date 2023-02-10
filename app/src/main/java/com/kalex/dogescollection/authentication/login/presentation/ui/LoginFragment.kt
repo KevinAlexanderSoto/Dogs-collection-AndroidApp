@@ -1,6 +1,7 @@
 package com.kalex.dogescollection.authentication.login.presentation.ui
 
 import android.os.Bundle
+import android.util.Patterns
 import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
@@ -41,7 +42,7 @@ class LoginFragment : Fragment() {
                 id(1)
                 //TODO: Add strings resources
                 textHint("Usuario")
-                regexValidation(Regex(""))
+                regexValidation( Patterns.EMAIL_ADDRESS.toRegex())
                 onValidationResult(){ valid ->
                     //TODO: implement
                     if (!valid){
@@ -52,7 +53,7 @@ class LoginFragment : Fragment() {
             epoxyInputPassword{
                 id(2)
                 textHint("Password")
-                regexValidation(Regex(""))
+                regexValidation(Regex("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{5,}$"))
                 onValidationResult(){ valid ->
                     //TODO: implement
                     if (!valid){

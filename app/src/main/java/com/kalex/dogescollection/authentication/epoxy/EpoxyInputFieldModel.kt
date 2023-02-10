@@ -1,8 +1,6 @@
 package com.kalex.dogescollection.authentication.epoxy
 
-import androidx.core.content.ContextCompat.getColor
-import androidx.core.graphics.red
-import androidx.core.graphics.toColor
+
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
@@ -10,6 +8,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.kalex.dogescollection.R
 import com.kalex.dogescollection.common.epoxyhelpers.KotlinEpoxyHolder
+
 
 @EpoxyModelClass(layout = R.layout.authentication_input_field)
 abstract class EpoxyInputFieldModel : EpoxyModelWithHolder<EpoxyInputFieldModel.Holder>() {
