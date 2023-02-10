@@ -1,5 +1,6 @@
 package com.kalex.dogescollection.authentication.epoxy
 
+import android.content.Context
 import android.util.TypedValue
 import androidx.appcompat.widget.AppCompatTextView
 import com.airbnb.epoxy.EpoxyAttribute
@@ -15,12 +16,12 @@ abstract class EpoxyTextTitleModel: EpoxyModelWithHolder<EpoxyTextTitleModel.Hol
     lateinit var titleText : String
 
     @EpoxyAttribute
-    lateinit var onClickListener : () -> Unit
+     var textStyle : Int = R.style.title_text_32
 
     override fun bind(holder: Holder) {
         super.bind(holder)
         holder.textView.text = titleText
-        holder.textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20F)
+        holder.textView.setTextAppearance(textStyle)
 
     }
     inner class Holder():  KotlinEpoxyHolder(){
