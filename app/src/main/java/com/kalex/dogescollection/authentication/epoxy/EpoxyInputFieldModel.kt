@@ -21,7 +21,8 @@ abstract class EpoxyInputFieldModel : EpoxyModelWithHolder<EpoxyInputFieldModel.
     lateinit var regexValidation: Regex
 
     @EpoxyAttribute
-    lateinit var onValidationResult: (result: Boolean) -> Unit
+    lateinit var onValidationResult: (result: Boolean,text:String) -> Unit
+
     @EpoxyAttribute
     lateinit var onIsFocus: () -> Unit
 
@@ -65,12 +66,12 @@ abstract class EpoxyInputFieldModel : EpoxyModelWithHolder<EpoxyInputFieldModel.
 
     private fun handleError() {
         onValidationError(textFieldLayoutView)
-        onValidationResult.invoke(false)
+        onValidationResult.invoke(false,"")
     }
 
     private fun handleRegex(currentText: String) {
         if (regexValidation.matches(currentText)) {
-            onValidationResult.invoke(true)
+            onValidationResult.invoke(true,currentText)
         } else {
             handleError()
         }

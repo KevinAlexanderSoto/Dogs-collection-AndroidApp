@@ -1,6 +1,7 @@
 package com.kalex.dogescollection.authentication.createaccount.presentation.iu
 
 import android.os.Bundle
+import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import com.kalex.dogescollection.authentication.epoxy.epoxyButton
 import com.kalex.dogescollection.authentication.epoxy.epoxyInputField
 import com.kalex.dogescollection.authentication.epoxy.epoxyInputPassword
 import com.kalex.dogescollection.databinding.FragmentCreateAccountBinding
+import kotlinx.coroutines.flow.MutableStateFlow
 
 
 class CreateAccountFragment : Fragment() {
@@ -28,39 +30,57 @@ class CreateAccountFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        var enableUser = false
+        var enablePass = false
+        val state = MutableStateFlow(false)
+        fun updateInputFieldState(enable:Boolean){
+            enableUser = enable
+            state.value = enableUser && enablePass
+        }
+        fun updateInputPasswordState(enable:Boolean){
+            enablePass = enable
+            state.value = enableUser && enablePass
+        }
+
         binding.CreateAccountEpoxyRecyclerView.withModels {
-            epoxyInputField{
+            epoxyInputField {
                 id(1)
                 //TODO: Add strings resources
                 textHint("Usuario")
-                regexValidation(Regex(""))
-                onValidationResult(){ valid ->
-                    //TODO: implement
-                    if (!valid){
-                        Toast.makeText(context,"No empty input", Toast.LENGTH_LONG).show()
-                    }
+                regexValidation(Patterns.EMAIL_ADDRESS.toRegex())
+                onValidationResult { valid ->
+                    //TODO: implementEror message
+                    updateInputFieldState(valid)
+                }
+                onIsFocus{
+                    updateInputFieldState(false)
                 }
             }
-            epoxyInputPassword{
+            epoxyInputPassword {
                 id(2)
+                //TODO: Add strings resources
                 textHint("Password")
-                regexValidation(Regex(""))
-                onValidationResult(){ valid ->
-                    //TODO: implement
-                    if (!valid){
-                        Toast.makeText(context,"No empty input", Toast.LENGTH_LONG).show()
-                    }
+                regexValidation(Regex("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{5,}$"))
+                onValidationResult { valid ->
+                    //TODO: implement Eror message
+                    updateInputPasswordState(valid)
+                }
+                onIsFocus{
+                    updateInputFieldState(false)
                 }
             }
-            epoxyInputPassword{
-                id(25)
-                textHint("confirm password")
-                regexValidation(Regex(""))
-                onValidationResult(){ valid ->
-                    //TODO: implement
-                    if (!valid){
-                        Toast.makeText(context,"No empty input", Toast.LENGTH_LONG).show()
-                    }
+            epoxyInputPassword {
+                id(2)
+                //TODO: Add strings resources
+                textHint("Password")
+                regexValidation(Regex("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{5,}$"))
+                onValidationResult { valid ->
+                    //TODO: implement Eror message
+                    updateInputPasswordState(valid)
+                }
+                onIsFocus{
+                    updateInputFieldState(false)
                 }
             }
             epoxyButton{

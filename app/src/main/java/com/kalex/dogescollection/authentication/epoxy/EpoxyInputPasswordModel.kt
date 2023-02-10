@@ -21,7 +21,7 @@ abstract class EpoxyInputPasswordModel : EpoxyModelWithHolder<EpoxyInputPassword
     lateinit var onIsFocus: () -> Unit
 
     @EpoxyAttribute
-    lateinit var onValidationResult: (result: Boolean) -> Unit
+    lateinit var onValidationResult: (result: Boolean, text: String) -> Unit
 
     @JvmField
     @EpoxyAttribute
@@ -37,7 +37,7 @@ abstract class EpoxyInputPasswordModel : EpoxyModelWithHolder<EpoxyInputPassword
             currentText = holder.textFieldEditView.text.toString()
             if (!focus) {
                     handleMinLength(currentText) {
-                        handleRegex()
+                        handleRegex(currentText)
                     }
             } else {
                 onIsFocus.invoke()
@@ -61,12 +61,12 @@ abstract class EpoxyInputPasswordModel : EpoxyModelWithHolder<EpoxyInputPassword
 
     private fun handleError() {
         onValidationError(textFieldLayoutView)
-        onValidationResult.invoke(false)
+        onValidationResult.invoke(false,"")
     }
 
-    private fun handleRegex() {
+    private fun handleRegex(currentText: String) {
         if (regexValidation.matches(currentText)) {
-            onValidationResult.invoke(true)
+            onValidationResult.invoke(true,currentText)
         } else {
             handleError()
         }
