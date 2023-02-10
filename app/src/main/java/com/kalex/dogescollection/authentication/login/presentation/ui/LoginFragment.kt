@@ -8,12 +8,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import androidx.navigation.fragment.findNavController
-import com.kalex.dogescollection.authentication.createaccount.presentation.iu.CreateAccountFragment
-import com.kalex.dogescollection.authentication.createaccount.presentation.iu.CreateAccountFragmentDirections
 import com.kalex.dogescollection.authentication.epoxy.epoxyButton
 import com.kalex.dogescollection.authentication.epoxy.epoxyInputField
 import com.kalex.dogescollection.authentication.epoxy.epoxyInputPassword
 import com.kalex.dogescollection.authentication.epoxy.epoxyTextButton
+import com.kalex.dogescollection.authentication.epoxy.epoxyTextTitle
 import com.kalex.dogescollection.databinding.FragmentLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -34,6 +33,10 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.loginEpoxyRecyclerView.withModels {
+            epoxyTextTitle{
+                id(0)
+                titleText("Log in")
+            }
             epoxyInputField{
                 id(1)
                 //TODO: Add strings resources
