@@ -1,6 +1,7 @@
 package com.kalex.dogescollection.authentication.epoxy
 
 
+import androidx.core.widget.addTextChangedListener
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
@@ -37,7 +38,7 @@ abstract class EpoxyInputFieldModel : EpoxyModelWithHolder<EpoxyInputFieldModel.
             if (!focus) {
                 handleOptional {
                     handleNullOrEmpty(currentText) {
-                        handleRegex()
+                        handleRegex(currentText)
                     }
                 }
             } else {
@@ -64,7 +65,7 @@ abstract class EpoxyInputFieldModel : EpoxyModelWithHolder<EpoxyInputFieldModel.
         onValidationResult.invoke(false)
     }
 
-    private fun handleRegex() {
+    private fun handleRegex(currentText: String) {
         if (regexValidation.matches(currentText)) {
             onValidationResult.invoke(true)
         } else {
@@ -76,7 +77,7 @@ abstract class EpoxyInputFieldModel : EpoxyModelWithHolder<EpoxyInputFieldModel.
         if (!isOptional) {
             nextStep()
         } else {
-            handleRegex()
+            handleRegex(currentText)
         }
     }
 

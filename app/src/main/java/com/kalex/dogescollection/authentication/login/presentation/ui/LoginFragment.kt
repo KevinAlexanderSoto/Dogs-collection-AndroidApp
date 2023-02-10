@@ -41,70 +41,63 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-         var enableuser = false
-         var enablepass = false
-         val state = MutableStateFlow(false)
+        var enableUser = false
+        var enablePass = false
+        val state = MutableStateFlow(false)
+        fun updateInputFieldState(enable:Boolean){
+            enableUser = enable
+            state.value = enableUser && enablePass
+        }
+        fun updateInputPasswordState(enable:Boolean){
+            enablePass = enable
+            state.value = enableUser && enablePass
+        }
         binding.loginEpoxyRecyclerView.withModels {
-            epoxyTextTitle{
+            epoxyTextTitle {
                 id(0)
+                //TODO: Add strings resources
                 titleText("Log in")
             }
-            epoxyInputField{
+            epoxyInputField {
                 id(1)
                 //TODO: Add strings resources
                 textHint("Usuario")
-                regexValidation( Patterns.EMAIL_ADDRESS.toRegex())
-                onValidationResult{ valid ->
-                    //TODO: implement
-                    if (!valid){
-                        enableuser = false
-                        state.value = enableuser && enablepass
-                        //TODO: Change this
-                        Toast.makeText(context,"No empty input",LENGTH_LONG).show()
-                    }else{
-
-                        enableuser = true
-                        state.value = enableuser && enablepass
-                    }
+                regexValidation(Patterns.EMAIL_ADDRESS.toRegex())
+                onValidationResult { valid ->
+                    //TODO: implementEror message
+                    updateInputFieldState(valid)
                 }
             }
-            epoxyInputPassword{
+            epoxyInputPassword {
                 id(2)
+                //TODO: Add strings resources
                 textHint("Password")
                 regexValidation(Regex("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{5,}$"))
-                onValidationResult{ valid ->
-                    //TODO: implement
-                    if (!valid){
-                        enablepass = false
-                        state.value = enableuser && enablepass
-                        //TODO: Change this
-                        Toast.makeText(context,"No empty input",LENGTH_LONG).show()
-                    }else{
-                        enablepass = true
-                        state.value = enableuser && enablepass
-                    }
+                onValidationResult { valid ->
+                    //TODO: implement Eror message
+                    updateInputPasswordState(valid)
                 }
             }
-            epoxyButton{
-                id(3)
+            epoxyButton {
+                id(3)//TODO: Add strings resources
                 buttonText("Login")
-                onClickListener{
+                onClickListener {
 
                 }
-                enableButton{ isEnable: MaterialButton ->
+                enableButton { isEnable: MaterialButton ->
                     lifecycleScope.launch {
-                        viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
+                        viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                             state.collectLatest {
                                 isEnable.isEnabled = it
                             }
                         }
-
                     }
                 }
             }
 
-            epoxyTextButton{
+            epoxyTextButton {
                 id(4)
+                //TODO: Add strings resources
                 buttonText("Register")
                 topButtonText("Do not have an account?")
                 onClickListener {
