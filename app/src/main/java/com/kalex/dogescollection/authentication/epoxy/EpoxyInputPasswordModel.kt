@@ -18,6 +18,9 @@ abstract class EpoxyInputPasswordModel : EpoxyModelWithHolder<EpoxyInputPassword
     lateinit var regexValidation: Regex
 
     @EpoxyAttribute
+    lateinit var onIsFocus: () -> Unit
+
+    @EpoxyAttribute
     lateinit var onValidationResult: (result: Boolean) -> Unit
 
     @JvmField
@@ -37,6 +40,7 @@ abstract class EpoxyInputPasswordModel : EpoxyModelWithHolder<EpoxyInputPassword
                         handleRegex()
                     }
             } else {
+                onIsFocus.invoke()
                 textFieldLayoutView.error = null
             }
         }

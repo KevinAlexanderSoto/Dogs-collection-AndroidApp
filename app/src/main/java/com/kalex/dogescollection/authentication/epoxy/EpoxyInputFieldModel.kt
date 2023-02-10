@@ -22,6 +22,8 @@ abstract class EpoxyInputFieldModel : EpoxyModelWithHolder<EpoxyInputFieldModel.
 
     @EpoxyAttribute
     lateinit var onValidationResult: (result: Boolean) -> Unit
+    @EpoxyAttribute
+    lateinit var onIsFocus: () -> Unit
 
     @JvmField
     @EpoxyAttribute
@@ -42,6 +44,7 @@ abstract class EpoxyInputFieldModel : EpoxyModelWithHolder<EpoxyInputFieldModel.
                     }
                 }
             } else {
+                onIsFocus.invoke()
                 textFieldLayoutView.error = null
             }
         }

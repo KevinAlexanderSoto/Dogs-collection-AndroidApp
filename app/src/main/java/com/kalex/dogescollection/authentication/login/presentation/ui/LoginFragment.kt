@@ -67,6 +67,9 @@ class LoginFragment : Fragment() {
                     //TODO: implementEror message
                     updateInputFieldState(valid)
                 }
+                onIsFocus{
+                    updateInputFieldState(false)
+                }
             }
             epoxyInputPassword {
                 id(2)
@@ -76,6 +79,9 @@ class LoginFragment : Fragment() {
                 onValidationResult { valid ->
                     //TODO: implement Eror message
                     updateInputPasswordState(valid)
+                }
+                onIsFocus{
+                    updateInputFieldState(false)
                 }
             }
             epoxyButton {
