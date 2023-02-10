@@ -25,7 +25,7 @@ abstract class EpoxyTextButtonModel: EpoxyModelWithHolder<EpoxyTextButtonModel.H
         holder.buttonTitleView.text = topButtonText
         holder.buttonView.text = buttonText
         holder.buttonView.setOnClickListener{
-            onClickListener
+            onClickListener.invoke()
         }
 
     }

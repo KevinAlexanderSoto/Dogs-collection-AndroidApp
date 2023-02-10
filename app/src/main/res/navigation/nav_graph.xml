@@ -13,6 +13,7 @@
         <action
             android:id="@+id/action_LoginFragment_to_DogListFragment"
             app:destination="@id/DogListFragment" />
+
         <action
             android:id="@+id/action_LoginFragment_to_CreateAccountFragment"
             app:destination="@id/CreateAccountFragment" />

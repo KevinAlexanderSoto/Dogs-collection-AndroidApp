@@ -53,7 +53,7 @@ class CreateAccountFragment : Fragment() {
                 }
             }
             epoxyInputPassword{
-                id(2)
+                id(25)
                 textHint("confirm password")
                 regexValidation(Regex(""))
                 onValidationResult(){ valid ->
