@@ -7,11 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.google.android.material.button.MaterialButton
 import com.kalex.dogescollection.authentication.epoxy.epoxyButton
 import com.kalex.dogescollection.authentication.epoxy.epoxyInputField
 import com.kalex.dogescollection.authentication.epoxy.epoxyInputPassword
 import com.kalex.dogescollection.databinding.FragmentCreateAccountBinding
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 
 class CreateAccountFragment : Fragment() {
@@ -49,7 +55,7 @@ class CreateAccountFragment : Fragment() {
                 //TODO: Add strings resources
                 textHint("Usuario")
                 regexValidation(Patterns.EMAIL_ADDRESS.toRegex())
-                onValidationResult { valid ->
+                onValidationResult { valid, currentText ->
                     //TODO: implementEror message
                     updateInputFieldState(valid)
                 }
@@ -62,7 +68,7 @@ class CreateAccountFragment : Fragment() {
                 //TODO: Add strings resources
                 textHint("Password")
                 regexValidation(Regex("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{5,}$"))
-                onValidationResult { valid ->
+                onValidationResult { valid , currentText ->
                     //TODO: implement Eror message
                     updateInputPasswordState(valid)
                 }
@@ -75,7 +81,7 @@ class CreateAccountFragment : Fragment() {
                 //TODO: Add strings resources
                 textHint("Password")
                 regexValidation(Regex("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{5,}$"))
-                onValidationResult { valid ->
+                onValidationResult { valid, currentText ->
                     //TODO: implement Eror message
                     updateInputPasswordState(valid)
                 }
@@ -83,9 +89,21 @@ class CreateAccountFragment : Fragment() {
                     updateInputFieldState(false)
                 }
             }
-            epoxyButton{
-                id(3)
-                buttonText("crear cuenta")
+            epoxyButton {
+                id(3)//TODO: Add strings resources
+                buttonText("Login")
+                onClickListener {
+
+                }
+                enableButton { isEnable: MaterialButton ->
+                    lifecycleScope.launch {
+                        viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                            state.collectLatest {
+                                isEnable.isEnabled = it
+                            }
+                        }
+                    }
+                }
             }
 
         }

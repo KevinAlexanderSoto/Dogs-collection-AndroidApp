@@ -63,7 +63,7 @@ class LoginFragment : Fragment() {
                 //TODO: Add strings resources
                 textHint("Usuario")
                 regexValidation(Patterns.EMAIL_ADDRESS.toRegex())
-                onValidationResult { valid ->
+                onValidationResult { valid, currentText ->
                     //TODO: implementEror message
                     updateInputFieldState(valid)
                 }
@@ -76,7 +76,7 @@ class LoginFragment : Fragment() {
                 //TODO: Add strings resources
                 textHint("Password")
                 regexValidation(Regex("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{5,}$"))
-                onValidationResult { valid ->
+                onValidationResult { valid, currentText ->
                     //TODO: implement Eror message
                     updateInputPasswordState(valid)
                 }
