@@ -21,12 +21,12 @@
 
     <fragment
         android:id="@+id/CreateAccountFragment"
-        android:name="com.kalex.dogescollection.authentication.login.presentation.ui.LoginFragment"
+        android:name="com.kalex.dogescollection.authentication.createaccount.presentation.iu.CreateAccountFragment"
         android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_login">
+        tools:layout="@layout/fragment_create_account">
 
         <action
-            android:id="@+id/action_LoginFragment_to_DogListFragment"
+            android:id="@+id/action_CreateAccountFragment_to_DogListFragment"
             app:destination="@id/DogListFragment" />
 
     </fragment>
