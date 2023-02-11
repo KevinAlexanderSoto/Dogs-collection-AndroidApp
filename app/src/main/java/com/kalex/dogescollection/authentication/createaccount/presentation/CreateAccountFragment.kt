@@ -51,7 +51,7 @@ class CreateAccountFragment : Fragment() {
                 regexValidation(Patterns.EMAIL_ADDRESS.toRegex())
                 onValidationResult { valid, currentText ->
                     //TODO: implementEror message
-                    regexValidationState.updateInputFieldState(valid)
+                    regexValidationState.updateInputFieldState(valid,currentText)
                 }
                 onIsFocus {
                     regexValidationState.updateInputFieldState(false)
@@ -64,7 +64,7 @@ class CreateAccountFragment : Fragment() {
                 regexValidation(Regex("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{5,}$"))
                 onValidationResult { valid, currentText ->
                     //TODO: implement Eror message
-                    regexValidationState.updateInputPasswordState(valid)
+                    regexValidationState.updateInputPasswordState(valid,currentText)
                 }
                 onIsFocus {
                     regexValidationState.updateInputPasswordState(false)
@@ -77,7 +77,7 @@ class CreateAccountFragment : Fragment() {
                 regexValidation(Regex("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{5,}$"))
                 onValidationResult { valid, currentText ->
                     //TODO: implement Eror message
-                    regexValidationState.updateInputPassword2State(valid)
+                    regexValidationState.updateInputPassword2State(valid,currentText)
                 }
                 onIsFocus {
                     regexValidationState.updateInputPassword2State(false)
