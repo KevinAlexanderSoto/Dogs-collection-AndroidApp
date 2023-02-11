@@ -19,7 +19,7 @@ fun <T> makeNetworkCallHandler(
         emit(UseCaseFlowStatus.Error(e.message ?: "Unknown") )
     }
     catch (e : UnknownHostException){
-        emit( UseCaseFlowStatus.Error(e.message ?: "Unknown"))
+        emit( UseCaseFlowStatus.Error(e.message ?: "Internet"))
     }
 }
 sealed class ViewModelNewsUiState<T> {

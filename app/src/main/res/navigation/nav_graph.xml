@@ -6,7 +6,7 @@
     app:startDestination="@id/LoginFragment">
     <fragment
         android:id="@+id/LoginFragment"
-        android:name="com.kalex.dogescollection.authentication.login.presentation.ui.LoginFragment"
+        android:name="com.kalex.dogescollection.authentication.login.presentation.LoginFragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_login">
 
@@ -22,7 +22,7 @@
 
     <fragment
         android:id="@+id/CreateAccountFragment"
-        android:name="com.kalex.dogescollection.authentication.createaccount.presentation.iu.CreateAccountFragment"
+        android:name="com.kalex.dogescollection.authentication.createaccount.presentation.CreateAccountFragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_create_account">
 

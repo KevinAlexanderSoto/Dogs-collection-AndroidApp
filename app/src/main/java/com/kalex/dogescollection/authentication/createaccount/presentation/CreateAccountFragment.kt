@@ -1,4 +1,4 @@
-package com.kalex.dogescollection.authentication.createaccount.presentation.iu
+package com.kalex.dogescollection.authentication.createaccount.presentation
 
 import android.os.Bundle
 import android.util.Patterns

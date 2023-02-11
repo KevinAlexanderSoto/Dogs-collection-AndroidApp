@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".authentication.login.presentation.ui.LoginFragment">
+    tools:context=".authentication.login.presentation.LoginFragment">
 
     <com.airbnb.epoxy.EpoxyRecyclerView
         android:id="@+id/loginEpoxyRecyclerView"

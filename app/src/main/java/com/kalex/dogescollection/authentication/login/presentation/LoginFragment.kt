@@ -1,4 +1,4 @@
-package com.kalex.dogescollection.authentication.login.presentation.ui
+package com.kalex.dogescollection.authentication.login.presentation
 
 import android.os.Bundle
 import android.util.Patterns
@@ -17,9 +17,9 @@ import com.kalex.dogescollection.authentication.epoxy.epoxyInputField
 import com.kalex.dogescollection.authentication.epoxy.epoxyInputPassword
 import com.kalex.dogescollection.authentication.epoxy.epoxyTextButton
 import com.kalex.dogescollection.authentication.epoxy.epoxyTextTitle
+import com.kalex.dogescollection.authentication.login.presentation.ui.LoginFragmentDirections
 import com.kalex.dogescollection.databinding.FragmentLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
