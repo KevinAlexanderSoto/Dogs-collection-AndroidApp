@@ -1,9 +1,12 @@
 package com.kalex.dogescollection.di
 
+import com.kalex.dogescollection.authentication.RegexValidationState
 import com.kalex.dogescollection.common.Constants
 import com.kalex.dogescollection.dogList.model.data.DogsApi
 import com.kalex.dogescollection.dogList.model.repository.DogRepository
 import com.kalex.dogescollection.dogList.model.repository.DogRepositoryImpl
+import dagger.Component
+import dagger.Component.Factory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,4 +32,7 @@ object DogModule {
     fun userRepositoryProvide(api : DogsApi): DogRepository {
         return DogRepositoryImpl(api)
     }
+
+    @Provides
+    fun movideValidation(): RegexValidationState = RegexValidationState()
 }
