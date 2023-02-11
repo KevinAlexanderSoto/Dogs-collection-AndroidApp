@@ -33,6 +33,5 @@ object DogModule {
         return DogRepositoryImpl(api)
     }
 
-    @Provides
-    fun movideValidation(): RegexValidationState = RegexValidationState()
+
 }

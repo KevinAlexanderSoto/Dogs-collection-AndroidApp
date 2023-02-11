@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButton
+import com.kalex.dogescollection.authentication.RegexValidationState
 import com.kalex.dogescollection.authentication.epoxy.epoxyButton
 import com.kalex.dogescollection.authentication.epoxy.epoxyInputField
 import com.kalex.dogescollection.authentication.epoxy.epoxyInputPassword
@@ -21,15 +22,21 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
+    @Inject
+    lateinit var regexValidationState: RegexValidationState
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
+        regexValidationState.updateInputFieldState(false)
+        regexValidationState.updateInputPasswordState(false)
+        regexValidationState.updateInputPassword2State(true)
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
 
@@ -37,17 +44,6 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var enableUser = false
-        var enablePass = false
-        val state = MutableStateFlow(false)
-        fun updateInputFieldState(enable:Boolean){
-            enableUser = enable
-            state.value = enableUser && enablePass
-        }
-        fun updateInputPasswordState(enable:Boolean){
-            enablePass = enable
-            state.value = enableUser && enablePass
-        }
         binding.loginEpoxyRecyclerView.withModels {
             epoxyTextTitle {
                 id(0)
@@ -61,10 +57,10 @@ class LoginFragment : Fragment() {
                 regexValidation(Patterns.EMAIL_ADDRESS.toRegex())
                 onValidationResult { valid, currentText ->
                     //TODO: implementEror message
-                    updateInputFieldState(valid)
+                    regexValidationState.updateInputFieldState(valid)
                 }
-                onIsFocus{
-                    updateInputFieldState(false)
+                onIsFocus {
+                    regexValidationState.updateInputFieldState(false)
                 }
             }
             epoxyInputPassword {
@@ -74,10 +70,10 @@ class LoginFragment : Fragment() {
                 regexValidation(Regex("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{5,}$"))
                 onValidationResult { valid, currentText ->
                     //TODO: implement Eror message
-                    updateInputPasswordState(valid)
+                    regexValidationState.updateInputPasswordState(valid)
                 }
-                onIsFocus{
-                    updateInputPasswordState(false)
+                onIsFocus {
+                    regexValidationState.updateInputPasswordState(false)
                 }
             }
             epoxyButton {
@@ -89,7 +85,7 @@ class LoginFragment : Fragment() {
                 enableButton { isEnable: MaterialButton ->
                     lifecycleScope.launch {
                         viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                            state.collectLatest {
+                            regexValidationState.regexState.collectLatest {
                                 isEnable.isEnabled = it
                             }
                         }

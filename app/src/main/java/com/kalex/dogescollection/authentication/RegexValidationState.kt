@@ -4,20 +4,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
-class RegexValidationState @Inject constructor(
-    initialDataFieldValidate: Boolean = false,
-    initialPasswordField1Validate: Boolean = false,
-    initialPasswordField2Validate: Boolean = false
-) {
-    private var isDataFieldValidate: Boolean
-    private var isPasswordField1Validate: Boolean
-    private var isPasswordField2Validate: Boolean
-
-    init {
-        isDataFieldValidate = initialDataFieldValidate
-        isPasswordField1Validate = initialPasswordField1Validate
-        isPasswordField2Validate = initialPasswordField2Validate
-    }
+class RegexValidationState @Inject constructor() {
+    private var isDataFieldValidate: Boolean = false
+    private var isPasswordField1Validate: Boolean = false
+    private var isPasswordField2Validate: Boolean = false
 
     private val _regexState = MutableStateFlow(true)
     val regexState: StateFlow<Boolean>

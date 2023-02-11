@@ -13,12 +13,12 @@ import com.google.android.material.button.MaterialButton
 import com.kalex.dogescollection.authentication.RegexValidationState
 import com.kalex.dogescollection.authentication.epoxy.*
 import com.kalex.dogescollection.databinding.FragmentCreateAccountBinding
-import kotlinx.coroutines.flow.MutableStateFlow
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class CreateAccountFragment : Fragment() {
     private var _binding: FragmentCreateAccountBinding? = null
     private val binding get() = _binding!!
@@ -30,7 +30,7 @@ class CreateAccountFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         regexValidationState.updateInputFieldState(false)
-        regexValidationState.updateInputPassword2State(false)
+        regexValidationState.updateInputPasswordState(false)
         regexValidationState.updateInputPassword2State(false)
         _binding = FragmentCreateAccountBinding.inflate(inflater, container, false)
         return binding.root
@@ -40,24 +40,6 @@ class CreateAccountFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        var enableUser = false
-        var enablePass = false
-        var enablePass2 = false
-        val state = MutableStateFlow(false)
-        fun updateInputFieldState(enable:Boolean){
-            enableUser = enable
-            state.value = enableUser && enablePass && enablePass2
-        }
-        fun updateInputPasswordState(enable:Boolean){
-            enablePass = enable
-            state.value = enableUser && enablePass && enablePass2
-        }
-        fun updateInputPassword2State(enable:Boolean){
-            enablePass2 = enable
-            state.value = enableUser && enablePass && enablePass2
-        }
-
         binding.CreateAccountEpoxyRecyclerView.withModels {
             epoxyInputField {
                 id(17)
@@ -66,10 +48,10 @@ class CreateAccountFragment : Fragment() {
                 regexValidation(Patterns.EMAIL_ADDRESS.toRegex())
                 onValidationResult { valid, currentText ->
                     //TODO: implementEror message
-                    updateInputFieldState(valid)
+                    regexValidationState.updateInputFieldState(valid)
                 }
-                onIsFocus{
-                    updateInputFieldState(false)
+                onIsFocus {
+                    regexValidationState.updateInputFieldState(false)
                 }
             }
             epoxyInputPassword {
@@ -77,12 +59,12 @@ class CreateAccountFragment : Fragment() {
                 //TODO: Add strings resources
                 textHint("Password")
                 regexValidation(Regex("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{5,}$"))
-                onValidationResult { valid , currentText ->
+                onValidationResult { valid, currentText ->
                     //TODO: implement Eror message
-                    updateInputPasswordState(valid)
+                    regexValidationState.updateInputPasswordState(valid)
                 }
-                onIsFocus{
-                    updateInputPasswordState(false)
+                onIsFocus {
+                    regexValidationState.updateInputPasswordState(false)
                 }
             }
             epoxyInputPassword {
@@ -92,10 +74,10 @@ class CreateAccountFragment : Fragment() {
                 regexValidation(Regex("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{5,}$"))
                 onValidationResult { valid, currentText ->
                     //TODO: implement Eror message
-                    updateInputPassword2State(valid)
+                    regexValidationState.updateInputPassword2State(valid)
                 }
-                onIsFocus{
-                    updateInputPassword2State(false)
+                onIsFocus {
+                    regexValidationState.updateInputPassword2State(false)
                 }
             }
             epoxyButton {
@@ -107,7 +89,7 @@ class CreateAccountFragment : Fragment() {
                 enableButton { isEnable: MaterialButton ->
                     lifecycleScope.launch {
                         viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                            state.collectLatest {
+                            regexValidationState.regexState.collectLatest {
                                 isEnable.isEnabled = it
                             }
                         }
