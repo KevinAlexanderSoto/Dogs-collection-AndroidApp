@@ -11,6 +11,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.button.MaterialButton
+import com.kalex.dogescollection.authentication.FieldKey
 import com.kalex.dogescollection.authentication.RegexValidationState
 import com.kalex.dogescollection.authentication.epoxy.*
 import com.kalex.dogescollection.databinding.FragmentCreateAccountBinding
@@ -87,7 +88,10 @@ class CreateAccountFragment : Fragment() {
                 id(7)//TODO: Add strings resources
                 buttonText("Login")
                 onClickListener {
-
+                    val email = regexValidationState.getFieldValue(FieldKey.DATA_FIELD)
+                    val password1 = regexValidationState.getFieldValue(FieldKey.PASSWORD_ONE)
+                    val password2 = regexValidationState.getFieldValue(FieldKey.PASSWORD_TWO)
+                    createAccountViewModel.createAccount(email,password1,password2)
                 }
                 enableButton { isEnable: MaterialButton ->
                     lifecycleScope.launch {

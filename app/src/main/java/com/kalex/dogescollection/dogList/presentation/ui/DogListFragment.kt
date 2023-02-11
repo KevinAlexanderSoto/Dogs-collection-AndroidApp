@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kalex.dogescollection.R
 import com.kalex.dogescollection.common.networkstates.ViewModelNewsUiState
+import com.kalex.dogescollection.common.networkstates.handleViewModelState
 import com.kalex.dogescollection.databinding.DogListFragmentBinding
 import com.kalex.dogescollection.dogList.model.data.dto.Dog
 import com.kalex.dogescollection.dogList.presentation.viewmodel.DogsViewModel
@@ -61,17 +62,18 @@ class DogListFragment : Fragment() {
     }
 
     private fun getDogsByViewModel(dogListAdapter: DogListAdapter) {
-        lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                dogsViewModel.dogState.collectLatest {
-                    when (it) {
-                        is ViewModelNewsUiState.Error -> handleErrorStatus(it.exception)
-                        is ViewModelNewsUiState.Loading -> handleLoadingStatus(it.isLoading)
-                        is ViewModelNewsUiState.Success -> handleSuccessStatus(it.data.dogs,dogListAdapter)
-                    }
-                }
+
+        handleViewModelState(dogsViewModel.dogState,
+            onSuccess = {
+                handleSuccessStatus(it.dogs, dogListAdapter)
+            },
+            onLoading = {
+                handleLoadingStatus(it)
+            },
+            onError = {
+                handleErrorStatus(it)
             }
-        }
+        )
     }
 
     private fun handleErrorStatus(exception: String) {
