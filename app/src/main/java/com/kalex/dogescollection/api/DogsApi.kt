@@ -6,13 +6,14 @@ import com.kalex.dogescollection.common.Constants
 import com.kalex.dogescollection.dogList.model.data.dto.Dogs
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.PUT
 
 interface DogsApi {
 
     @GET(Constants.GET_ALL_DOGS_URL)
     suspend fun getAllDogs() : Dogs
-    @PUT(Constants.CREATE_ACCOUNT_URL)
+    @POST(Constants.CREATE_ACCOUNT_URL)
     suspend fun createAccount(@Body signUpDTO: SignUpDTO): UserResponse
 
 }
