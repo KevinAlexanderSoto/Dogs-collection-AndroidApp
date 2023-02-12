@@ -11,7 +11,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kalex.dogescollection.R
 import com.kalex.dogescollection.authentication.FieldKey
 import com.kalex.dogescollection.authentication.RegexValidationState
@@ -122,11 +124,19 @@ class CreateAccountFragment : Fragment() {
 
     private fun handleOnCreateAccountStates() {
         handleViewModelState(createAccountViewModel.authenticationState,
-            onSuccess = {Toast.makeText(context,"login correcto",Toast.LENGTH_LONG).show()},
+            onSuccess = {
+                findNavController().navigate(CreateAccountFragmentDirections.actionCreateAccountFragmentToDogListFragment())
+                        },
             onLoading = {},
             onError = {
-it
-                Toast.makeText(context,"ERROR DEACONOCIDO",Toast.LENGTH_LONG).show()
+
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle(resources.getString(R.string.error_title))
+                    .setMessage(resources.getString(it))
+                    .setPositiveButton(resources.getString(R.string.error_accept)) { dialog, which ->
+                        dialog.dismiss()
+                    }
+                    .show()
             }
         )
     }

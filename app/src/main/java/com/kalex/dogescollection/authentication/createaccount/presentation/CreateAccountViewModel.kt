@@ -24,9 +24,9 @@ class CreateAccountViewModel @Inject constructor(
         viewModelScope.launch {
             authenticationUseCase.createAccount(user,password,passwordConfirm).collectLatest {
                 when (it) {
-                    is UseCaseFlowStatus.Error -> _authenticationState.value = ViewModelNewsUiState.Error(it.exception)
                     is UseCaseFlowStatus.Success -> _authenticationState.value = ViewModelNewsUiState.Success(it.data)
                     is UseCaseFlowStatus.Loading ->_authenticationState.value = ViewModelNewsUiState.Loading(true)
+                    is UseCaseFlowStatus.Error -> _authenticationState.value = ViewModelNewsUiState.Error(it.exception)
                 }
             }
         }
