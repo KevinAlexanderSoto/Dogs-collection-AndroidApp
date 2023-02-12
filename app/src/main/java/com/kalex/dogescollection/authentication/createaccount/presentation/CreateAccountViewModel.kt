@@ -6,12 +6,13 @@ import com.kalex.dogescollection.authentication.AuthenticationUseCase
 import com.kalex.dogescollection.authentication.createaccount.dto.User
 import com.kalex.dogescollection.common.networkstates.UseCaseFlowStatus
 import com.kalex.dogescollection.common.networkstates.ViewModelNewsUiState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
+@HiltViewModel
 class CreateAccountViewModel @Inject constructor(
     private val authenticationUseCase : AuthenticationUseCase
 ): ViewModel() {
