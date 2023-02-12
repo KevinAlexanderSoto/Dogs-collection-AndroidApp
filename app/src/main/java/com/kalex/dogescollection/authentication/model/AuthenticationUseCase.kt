@@ -18,4 +18,13 @@ class AuthenticationUseCase @Inject constructor(
             throw Exception(result.message)
         }
     }
+
+    fun signIn(user: String, password: String): Flow<UseCaseFlowStatus<User>> = makeNetworkCallHandler{
+        val result = Repository.SignIn(user, password)
+        if(result.is_success){
+            result.body_data.user.userDTOtoUser()
+        }else{
+            throw Exception(result.message)
+        }
+    }
 }
