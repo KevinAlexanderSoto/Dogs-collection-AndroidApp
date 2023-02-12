@@ -1,4 +1,4 @@
-package com.kalex.dogescollection.authentication
+package com.kalex.dogescollection.authentication.model
 
 import com.kalex.dogescollection.authentication.createaccount.dto.SignUpDTO
 import com.kalex.dogescollection.api.DogsApi

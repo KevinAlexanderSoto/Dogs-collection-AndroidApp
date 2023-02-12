@@ -1,7 +1,7 @@
 package com.kalex.dogescollection.di
 
-import com.kalex.dogescollection.authentication.AuthenticationRepository
-import com.kalex.dogescollection.authentication.AuthenticationRepositoryImpl
+import com.kalex.dogescollection.authentication.model.AuthenticationRepository
+import com.kalex.dogescollection.authentication.model.AuthenticationRepositoryImpl
 import com.kalex.dogescollection.common.Constants
 import com.kalex.dogescollection.api.DogsApi
 import com.kalex.dogescollection.dogList.model.repository.DogRepository
