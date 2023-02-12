@@ -90,6 +90,7 @@ class LoginFragment : Fragment() {
                         regexValidationState.getFieldValue(FieldKey.DATA_FIELD),
                         regexValidationState.getFieldValue(FieldKey.PASSWORD_ONE)
                     )
+                    handleOnCreateAccountStates()
                 }
                 enableButton { isEnable: MaterialButton ->
                     lifecycleScope.launch {
