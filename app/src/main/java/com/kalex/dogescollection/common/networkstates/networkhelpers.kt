@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 import java.net.UnknownHostException
 
 /**
@@ -25,6 +26,13 @@ fun <T> makeNetworkCallHandler(
 
     }catch (e : UnknownHostException){
         emit( UseCaseFlowStatus.Error(R.string.Internet_error_message))
+    }
+    catch (e: HttpException){
+        val errorMessage = when(e.code()){
+            401 ->  R.string.wrong_user_or_password_error_message
+           else ->  R.string.unknown_error_message
+        }
+        emit(UseCaseFlowStatus.Error(errorMessage) )
     }
     catch (e:Exception){
 

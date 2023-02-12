@@ -21,5 +21,6 @@
     <string name="not_equals_passwords_error">The passwords must match</string>
     <string name="error_accept">Accept</string>
     <string name="error_title">Error</string>
+    <string name="wrong_user_or_password_error_message">Check the User email or the password</string>
 
 </resources>
