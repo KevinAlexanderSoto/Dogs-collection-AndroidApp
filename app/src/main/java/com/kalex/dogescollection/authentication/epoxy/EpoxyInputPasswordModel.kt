@@ -21,6 +21,13 @@ abstract class EpoxyInputPasswordModel : EpoxyModelWithHolder<EpoxyInputPassword
     lateinit var onIsFocus: () -> Unit
 
     @EpoxyAttribute
+    lateinit var comparablePassword: () -> Map<ComparableKey,String>
+
+    @JvmField
+    @EpoxyAttribute
+     var isComparable: Boolean = false
+
+    @EpoxyAttribute
     lateinit var onValidationResult: (result: Boolean, text: String) -> Unit
 
     @JvmField
@@ -36,9 +43,9 @@ abstract class EpoxyInputPasswordModel : EpoxyModelWithHolder<EpoxyInputPassword
         holder.textFieldEditView.setOnFocusChangeListener { _, focus: Boolean ->
             currentText = holder.textFieldEditView.text.toString()
             if (!focus) {
-                    handleMinLength(currentText) {
-                        handleRegex(currentText)
-                    }
+                handleComparable{
+                    handleRegex(currentText)
+                }
             } else {
                 onIsFocus.invoke()
                 textFieldLayoutView.error = null
@@ -46,21 +53,28 @@ abstract class EpoxyInputPasswordModel : EpoxyModelWithHolder<EpoxyInputPassword
         }
     }
 
-    private fun onValidationError(textFieldLayoutView: TextInputLayout) {
-        //TODO: Add error messages
-        textFieldLayoutView.error = "error"
-    }
-//TODO: Do we need to hadle minLength? the Regex already validate the min and max length
-    private fun handleMinLength(currentText: String, nextStep: () -> Unit) {
-        if (currentText.length >= minLength) {
-            nextStep()
-        } else {
-            handleError()
+    fun handleComparable(function: () -> Unit){
+
+        if(isComparable){
+            val map = comparablePassword.invoke()
+            if (currentText == map[ComparableKey.COMPARABLE_PASSWORD_TEXT]) {
+                function.invoke()
+            } else {
+                handleError(map[ComparableKey.COMPARABLE_PASSWORD_ERROR])
+            }
+        }else{
+            function.invoke()
         }
     }
 
-    private fun handleError() {
-        onValidationError(textFieldLayoutView)
+    private fun onValidationError(errorMessage: String) {
+        //TODO: Add error messages
+        textFieldLayoutView.error = errorMessage
+    }
+
+    private fun handleError(get: String?) {
+
+        onValidationError(get ?:"Unknown")
         onValidationResult.invoke(false,"")
     }
 
@@ -68,7 +82,7 @@ abstract class EpoxyInputPasswordModel : EpoxyModelWithHolder<EpoxyInputPassword
         if (regexValidation.matches(currentText)) {
             onValidationResult.invoke(true,currentText)
         } else {
-            handleError()
+            handleError("Validation do not mach")
         }
     }
 
@@ -76,4 +90,9 @@ abstract class EpoxyInputPasswordModel : EpoxyModelWithHolder<EpoxyInputPassword
         val textFieldLayoutView by bind<TextInputLayout>(R.id.passwordInputText)
         val textFieldEditView by bind<TextInputEditText>(R.id.passwordEditText)
     }
+}
+
+enum class ComparableKey {
+    COMPARABLE_PASSWORD_TEXT,
+    COMPARABLE_PASSWORD_ERROR,
 }

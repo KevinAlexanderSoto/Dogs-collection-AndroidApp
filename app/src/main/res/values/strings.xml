@@ -18,5 +18,6 @@
     <string name="user_already_exists">"the user already exist "</string>
     <string name="unknown_error_message">Unknown Error</string>
     <string name="Internet_error_message">No internet connection</string>
+    <string name="not_equals_passwords_error">The passwords must match</string>
 
 </resources>

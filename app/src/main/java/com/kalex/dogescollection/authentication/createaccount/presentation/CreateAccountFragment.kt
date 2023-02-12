@@ -6,14 +6,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.button.MaterialButton
+import com.kalex.dogescollection.R
 import com.kalex.dogescollection.authentication.FieldKey
 import com.kalex.dogescollection.authentication.RegexValidationState
 import com.kalex.dogescollection.authentication.epoxy.*
+import com.kalex.dogescollection.common.networkstates.handleViewModelState
 import com.kalex.dogescollection.databinding.FragmentCreateAccountBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -83,15 +86,26 @@ class CreateAccountFragment : Fragment() {
                 onIsFocus {
                     regexValidationState.updateInputPassword2State(false)
                 }
+                isComparable(true)
+                comparablePassword{
+                    mapOf(
+                        ComparableKey.COMPARABLE_PASSWORD_TEXT to regexValidationState.getFieldValue(FieldKey.PASSWORD_ONE)
+                    ,
+                    ComparableKey.COMPARABLE_PASSWORD_ERROR to getString(R.string.not_equals_passwords_error)
+                    )
+
+                }
             }
             epoxyButton {
                 id(7)//TODO: Add strings resources
                 buttonText("Login")
                 onClickListener {
-                    val email = regexValidationState.getFieldValue(FieldKey.DATA_FIELD)
-                    val password1 = regexValidationState.getFieldValue(FieldKey.PASSWORD_ONE)
-                    val password2 = regexValidationState.getFieldValue(FieldKey.PASSWORD_TWO)
-                    createAccountViewModel.createAccount(email,password1,password2)
+                    createAccountViewModel.createAccount(
+                        regexValidationState.getFieldValue(FieldKey.DATA_FIELD),
+                        regexValidationState.getFieldValue(FieldKey.PASSWORD_ONE),
+                        regexValidationState.getFieldValue(FieldKey.PASSWORD_TWO)
+                    )
+                    handleOnCreateAccountStates()
                 }
                 enableButton { isEnable: MaterialButton ->
                     lifecycleScope.launch {
@@ -104,5 +118,16 @@ class CreateAccountFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun handleOnCreateAccountStates() {
+        handleViewModelState(createAccountViewModel.authenticationState,
+            onSuccess = {Toast.makeText(context,"login correcto",Toast.LENGTH_LONG).show()},
+            onLoading = {},
+            onError = {
+it
+                Toast.makeText(context,"ERROR DEACONOCIDO",Toast.LENGTH_LONG).show()
+            }
+        )
     }
 }

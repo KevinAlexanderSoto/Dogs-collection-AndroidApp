@@ -17,7 +17,7 @@ import com.kalex.dogescollection.authentication.epoxy.epoxyInputField
 import com.kalex.dogescollection.authentication.epoxy.epoxyInputPassword
 import com.kalex.dogescollection.authentication.epoxy.epoxyTextButton
 import com.kalex.dogescollection.authentication.epoxy.epoxyTextTitle
-import com.kalex.dogescollection.authentication.login.presentation.ui.LoginFragmentDirections
+import com.kalex.dogescollection.authentication.login.presentation.LoginFragmentDirections
 import com.kalex.dogescollection.databinding.FragmentLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
