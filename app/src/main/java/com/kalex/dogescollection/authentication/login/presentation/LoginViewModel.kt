@@ -24,7 +24,7 @@ class LoginViewModel @Inject constructor(
     val signInState: StateFlow<ViewModelNewsUiState<User>>
         get() = _signInState
 
-    fun createAccount(user : String,password : String) {
+    fun signIn(user : String,password : String) {
         viewModelScope.launch {
             authenticationUseCase.signIn(user,password).collectLatest {
                 when (it) {
