@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.kalex.dogescollection.R
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flow
@@ -23,10 +24,18 @@ fun <T> makeNetworkCallHandler(
         emit(UseCaseFlowStatus.Success(call()))
 
     }catch (e : UnknownHostException){
-        emit( UseCaseFlowStatus.Error(e.message ?: "Internet"))
+        emit( UseCaseFlowStatus.Error(R.string.Internet_error_message))
     }
     catch (e:Exception){
-        emit(UseCaseFlowStatus.Error(e.message ?: "Unknown") )
+
+        val errorMessage = when(e.message){
+            "sign_up_error" -> R.string.sign_up_error
+            "sign_in_error" -> R.string.sign_in_error
+            "user_already_exists" -> R.string.user_already_exists
+            else -> R.string.unknown_error_message
+        }
+
+        emit(UseCaseFlowStatus.Error(errorMessage) )
     }
 
 }
@@ -35,7 +44,7 @@ fun <T>Fragment.handleViewModelState(
     call : Flow<ViewModelNewsUiState<T>>,
     onSuccess: (T)->Unit,
     onLoading: (Boolean)->Unit,
-    onError: (String)->Unit
+    onError: (Int)->Unit
 ){
     lifecycleScope.launch {
         viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -52,11 +61,11 @@ fun <T>Fragment.handleViewModelState(
 sealed class ViewModelNewsUiState<T> {
     data class Success<T>(val data: T) : ViewModelNewsUiState<T>()
     data class Loading<T>(val isLoading: Boolean) : ViewModelNewsUiState<T>()
-    data class Error<T>(val exception: String) : ViewModelNewsUiState<T>()
+    data class Error<T>(val exception: Int) : ViewModelNewsUiState<T>()
 }
 
 sealed class UseCaseFlowStatus <T>{
     data class Success<T>(val data :T) : UseCaseFlowStatus<T>()
-    data class Error<T>(val exception: String ) : UseCaseFlowStatus<T>()
+    data class Error<T>(val exception: Int) : UseCaseFlowStatus<T>()
     data class Loading<T>(val message: String) : UseCaseFlowStatus<T>()
 }

@@ -71,7 +71,7 @@ class DogListFragment : Fragment() {
                 handleLoadingStatus(it)
             },
             onError = {
-                handleErrorStatus(it)
+                handleErrorStatus(getString(it))
             }
         )
     }
