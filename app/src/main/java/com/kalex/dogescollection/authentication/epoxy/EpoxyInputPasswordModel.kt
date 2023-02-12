@@ -50,7 +50,7 @@ abstract class EpoxyInputPasswordModel : EpoxyModelWithHolder<EpoxyInputPassword
         //TODO: Add error messages
         textFieldLayoutView.error = "error"
     }
-
+//TODO: Do we need to hadle minLength? the Regex already validate the min and max length
     private fun handleMinLength(currentText: String, nextStep: () -> Unit) {
         if (currentText.length >= minLength) {
             nextStep()

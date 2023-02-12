@@ -1,7 +1,6 @@
 package com.kalex.dogescollection.authentication.epoxy
 
 
-import androidx.core.widget.addTextChangedListener
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder

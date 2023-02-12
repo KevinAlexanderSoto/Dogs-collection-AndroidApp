@@ -22,12 +22,13 @@ fun <T> makeNetworkCallHandler(
         emit(UseCaseFlowStatus.Loading(""))
         emit(UseCaseFlowStatus.Success(call()))
 
-    }catch (e:Exception){
-        emit(UseCaseFlowStatus.Error(e.message ?: "Unknown") )
-    }
-    catch (e : UnknownHostException){
+    }catch (e : UnknownHostException){
         emit( UseCaseFlowStatus.Error(e.message ?: "Internet"))
     }
+    catch (e:Exception){
+        emit(UseCaseFlowStatus.Error(e.message ?: "Unknown") )
+    }
+
 }
 
 fun <T>Fragment.handleViewModelState(
