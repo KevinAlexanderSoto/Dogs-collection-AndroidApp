@@ -33,13 +33,18 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class DogListFragment : Fragment() {
 
+    interface DogListFragmentActions {
+        fun showMenuItem()
+        fun hideMenuItem()
+    }
+
+    private lateinit var dogListFragmentActions: DogListFragmentActions
     private var _binding: DogListFragmentBinding? = null
     private val dogsViewModel: DogsViewModel by viewModels()
 
     @Inject
     lateinit var dogListAdapter :DogListAdapter
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+
     private val binding get() = _binding!!
 
     private val backPressedDispatcher = object : OnBackPressedCallback(true) {
@@ -66,8 +71,8 @@ class DogListFragment : Fragment() {
         (requireActivity() as AppCompatActivity).apply {
             // Redirect system "Back" press to our dispatcher
             onBackPressedDispatcher.addCallback(viewLifecycleOwner, backPressedDispatcher)
-
         }
+        dogListFragmentActions.hideMenuItem()
         setUpRecycler(dogListAdapter)
 
         dogsViewModel.getAllDogs()
@@ -124,6 +129,7 @@ class DogListFragment : Fragment() {
         dogListAdapter.onItemClick = {dog ->
             val bundle = DogListFragmentDirections.actionDogListFragmentToDogListDetailFragment(dog)
             findNavController().navigate(bundle)
+            dogListFragmentActions.showMenuItem()
         }
     }
 
@@ -132,6 +138,15 @@ class DogListFragment : Fragment() {
         backPressedDispatcher.remove()
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        dogListFragmentActions = try {
+            context as DogListFragmentActions
+        } catch (e: ClassCastException) {
+            throw ClassCastException("$context must implement LoginFragmentActions")
+        }
     }
 
     private fun onBackPressed() {
