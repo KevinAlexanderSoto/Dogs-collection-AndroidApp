@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -28,7 +30,7 @@ import javax.inject.Inject
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-
+@AndroidEntryPoint
 class DogListFragment : Fragment() {
 
     private var _binding: DogListFragmentBinding? = null
@@ -39,6 +41,14 @@ class DogListFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
+    private val backPressedDispatcher = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            // Redirect to our own function
+            this@DogListFragment.onBackPressed()
+        }
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -51,7 +61,13 @@ class DogListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true) //Set this to true in order to trigger callbacks to Fragment#onOptionsItemSelected
 
+        (requireActivity() as AppCompatActivity).apply {
+            // Redirect system "Back" press to our dispatcher
+            onBackPressedDispatcher.addCallback(viewLifecycleOwner, backPressedDispatcher)
+
+        }
         setUpRecycler(dogListAdapter)
 
         dogsViewModel.getAllDogs()
@@ -112,7 +128,21 @@ class DogListFragment : Fragment() {
     }
 
     override fun onDestroyView() {
+        // It is optional to remove since our dispatcher is lifecycle-aware. But it wouldn't hurt to just remove it to be on the safe side.
+        backPressedDispatcher.remove()
         super.onDestroyView()
         _binding = null
     }
+
+    private fun onBackPressed() {
+        //TODO: set strings and styles
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(resources.getString(R.string.error_title))
+            .setMessage("Seguro que desea cerrar la app?")
+            .setPositiveButton(resources.getString(R.string.error_accept)) { dialog, which ->
+                activity?.finish()
+            }
+            .show()
+    }
+
 }

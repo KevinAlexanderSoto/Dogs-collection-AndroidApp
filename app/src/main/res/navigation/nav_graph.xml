@@ -28,7 +28,10 @@
 
         <action
             android:id="@+id/action_CreateAccountFragment_to_DogListFragment"
-            app:destination="@id/DogListFragment" />
+            app:destination="@id/DogListFragment"
+            app:popUpTo="@+id/LoginFragment"
+            app:popUpToInclusive="true"
+            />
 
     </fragment>
 
@@ -36,7 +39,9 @@
         android:id="@+id/DogListFragment"
         android:name="com.kalex.dogescollection.dogList.presentation.ui.DogListFragment"
         android:label="@string/dog_list_fragment_label"
-        tools:layout="@layout/dog_list_fragment">
+        tools:layout="@layout/dog_list_fragment"
+
+        >
 
         <action
             android:id="@+id/action_DogListFragment_to_DogListDetailFragment"
