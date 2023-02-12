@@ -13,7 +13,7 @@ class AuthenticationUseCase @Inject constructor(
     fun createAccount(user: String, password: String, passwordConfirm: String): Flow<UseCaseFlowStatus<User>> = makeNetworkCallHandler{
         val result = Repository.createAccount(user, password, passwordConfirm)
         if(result.is_success){
-            result.body_data.userDTOtoUser()
+            result.body_data.user.userDTOtoUser()
         }else{
             throw Exception(result.message)
         }

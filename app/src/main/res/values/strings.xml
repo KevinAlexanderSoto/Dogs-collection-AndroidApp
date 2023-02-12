@@ -19,5 +19,7 @@
     <string name="unknown_error_message">Unknown Error</string>
     <string name="Internet_error_message">No internet connection</string>
     <string name="not_equals_passwords_error">The passwords must match</string>
+    <string name="error_accept">Accept</string>
+    <string name="error_title">Error</string>
 
 </resources>
