@@ -3,7 +3,7 @@ package com.kalex.dogescollection.authentication.createaccount.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kalex.dogescollection.authentication.model.AuthenticationUseCase
-import com.kalex.dogescollection.authentication.createaccount.dto.User
+import com.kalex.dogescollection.authentication.model.dto.User
 import com.kalex.dogescollection.common.networkstates.UseCaseFlowStatus
 import com.kalex.dogescollection.common.networkstates.ViewModelNewsUiState
 import dagger.hilt.android.lifecycle.HiltViewModel

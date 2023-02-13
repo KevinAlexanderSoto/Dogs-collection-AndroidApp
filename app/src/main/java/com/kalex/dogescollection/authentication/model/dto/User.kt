@@ -1,4 +1,4 @@
-package com.kalex.dogescollection.authentication.createaccount.dto
+package com.kalex.dogescollection.authentication.model.dto
 
 import com.kalex.dogescollection.dogList.model.data.dto.Data
 import com.squareup.moshi.Json

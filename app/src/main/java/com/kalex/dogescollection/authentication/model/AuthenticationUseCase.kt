@@ -1,7 +1,7 @@
 package com.kalex.dogescollection.authentication.model
 
-import com.kalex.dogescollection.authentication.createaccount.dto.User
-import com.kalex.dogescollection.authentication.createaccount.dto.userDTOtoUser
+import com.kalex.dogescollection.authentication.model.dto.User
+import com.kalex.dogescollection.authentication.model.dto.userDTOtoUser
 import com.kalex.dogescollection.common.networkstates.UseCaseFlowStatus
 import com.kalex.dogescollection.common.networkstates.makeNetworkCallHandler
 import kotlinx.coroutines.flow.Flow

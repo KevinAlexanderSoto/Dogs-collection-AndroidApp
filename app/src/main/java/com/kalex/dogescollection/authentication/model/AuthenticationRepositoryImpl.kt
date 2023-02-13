@@ -2,7 +2,7 @@ package com.kalex.dogescollection.authentication.model
 
 import com.kalex.dogescollection.authentication.createaccount.dto.SignUpDTO
 import com.kalex.dogescollection.api.DogsApi
-import com.kalex.dogescollection.authentication.createaccount.dto.UserResponse
+import com.kalex.dogescollection.authentication.model.dto.UserResponse
 import com.kalex.dogescollection.authentication.login.dto.LogInDTO
 import javax.inject.Inject
 
