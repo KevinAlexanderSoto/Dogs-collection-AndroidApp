@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -28,17 +30,35 @@ class MainActivity : AppCompatActivity(), DogListFragment.DogListFragmentActions
 
         setSupportActionBar(binding.toolbar)
 
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-        appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        val isUserLogged = true
+
+       val buildNavController = setStartDestination(isUserLogged)
+
+        appBarConfiguration = AppBarConfiguration(buildNavController.graph)
+        setupActionBarWithNavController(buildNavController, appBarConfiguration)
 
     }
+    private fun setStartDestination(isUserLogged : Boolean): NavController {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main) as NavHostFragment
+        val inflater = navHostFragment.navController.navInflater
+        val graph = inflater.inflate(R.navigation.nav_graph)
+
+        if (isUserLogged){
+            graph.setStartDestination(R.id.LoginFragment)
+        }else {
+            graph.setStartDestination(R.id.DogListFragment)
+        }
+
+        val navController = navHostFragment.navController
+        navController.setGraph(graph, intent.extras)
+        return navController
+    }
     override fun showMenuItem() {
-        binding.toolbar.visibility = View.VISIBLE// Call this method in runtime when you need show it
+        binding.toolbar.visibility = View.VISIBLE
     }
 
     override fun hideMenuItem() {
-        binding.toolbar.visibility = View.GONE // Call this method in runtime when you need hide it
+        binding.toolbar.visibility = View.GONE
     }
 
     override fun onSupportNavigateUp(): Boolean {

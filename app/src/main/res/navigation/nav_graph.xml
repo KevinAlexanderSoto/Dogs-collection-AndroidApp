@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/LoginFragment">
+    >
     <fragment
         android:id="@+id/LoginFragment"
         android:name="com.kalex.dogescollection.authentication.login.presentation.LoginFragment"
