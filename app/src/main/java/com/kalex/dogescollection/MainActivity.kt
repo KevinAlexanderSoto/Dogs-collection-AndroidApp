@@ -10,9 +10,11 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.kalex.dogescollection.common.PreferencesHandler
 import com.kalex.dogescollection.databinding.ActivityMainBinding
 import com.kalex.dogescollection.dogList.presentation.ui.DogListFragment
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -21,6 +23,8 @@ class MainActivity : AppCompatActivity(), DogListFragment.DogListFragmentActions
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
+    @Inject
+    lateinit var preferencesHandler: PreferencesHandler
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
@@ -29,8 +33,9 @@ class MainActivity : AppCompatActivity(), DogListFragment.DogListFragmentActions
         setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
+        var isUserLogged = true
 
-        val isUserLogged = true
+        if (preferencesHandler.getLoggedInUser() == null) { isUserLogged = false}
 
        val buildNavController = setStartDestination(isUserLogged)
 
@@ -44,9 +49,10 @@ class MainActivity : AppCompatActivity(), DogListFragment.DogListFragmentActions
         val graph = inflater.inflate(R.navigation.nav_graph)
 
         if (isUserLogged){
-            graph.setStartDestination(R.id.LoginFragment)
-        }else {
             graph.setStartDestination(R.id.DogListFragment)
+
+        }else {
+            graph.setStartDestination(R.id.LoginFragment)
         }
 
         val navController = navHostFragment.navController

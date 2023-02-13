@@ -24,6 +24,7 @@ import com.kalex.dogescollection.authentication.epoxy.epoxyInputPassword
 import com.kalex.dogescollection.authentication.epoxy.epoxyTextButton
 import com.kalex.dogescollection.authentication.epoxy.epoxyTextTitle
 import com.kalex.dogescollection.authentication.login.presentation.LoginFragmentDirections
+import com.kalex.dogescollection.common.PreferencesHandler
 import com.kalex.dogescollection.common.networkstates.handleViewModelState
 import com.kalex.dogescollection.databinding.FragmentLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,6 +39,9 @@ class LoginFragment : Fragment() {
     private val loginViewModel : LoginViewModel by viewModels()
     @Inject
     lateinit var regexValidationState: RegexValidationState
+
+    @Inject
+    lateinit var preferencesHandler: PreferencesHandler
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -120,6 +124,7 @@ class LoginFragment : Fragment() {
         handleViewModelState(loginViewModel.signInState,
             onSuccess = {
                 Toast.makeText(requireContext(),"LogIn success",Toast.LENGTH_LONG).show()
+                preferencesHandler.setLoggedInUser(it)
                 findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToDogListFragment())
             },
             onLoading = {},
