@@ -18,6 +18,7 @@ import com.kalex.dogescollection.R
 import com.kalex.dogescollection.authentication.FieldKey
 import com.kalex.dogescollection.authentication.RegexValidationState
 import com.kalex.dogescollection.authentication.epoxy.*
+import com.kalex.dogescollection.common.PreferencesHandler
 import com.kalex.dogescollection.common.networkstates.handleViewModelState
 import com.kalex.dogescollection.databinding.FragmentCreateAccountBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,6 +33,9 @@ class CreateAccountFragment : Fragment() {
 
     @Inject
     lateinit var regexValidationState: RegexValidationState
+
+    @Inject
+    lateinit var preferencesHandler: PreferencesHandler
 
     private val createAccountViewModel : CreateAccountViewModel by viewModels()
     override fun onCreateView(
@@ -125,6 +129,7 @@ class CreateAccountFragment : Fragment() {
     private fun handleOnCreateAccountStates() {
         handleViewModelState(createAccountViewModel.authenticationState,
             onSuccess = {
+                preferencesHandler.setLoggedInUser(it)
                 findNavController().navigate(CreateAccountFragmentDirections.actionCreateAccountFragmentToDogListFragment())
                         },
             onLoading = {},
