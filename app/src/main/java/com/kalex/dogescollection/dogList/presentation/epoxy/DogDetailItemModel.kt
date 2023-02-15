@@ -15,11 +15,11 @@ abstract class DogDetailItemModel : EpoxyModelWithHolder<DogDetailItemModel.Hold
 
     override fun bind(holder: Holder) {
         with(holder){
-            detailsTitleview.text =detailsTitle
+            detailsTitleView.text =detailsTitle
         }
     }
     inner class Holder : KotlinEpoxyHolder() {
-        val detailsTitleview by bind<TextView>(R.id.dog_item_title)
+        val detailsTitleView by bind<TextView>(R.id.dog_item_title)
 
     }
 }

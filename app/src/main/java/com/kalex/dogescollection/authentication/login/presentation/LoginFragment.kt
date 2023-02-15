@@ -58,13 +58,11 @@ class LoginFragment : Fragment() {
         binding.loginEpoxyRecyclerView.withModels {
             epoxyTextTitle {
                 id(0)
-                //TODO: Add strings resources
-                titleText("Log in")
+                titleText(getString(R.string.authentication_login_title))
             }
             epoxyInputField {
                 id(1)
-                //TODO: Add strings resources
-                textHint("Usuario")
+                textHint(getString(R.string.authentication_login_user_text_hint))
                 regexValidation(Patterns.EMAIL_ADDRESS.toRegex())
                 onValidationResult { valid, currentText ->
                     //TODO: implementEror message
@@ -76,8 +74,7 @@ class LoginFragment : Fragment() {
             }
             epoxyInputPassword {
                 id(2)
-                //TODO: Add strings resources
-                textHint("Password")
+                textHint(getString(R.string.authentication_login_password_text_hint))
                 regexValidation(Regex("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{5,}$"))
                 onValidationResult { valid, currentText ->
                     //TODO: implement Eror message
@@ -88,8 +85,8 @@ class LoginFragment : Fragment() {
                 }
             }
             epoxyButton {
-                id(3)//TODO: Add strings resources
-                buttonText("Login")
+                id(3)
+                buttonText(getString(R.string.authentication_login_button_text))
                 onClickListener {
                     loginViewModel.signIn(
                         regexValidationState.getFieldValue(FieldKey.DATA_FIELD),
@@ -110,9 +107,8 @@ class LoginFragment : Fragment() {
 
             epoxyTextButton {
                 id(4)
-                //TODO: Add strings resources
-                buttonText("Register")
-                topButtonText("Do not have an account?")
+                buttonText(getString(R.string.authentication_login_buttonText_text))
+                topButtonText(getString(R.string.authentication_login_buttonText_title))
                 onClickListener {
                     findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToCreateAccountFragment())
                 }
@@ -123,7 +119,7 @@ class LoginFragment : Fragment() {
     private fun handleOnCreateAccountStates() {
         handleViewModelState(loginViewModel.signInState,
             onSuccess = {
-                Toast.makeText(requireContext(),"LogIn success",Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(),getString(R.string.authentication_login_success_message),Toast.LENGTH_LONG).show()
                 preferencesHandler.setLoggedInUser(it)
                 findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToDogListFragment())
             },
