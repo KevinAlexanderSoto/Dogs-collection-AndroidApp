@@ -1,11 +1,13 @@
 package com.kalex.dogescollection.settings
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat.finishAffinity
+import com.kalex.dogescollection.MainActivity
 import com.kalex.dogescollection.R
 import com.kalex.dogescollection.authentication.epoxy.epoxyButton
 import com.kalex.dogescollection.authentication.epoxy.epoxyTextTitle
@@ -44,7 +46,10 @@ class SettingsFragment : Fragment() {
                 initialButtonEnableState(true)
                 onClickListener{
                     preferencesHandler.onLogOutUser()
-                    getActivity()?.finish()
+                    val intent = Intent(this@SettingsFragment.requireContext(),MainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                    startActivity(intent)
+                    //getActivity()?.finish()
                 }
                 enableButton{
 
