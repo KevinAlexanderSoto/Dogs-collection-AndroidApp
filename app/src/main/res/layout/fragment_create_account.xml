@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".authentication.login.presentation.LoginFragment">
+    tools:context=".authentication.createaccount.presentation.CreateAccountFragment">
 
     <com.airbnb.epoxy.EpoxyRecyclerView
-        android:id="@+id/loginEpoxyRecyclerView"
+        android:id="@+id/CreateAccountEpoxyRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="16dp"

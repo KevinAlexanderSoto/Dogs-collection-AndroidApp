@@ -18,14 +18,18 @@ abstract class EpoxyTextButtonModel: EpoxyModelWithHolder<EpoxyTextButtonModel.H
     lateinit var topButtonText : String
 
     @EpoxyAttribute
+    var textStyle : Int = R.style.title_text_18
+
+    @EpoxyAttribute
     lateinit var onClickListener : () -> Unit
 
     override fun bind(holder: Holder) {
         super.bind(holder)
         holder.buttonTitleView.text = topButtonText
         holder.buttonView.text = buttonText
+        holder.buttonView.setTextAppearance(textStyle)
         holder.buttonView.setOnClickListener{
-            onClickListener
+            onClickListener.invoke()
         }
 
     }

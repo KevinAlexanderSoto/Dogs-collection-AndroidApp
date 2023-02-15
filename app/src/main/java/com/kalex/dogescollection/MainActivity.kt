@@ -1,25 +1,31 @@
 package com.kalex.dogescollection
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
-import android.view.Menu
-import android.view.MenuItem
+import com.kalex.dogescollection.common.PreferencesHandler
 import com.kalex.dogescollection.databinding.ActivityMainBinding
+import com.kalex.dogescollection.dogList.presentation.ui.DogListFragment
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), DogListFragment.DogListFragmentActions {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
+    @Inject
+    lateinit var preferencesHandler: PreferencesHandler
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
@@ -28,32 +34,47 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
+        var isUserLogged = true
 
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-        appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        if (preferencesHandler.getLoggedInUser() == null) { isUserLogged = false}
 
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAnchorView(R.id.fab)
-                .setAction("Action", null).show()
+       val buildNavController = setStartDestination(isUserLogged)
+
+        //Set Up bottom bar
+        NavigationUI.setupWithNavController(binding.bottomAppBar, buildNavController)
+
+        appBarConfiguration = AppBarConfiguration(buildNavController.graph)
+        setupActionBarWithNavController(buildNavController, appBarConfiguration)
+
+    }
+    private fun setStartDestination(isUserLogged : Boolean): NavController {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main) as NavHostFragment
+        val inflater = navHostFragment.navController.navInflater
+        val graph = inflater.inflate(R.navigation.nav_graph)
+
+        if (isUserLogged){
+            binding.cameraActionButton.visibility = View.VISIBLE
+            binding.bottomAppBar.visibility = View.VISIBLE
+            graph.setStartDestination(R.id.DogListFragment)
+
+        }else {
+            binding.cameraActionButton.visibility = View.GONE
+            binding.bottomAppBar.visibility = View.GONE
+            graph.setStartDestination(R.id.LoginFragment)
         }
+
+        val navController = navHostFragment.navController
+        navController.setGraph(graph, intent.extras)
+        return navController
+    }
+    override fun showMenuItem() {
+        binding.toolbar.visibility = View.VISIBLE
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
-        }
+    override fun hideMenuItem() {
+        binding.cameraActionButton.visibility = View.VISIBLE
+        binding.bottomAppBar.visibility = View.VISIBLE
+        binding.toolbar.visibility = View.GONE
     }
 
     override fun onSupportNavigateUp(): Boolean {

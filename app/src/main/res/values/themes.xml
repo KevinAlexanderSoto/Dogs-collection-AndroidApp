@@ -5,10 +5,17 @@
          <item name="colorPrimary">@color/CyanProcess</item>
         <item name="colorSecondary">@color/Aquamarine</item>
         <item name="colorOnSecondary">@color/aquamarineligth</item>
-        <item name="colorSecondaryContainer">@color/m3_sys_color_light_secondary_container</item>
+
+        <item name="colorSecondaryContainer">@color/aquamarineligthnes</item>
+        <item name="colorPrimaryContainer">@color/aquamarineligthnes</item>
+
         <item name="colorOnSecondaryContainer">@color/m3_sys_color_light_on_secondary_container</item>
+
         <item name="colorTertiary">@color/OuterSpaceCrayola</item>
+
         <item name="colorOnTertiary">@color/m3_sys_color_light_on_tertiary</item>
+
+        <item name="colorSurface">@color/m3_sys_color_light_on_tertiary</item>
 
         <item name="colorError">@color/RedSalsa</item>
         <item name="colorOnError">@color/RedSalsa</item>

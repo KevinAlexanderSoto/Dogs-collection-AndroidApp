@@ -1,12 +1,20 @@
 package com.kalex.dogescollection.di
 
+import android.app.Activity
+import android.content.Context
+import com.kalex.dogescollection.authentication.model.AuthenticationRepository
+import com.kalex.dogescollection.authentication.model.AuthenticationRepositoryImpl
 import com.kalex.dogescollection.common.Constants
-import com.kalex.dogescollection.dogList.model.data.DogsApi
+import com.kalex.dogescollection.api.DogsApi
+import com.kalex.dogescollection.common.PreferencesHandler
 import com.kalex.dogescollection.dogList.model.repository.DogRepository
 import com.kalex.dogescollection.dogList.model.repository.DogRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityComponent
+import dagger.hilt.android.qualifiers.ActivityContext
+import dagger.hilt.android.scopes.ActivityScoped
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -26,7 +34,26 @@ object DogModule {
 
     @Provides
     @Singleton
-    fun userRepositoryProvide(api : DogsApi): DogRepository {
+    fun ProvideDogsRepository(api : DogsApi): DogRepository {
         return DogRepositoryImpl(api)
     }
+    @Provides
+    @Singleton
+    fun provideAuthenticationRepository(api : DogsApi): AuthenticationRepository {
+        return AuthenticationRepositoryImpl(api)
+    }
+
+
+}
+
+@Module
+@InstallIn(ActivityComponent::class)
+object SharedPreferencesModule {
+
+    @Provides
+    @ActivityScoped
+    fun providePreferencesHandler(@ActivityContext context: Context): PreferencesHandler {
+        return PreferencesHandler(context as Activity)
+    }
+
 }

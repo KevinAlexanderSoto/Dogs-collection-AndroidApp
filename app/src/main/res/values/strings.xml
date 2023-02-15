@@ -2,8 +2,10 @@
     <string name="app_name">DogesCollection</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">Dogs List</string>
-    <string name="second_fragment_label">Dogs List Details</string>
+    <string name="first_fragment_label"></string>
+    <string name="second_fragment_label">Create an account</string>
+    <string name="dog_list_fragment_label">Dog list</string>
+    <string name="dog_detail_fragment_label">Dog list</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="ErrorTitle">Errror</string>
@@ -11,5 +13,14 @@
     <string name="ErrorbuttonText">Aceptar</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="sign_up_error">sign up error</string>
+    <string name="sign_in_error">sign in error</string>
+    <string name="user_already_exists">"the user already exist "</string>
+    <string name="unknown_error_message">Unknown Error</string>
+    <string name="Internet_error_message">No internet connection</string>
+    <string name="not_equals_passwords_error">The passwords must match</string>
+    <string name="error_accept">Accept</string>
+    <string name="error_title">Error</string>
+    <string name="wrong_user_or_password_error_message">Check the User email or the password</string>
 
 </resources>

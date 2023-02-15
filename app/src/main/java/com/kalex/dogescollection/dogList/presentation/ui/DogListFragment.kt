@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -15,6 +17,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kalex.dogescollection.R
 import com.kalex.dogescollection.common.networkstates.ViewModelNewsUiState
+import com.kalex.dogescollection.common.networkstates.handleViewModelState
 import com.kalex.dogescollection.databinding.DogListFragmentBinding
 import com.kalex.dogescollection.dogList.model.data.dto.Dog
 import com.kalex.dogescollection.dogList.presentation.viewmodel.DogsViewModel
@@ -27,17 +30,30 @@ import javax.inject.Inject
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-
+@AndroidEntryPoint
 class DogListFragment : Fragment() {
 
+    interface DogListFragmentActions {
+        fun showMenuItem()
+        fun hideMenuItem()
+    }
+
+    private lateinit var dogListFragmentActions: DogListFragmentActions
     private var _binding: DogListFragmentBinding? = null
     private val dogsViewModel: DogsViewModel by viewModels()
 
     @Inject
     lateinit var dogListAdapter :DogListAdapter
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+
     private val binding get() = _binding!!
+
+    private val backPressedDispatcher = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            // Redirect to our own function
+            this@DogListFragment.onBackPressed()
+        }
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -50,7 +66,13 @@ class DogListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true) //Set this to true in order to trigger callbacks to Fragment#onOptionsItemSelected
 
+        (requireActivity() as AppCompatActivity).apply {
+            // Redirect system "Back" press to our dispatcher
+            onBackPressedDispatcher.addCallback(viewLifecycleOwner, backPressedDispatcher)
+        }
+        dogListFragmentActions.hideMenuItem()
         setUpRecycler(dogListAdapter)
 
         dogsViewModel.getAllDogs()
@@ -61,17 +83,18 @@ class DogListFragment : Fragment() {
     }
 
     private fun getDogsByViewModel(dogListAdapter: DogListAdapter) {
-        lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                dogsViewModel.dogState.collectLatest {
-                    when (it) {
-                        is ViewModelNewsUiState.Error -> handleErrorStatus(it.exception)
-                        is ViewModelNewsUiState.Loading -> handleLoadingStatus(it.isLoading)
-                        is ViewModelNewsUiState.Success -> handleSuccessStatus(it.data.dogs,dogListAdapter)
-                    }
-                }
+
+        handleViewModelState(dogsViewModel.dogState,
+            onSuccess = {
+                handleSuccessStatus(it.dogs, dogListAdapter)
+            },
+            onLoading = {
+                handleLoadingStatus(it)
+            },
+            onError = {
+                handleErrorStatus(getString(it))
             }
-        }
+        )
     }
 
     private fun handleErrorStatus(exception: String) {
@@ -106,11 +129,35 @@ class DogListFragment : Fragment() {
         dogListAdapter.onItemClick = {dog ->
             val bundle = DogListFragmentDirections.actionDogListFragmentToDogListDetailFragment(dog)
             findNavController().navigate(bundle)
+            dogListFragmentActions.showMenuItem()
         }
     }
 
     override fun onDestroyView() {
+        // It is optional to remove since our dispatcher is lifecycle-aware. But it wouldn't hurt to just remove it to be on the safe side.
+        backPressedDispatcher.remove()
         super.onDestroyView()
         _binding = null
     }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        dogListFragmentActions = try {
+            context as DogListFragmentActions
+        } catch (e: ClassCastException) {
+            throw ClassCastException("$context must implement LoginFragmentActions")
+        }
+    }
+
+    private fun onBackPressed() {
+        //TODO: set strings and styles
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(resources.getString(R.string.error_title))
+            .setMessage("Seguro que desea cerrar la app?")
+            .setPositiveButton(resources.getString(R.string.error_accept)) { dialog, which ->
+                activity?.finish()
+            }
+            .show()
+    }
+
 }
