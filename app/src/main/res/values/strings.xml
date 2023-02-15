@@ -22,8 +22,7 @@
     <string name="error_accept">Accept</string>
     <string name="error_title">Error</string>
     <string name="wrong_user_or_password_error_message">Check the User email or the password</string>
-    <string name="log_out_title">Salir de la aplicacion</string>
-    <string name="log_out_message">deseas cerrar la aplicacion?</string>
+
     <string name="positive_button_text">aceptar</string>
     <string name="dog_detail_famale_title">Hembra</string>
     <string name="dog_detail_height_title">Altura</string>
@@ -36,5 +35,6 @@
     <string name="authentication_login_buttonText_text">Registrarse</string>
     <string name="authentication_login_buttonText_title">No tienes una cuenta?</string>
     <string name="authentication_login_success_message">Seccion iniciada correctamente</string>
-
+    <string name="authentication_log_out_title">Salir de la aplicacion</string>
+    <string name="authentication_log_out_message">deseas cerrar la aplicacion?</string>
 </resources>

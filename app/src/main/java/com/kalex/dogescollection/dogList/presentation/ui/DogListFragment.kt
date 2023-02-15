@@ -152,8 +152,8 @@ class DogListFragment : Fragment() {
     private fun onBackPressed() {
         //TODO: set strings and styles
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle(resources.getString(R.string.log_out_title))
-            .setMessage(resources.getString(R.string.log_out_message))
+            .setTitle(resources.getString(R.string.authentication_log_out_title))
+            .setMessage(resources.getString(R.string.authentication_log_out_message))
             .setPositiveButton(resources.getString(R.string.positive_button_text)) { dialog, which ->
                 activity?.finish()
             }
