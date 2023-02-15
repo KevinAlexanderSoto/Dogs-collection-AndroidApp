@@ -8,6 +8,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.kalex.dogescollection.common.PreferencesHandler
@@ -38,6 +39,9 @@ class MainActivity : AppCompatActivity(), DogListFragment.DogListFragmentActions
         if (preferencesHandler.getLoggedInUser() == null) { isUserLogged = false}
 
        val buildNavController = setStartDestination(isUserLogged)
+
+        //Set Up bottom bar
+        NavigationUI.setupWithNavController(binding.bottomAppBar, buildNavController)
 
         appBarConfiguration = AppBarConfiguration(buildNavController.graph)
         setupActionBarWithNavController(buildNavController, appBarConfiguration)

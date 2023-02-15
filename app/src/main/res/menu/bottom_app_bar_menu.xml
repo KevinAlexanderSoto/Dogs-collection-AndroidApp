@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.kalex.dogescollection.MainActivity"
+
+    >
+    <item
+        android:id="@+id/CreateAccountFragment"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="ifRoom" />
+
+
+    <item
+        android:id="@+id/DogListFragment"
+        android:icon="@drawable/ic_100tb"
+        android:title="dashboard"
+        android:contentDescription="content_description_dashboard"
+        app:showAsAction="ifRoom"/>
+</menu>
