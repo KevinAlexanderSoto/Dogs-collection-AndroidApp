@@ -70,4 +70,12 @@
             app:nullable="true"
             android:defaultValue="@null" />
     </fragment>
+
+    <fragment
+        android:id="@+id/SettingsFragment"
+        android:name="com.kalex.dogescollection.settings.SettingsFragment"
+        android:label="@string/dog_detail_fragment_label"
+        tools:layout="@layout/fragment_settings">
+
+    </fragment>
 </navigation>

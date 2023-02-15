@@ -53,9 +53,13 @@ class MainActivity : AppCompatActivity(), DogListFragment.DogListFragmentActions
         val graph = inflater.inflate(R.navigation.nav_graph)
 
         if (isUserLogged){
+            binding.cameraActionButton.visibility = View.VISIBLE
+            binding.bottomAppBar.visibility = View.VISIBLE
             graph.setStartDestination(R.id.DogListFragment)
 
         }else {
+            binding.cameraActionButton.visibility = View.GONE
+            binding.bottomAppBar.visibility = View.GONE
             graph.setStartDestination(R.id.LoginFragment)
         }
 
@@ -68,6 +72,8 @@ class MainActivity : AppCompatActivity(), DogListFragment.DogListFragmentActions
     }
 
     override fun hideMenuItem() {
+        binding.cameraActionButton.visibility = View.VISIBLE
+        binding.bottomAppBar.visibility = View.VISIBLE
         binding.toolbar.visibility = View.GONE
     }
 

@@ -9,8 +9,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="10dp"
-        android:layout_marginTop="30dp"
+        android:paddingBottom="2dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="40dp"
         >
 <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/doglist_recycler"
