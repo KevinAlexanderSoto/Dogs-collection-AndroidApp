@@ -56,8 +56,7 @@ class CreateAccountFragment : Fragment() {
         binding.CreateAccountEpoxyRecyclerView.withModels {
             epoxyInputField {
                 id(17)
-                //TODO: Add strings resources
-                textHint("Usuario")
+                textHint(getString(R.string.authentication_login_user_text_hint))
                 regexValidation(Patterns.EMAIL_ADDRESS.toRegex())
                 onValidationResult { valid, currentText ->
                     //TODO: implementEror message
@@ -69,8 +68,7 @@ class CreateAccountFragment : Fragment() {
             }
             epoxyInputPassword {
                 id(28)
-                //TODO: Add strings resources
-                textHint("Password")
+                textHint(getString(R.string.authentication_login_password_text_hint))
                 regexValidation(Regex("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{5,}$"))
                 onValidationResult { valid, currentText ->
                     //TODO: implement Eror message
@@ -82,8 +80,7 @@ class CreateAccountFragment : Fragment() {
             }
             epoxyInputPassword {
                 id(39)
-                //TODO: Add strings resources
-                textHint("Password")
+                textHint(getString(R.string.authentication_login_password_text_hint))
                 regexValidation(Regex("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{5,}$"))
                 onValidationResult { valid, currentText ->
                     //TODO: implement Eror message
@@ -103,8 +100,8 @@ class CreateAccountFragment : Fragment() {
                 }
             }
             epoxyButton {
-                id(7)//TODO: Add strings resources
-                buttonText("Login")
+                id(7)
+                buttonText(getString(R.string.authentication_login_button_text))
                 onClickListener {
                     createAccountViewModel.createAccount(
                         regexValidationState.getFieldValue(FieldKey.DATA_FIELD),

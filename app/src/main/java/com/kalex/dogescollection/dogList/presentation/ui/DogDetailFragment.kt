@@ -56,12 +56,11 @@ class DogDetailFragment : Fragment() {
                     layout(R.layout.vertical_linear_group)
                     dogDetailInfo {
                         id(1)
-                        detailsTitle("Famale")
-                        //TODO : ADD STRINGS RESOURCES
+                        detailsTitle(resources.getString(R.string.dog_detail_famale_title))
                         heightValue(dog.height_female)
-                        heightTitle("Height")
+                        heightTitle(resources.getString(R.string.dog_detail_height_title))
                         weightValue(dog.weight_female)
-                        weightTitle("Weight")
+                        weightTitle(getString(R.string.dog_detail_weight_title))
                     }
                     dogDetailItem {
                         id(2)
@@ -69,12 +68,11 @@ class DogDetailFragment : Fragment() {
                     }
                     dogDetailInfo {
                         id(3)
-                        detailsTitle("Male")
-                        //TODO : ADD STRINGS RESOURCES
+                        detailsTitle(getString(R.string.dog_detail_male_title))
                         heightValue(dog.height_male)
-                        heightTitle("Height")
+                        heightTitle(resources.getString(R.string.dog_detail_height_title))
                         weightValue(dog.weight_male)
-                        weightTitle("Weight")
+                        weightTitle(getString(R.string.dog_detail_weight_title))
                     }
                 }
             }

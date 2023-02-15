@@ -152,9 +152,9 @@ class DogListFragment : Fragment() {
     private fun onBackPressed() {
         //TODO: set strings and styles
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle(resources.getString(R.string.error_title))
-            .setMessage("Seguro que desea cerrar la app?")
-            .setPositiveButton(resources.getString(R.string.error_accept)) { dialog, which ->
+            .setTitle(resources.getString(R.string.log_out_title))
+            .setMessage(resources.getString(R.string.log_out_message))
+            .setPositiveButton(resources.getString(R.string.positive_button_text)) { dialog, which ->
                 activity?.finish()
             }
             .show()

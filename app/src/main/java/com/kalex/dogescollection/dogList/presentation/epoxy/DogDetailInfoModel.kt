@@ -25,20 +25,20 @@ abstract class DogDetailInfoModel : EpoxyModelWithHolder<DogDetailInfoModel.Hold
 
     override fun bind(holder: Holder) {
         with(holder){
-            detailsTitleview.text =detailsTitle
-            heightValueview.text = heightValue
-            heightTitleview.text = heightTitle
-            weightValueview.text = weightValue
-            weightTitleview.text = weightTitle
+            detailsTitleView.text =detailsTitle
+            heightValueView.text = heightValue
+            heightTitleView.text = heightTitle
+            weightValueView.text = weightValue
+            weightTitleView.text = weightTitle
         }
     }
     inner class Holder : KotlinEpoxyHolder() {
-        val detailsTitleview by bind<TextView>(R.id.dog_description_title)
-        val heightValueview by bind<TextView>(R.id.dog_height_value)
-        val heightTitleview by bind<TextView>(R.id.dog_height_title)
+        val detailsTitleView by bind<TextView>(R.id.dog_description_title)
+        val heightValueView by bind<TextView>(R.id.dog_height_value)
+        val heightTitleView by bind<TextView>(R.id.dog_height_title)
 
-        val weightValueview by bind<TextView>(R.id.dog_weight_value)
-        val weightTitleview by bind<TextView>(R.id.dog_weight_title)
+        val weightValueView by bind<TextView>(R.id.dog_weight_value)
+        val weightTitleView by bind<TextView>(R.id.dog_weight_title)
     }
 }
 
