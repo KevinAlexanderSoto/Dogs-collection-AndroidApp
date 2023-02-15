@@ -38,10 +38,12 @@ class SettingsFragment : Fragment() {
         binding.SettingEpoxyRecyclerView.withModels {
             epoxyTextTitle{
                 id(0)
+                //TODO:add strings resources
                 titleText("Configuraciones")
             }
             epoxyButton{
                 id(1)
+                //TODO:add strings resources
                 buttonText("Cerrar seccion")
                 initialButtonEnableState(true)
                 onClickListener{
