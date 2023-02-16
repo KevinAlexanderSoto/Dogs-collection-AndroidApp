@@ -2,6 +2,7 @@ package com.kalex.dogescollection.di
 
 import android.app.Activity
 import android.content.Context
+import com.kalex.dogescollection.api.ApiServiceInterceptor
 import com.kalex.dogescollection.authentication.model.AuthenticationRepository
 import com.kalex.dogescollection.authentication.model.AuthenticationRepositoryImpl
 import com.kalex.dogescollection.common.Constants
@@ -16,6 +17,7 @@ import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.qualifiers.ActivityContext
 import dagger.hilt.android.scopes.ActivityScoped
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
@@ -26,15 +28,24 @@ object DogModule {
 
     @Provides
     @Singleton
-    fun provideDogApi(): DogsApi = Retrofit.Builder()
+    fun provideDogApi(client: OkHttpClient): DogsApi = Retrofit.Builder()
         .baseUrl(Constants.BASE_URL)
+        .client(client)
         .addConverterFactory(MoshiConverterFactory.create())
         .build()
         .create(DogsApi::class.java)
 
     @Provides
     @Singleton
-    fun ProvideDogsRepository(api : DogsApi): DogRepository {
+    fun provideOkHttpClient(): OkHttpClient = OkHttpClient
+            .Builder()
+            .addInterceptor(ApiServiceInterceptor)
+            .build()
+
+
+    @Provides
+    @Singleton
+    fun provideDogsRepository(api : DogsApi): DogRepository {
         return DogRepositoryImpl(api)
     }
     @Provides
