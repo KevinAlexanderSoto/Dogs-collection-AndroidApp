@@ -16,6 +16,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kalex.dogescollection.R
 import com.kalex.dogescollection.authentication.FieldKey
+import com.kalex.dogescollection.authentication.RegexPatterns
 import com.kalex.dogescollection.authentication.RegexValidationState
 import com.kalex.dogescollection.authentication.createaccount.presentation.CreateAccountFragmentDirections
 import com.kalex.dogescollection.authentication.epoxy.epoxyButton
@@ -75,7 +76,7 @@ class LoginFragment : Fragment() {
             epoxyInputPassword {
                 id(2)
                 textHint(getString(R.string.authentication_login_password_text_hint))
-                regexValidation(Regex("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{5,}$"))
+                regexValidation(Regex(RegexPatterns.PASSWORD_REGEX_PATTERN))
                 onValidationResult { valid, currentText ->
                     //TODO: implement Eror message
                     regexValidationState.updateInputPasswordState(valid,currentText)
