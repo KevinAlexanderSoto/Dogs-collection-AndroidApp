@@ -1,7 +1,7 @@
 package com.kalex.dogescollection.dogList.model.repository
 
 import com.kalex.dogescollection.api.DogsApi
-import com.kalex.dogescollection.dogList.model.data.dto.Dogs
+import com.kalex.dogescollection.dogList.model.data.alldogs.Dogs
 import javax.inject.Inject
 
 class DogRepositoryImpl @Inject constructor (

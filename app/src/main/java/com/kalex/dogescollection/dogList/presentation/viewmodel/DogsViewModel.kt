@@ -3,7 +3,7 @@ package com.kalex.dogescollection.dogList.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kalex.dogescollection.common.networkstates.UseCaseFlowStatus
-import com.kalex.dogescollection.dogList.model.data.dto.Data
+import com.kalex.dogescollection.dogList.model.data.alldogs.Data
 import com.kalex.dogescollection.common.networkstates.ViewModelNewsUiState
 import com.kalex.dogescollection.dogList.model.usecase.DogsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

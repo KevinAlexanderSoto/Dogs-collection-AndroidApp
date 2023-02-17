@@ -1,7 +1,6 @@
-package com.kalex.dogescollection.dogList.model.data.dto
+package com.kalex.dogescollection.dogList.model.data.alldogs
 
 import com.squareup.moshi.Json
-import retrofit2.http.Field
 
 data class Dogs(
     @field:Json(name = "data")

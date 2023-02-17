@@ -9,7 +9,7 @@ import coil.load
 import com.airbnb.epoxy.group
 import com.kalex.dogescollection.R
 import com.kalex.dogescollection.databinding.DogDetailFragmentBinding
-import com.kalex.dogescollection.dogList.model.data.dto.Dog
+import com.kalex.dogescollection.dogList.model.data.alldogs.Dog
 import com.kalex.dogescollection.dogList.presentation.epoxy.dogDetailInfo
 import com.kalex.dogescollection.dogList.presentation.epoxy.dogDetailItem
 

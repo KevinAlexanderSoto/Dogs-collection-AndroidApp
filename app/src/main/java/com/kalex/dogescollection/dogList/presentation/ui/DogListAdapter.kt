@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kalex.dogescollection.databinding.DogListItemBinding
-import com.kalex.dogescollection.dogList.model.data.dto.Dog
+import com.kalex.dogescollection.dogList.model.data.alldogs.Dog
 import javax.inject.Inject
 
 

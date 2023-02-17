@@ -1,4 +1,4 @@
-package com.kalex.dogescollection.dogList.model.data.dto
+package com.kalex.dogescollection.dogList.model.data.alldogs
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
