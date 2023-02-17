@@ -16,6 +16,7 @@ import com.kalex.dogescollection.R
 import com.kalex.dogescollection.common.networkstates.handleViewModelState
 import com.kalex.dogescollection.databinding.DogListFragmentBinding
 import com.kalex.dogescollection.dogList.model.data.alldogs.Dog
+import com.kalex.dogescollection.dogList.presentation.viewmodel.DogCollectionViewModel
 import com.kalex.dogescollection.dogList.presentation.viewmodel.DogsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -34,6 +35,7 @@ class DogListFragment : Fragment() {
     private lateinit var dogListFragmentActions: DogListFragmentActions
     private var _binding: DogListFragmentBinding? = null
     private val dogsViewModel: DogsViewModel by viewModels()
+    private val collectionViewModel: DogCollectionViewModel by viewModels()
 
     @Inject
     lateinit var dogListAdapter :DogListAdapter
@@ -68,18 +70,18 @@ class DogListFragment : Fragment() {
         dogListFragmentActions.hideMenuItem()
         setUpRecycler(dogListAdapter)
 
-        dogsViewModel.getAllDogs()
+        collectionViewModel.getDogCollection()
 
-        getDogsByViewModel(dogListAdapter)
+        handleDogsByViewModel(dogListAdapter)
         //
 
     }
 
-    private fun getDogsByViewModel(dogListAdapter: DogListAdapter) {
+    private fun handleDogsByViewModel(dogListAdapter: DogListAdapter) {
 
-        handleViewModelState(dogsViewModel.dogState,
+        handleViewModelState(collectionViewModel.getCollectionState,
             onSuccess = {
-                handleSuccessStatus(it.dogs, dogListAdapter)
+                handleSuccessStatus(it, dogListAdapter)
             },
             onLoading = {
                 handleLoadingStatus(it)

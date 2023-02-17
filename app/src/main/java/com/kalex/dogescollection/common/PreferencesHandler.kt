@@ -33,6 +33,7 @@ companion object {
             activity.getSharedPreferences(AUTH_PREFS, Context.MODE_PRIVATE) ?: return null
         val currentId = prefs.getLong(ID_KEY, 0)
         if (currentId == 0L) return null
+        ApiServiceInterceptor.setCurrentToken(prefs.getString(AUTH_TOKEN_KEY, "") ?: "")
         return User(
             authenticationToken = prefs.getString(AUTH_TOKEN_KEY, "") ?: "",
             email = prefs.getString(EMAIL_KEY, "") ?: "",

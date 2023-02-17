@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.kalex.dogescollection.common.networkstates.UseCaseFlowStatus
 import com.kalex.dogescollection.common.networkstates.ViewModelNewsUiState
 import com.kalex.dogescollection.dogList.model.data.alldogs.Data
+import com.kalex.dogescollection.dogList.model.data.alldogs.Dog
 import com.kalex.dogescollection.dogList.model.usecase.DogsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,11 +19,15 @@ class DogCollectionViewModel @Inject constructor(
     private val dogsUseCase : DogsUseCase
 ):ViewModel() {
     private val _dogCollectionState = MutableStateFlow<ViewModelNewsUiState<Boolean>>(ViewModelNewsUiState.Loading(true))
-    val currentState: StateFlow<ViewModelNewsUiState<Boolean>>
+    val currentAddState: StateFlow<ViewModelNewsUiState<Boolean>>
         get() = _dogCollectionState
 
+    private val _getCollectionState = MutableStateFlow<ViewModelNewsUiState<List<Dog>>>(ViewModelNewsUiState.Loading(true))
+    val getCollectionState: StateFlow<ViewModelNewsUiState<List<Dog>>>
+        get() = _getCollectionState
+
     //TODO : when add a new dog, reload the dog list,
-    fun addDogToCollection(id : String){
+    fun addDogToCollection(id : Long){
         viewModelScope.launch {
             dogsUseCase.addDogToCollection(id).collectLatest {
                 when (it) {
@@ -32,6 +37,17 @@ class DogCollectionViewModel @Inject constructor(
                 }
             }
         }
-        
+    }
+
+    fun getDogCollection(){
+        viewModelScope.launch {
+            dogsUseCase.getDogCollection().collectLatest {
+                when (it) {
+                    is UseCaseFlowStatus.Error -> _getCollectionState.value = ViewModelNewsUiState.Error(it.exception)
+                    is UseCaseFlowStatus.Success -> _getCollectionState.value = ViewModelNewsUiState.Success(it.data)
+                    is UseCaseFlowStatus.Loading ->_getCollectionState.value = ViewModelNewsUiState.Loading(true)
+                }
+            }
+        }
     }
 }

@@ -13,7 +13,10 @@ class DogRepositoryImpl @Inject constructor (
         return dogApi.getAllDogs()
     }
 
-    override suspend fun addDogToCollection(dogId : String): AddDogCollectionResponse {
+    override suspend fun addDogToCollection(dogId : Long): AddDogCollectionResponse {
         return dogApi.addDogToCollection(DogCollectionItem(dogId))
+    }
+    override suspend fun getDogCollection(): Dogs {
+        return dogApi.getDogCollection()
     }
 }

@@ -21,8 +21,12 @@ interface DogsApi {
     @POST(Constants.LOGIN_URL)
     suspend fun logIn(@Body signInDTO: LogInDTO): UserResponse
 
-    @Headers("${ApiServiceInterceptor.AUTH_HEADER_KEY} : true")
+    @Headers("${ApiServiceInterceptor.AUTH_HEADER_KEY}:true")
     @POST(Constants.ADD_DOG_TO_USER_URL)
     suspend fun addDogToCollection(@Body dogCollectionItem: DogCollectionItem): AddDogCollectionResponse
+
+    @Headers("${ApiServiceInterceptor.AUTH_HEADER_KEY}:true")
+    @GET(Constants.GET_USER_DOGS_URL)
+    suspend fun getDogCollection(): Dogs
 
 }
