@@ -46,7 +46,7 @@ class DogsUseCase @Inject constructor(
                     }else{
                         Dog(index = it.index, id = it.id)
                     }
-                }
+                }.sorted()
             }else{
                 throw Exception("dog_collection_error")
             }

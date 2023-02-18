@@ -21,4 +21,10 @@ data class Dog(
     val updated_at: String = "",
     val weight_female: String = "",
     val weight_male: String = ""
-):Parcelable
+):Parcelable,Comparable<Dog>{
+    /**
+     * To order the list of dogs
+     * **/
+    override fun compareTo(other: Dog) = if (this.index > other.index) 1 else -1
+
+}
