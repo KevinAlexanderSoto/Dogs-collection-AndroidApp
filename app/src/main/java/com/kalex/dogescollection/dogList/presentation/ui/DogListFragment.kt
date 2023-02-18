@@ -108,7 +108,16 @@ class DogListFragment : Fragment() {
         handleLoadingStatus(false)
         dogListAdapter.submitList(dogList)
     }
+    private fun handleAddSuccessStatus(isAdded : Boolean) {
+        handleLoadingStatus(false)
+        if (isAdded){
+            collectionViewModel.getDogCollection()
+            handleDogsByViewModel(dogListAdapter)
+        }else{
+            handleErrorStatus("No se anadio ")
+        }
 
+    }
     private fun handleLoadingStatus(isLoading : Boolean){
         if (isLoading){
             binding.linearProgress.visibility = View.VISIBLE
@@ -117,10 +126,27 @@ class DogListFragment : Fragment() {
         }
 
     }
+    private fun handleAddDogByViewModel() {
 
+        handleViewModelState(collectionViewModel.currentAddState,
+            onSuccess = {
+                handleAddSuccessStatus(it)
+            },
+            onLoading = {
+                handleLoadingStatus(it)
+            },
+            onError = {
+                handleErrorStatus(getString(it))
+            }
+        )
+    }
     private fun setUpRecycler(dogListAdapter: DogListAdapter) {
         binding.doglistRecycler.layoutManager = GridLayoutManager(context, 2)
         binding.doglistRecycler.adapter = dogListAdapter
+        dogListAdapter.onLongItemClick = {
+            collectionViewModel.addDogToCollection(it.id.toLong())
+            handleAddDogByViewModel()
+        }
         dogListAdapter.onItemClick = {dog ->
             val bundle = DogListFragmentDirections.actionDogListFragmentToDogListDetailFragment(dog)
             findNavController().navigate(bundle)

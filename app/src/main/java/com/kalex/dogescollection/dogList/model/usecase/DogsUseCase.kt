@@ -33,20 +33,25 @@ class DogsUseCase @Inject constructor(
 
    suspend  fun getDogCollection(): Flow<UseCaseFlowStatus<List<Dog>>> = makeNetworkCallHandler{
         coroutineScope{
-            val allDogsList = async(Dispatchers.IO) {
+            val allDogs= async(Dispatchers.IO) {
                 dogRepository.getDogs()
             }
-            val userDogsList = async(Dispatchers.IO) {
+            val userDogs = async(Dispatchers.IO) {
                 dogRepository.getDogCollection()
             }
-            if(allDogsList.await().is_success && userDogsList.await().is_success){
-                allDogsList.await().body_data.dogs.map {
-                    if (  userDogsList.await().body_data.dogs.contains(it)){
+            val allDogsList = allDogs.await()
+            val userDogsList =userDogs.await()
+
+            if(allDogsList.is_success && userDogsList.is_success){
+               allDogsList.body_data.dogs.map {
+                    if (  userDogsList.body_data.dogs.contains(it)){
+                        it.inCollection = true
                         it
                     }else{
                         Dog(index = it.index, id = it.id, inCollection = false, name_es = it.name_es)
                     }
                 }.sorted()
+
             }else{
                 throw Exception("dog_collection_error")
             }

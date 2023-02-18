@@ -16,17 +16,23 @@ import javax.inject.Inject
 class DogListAdapter @Inject constructor() : ListAdapter<Dog, DogListAdapter.ViewHolder>(DiffUtilCallback) {
 
     var onItemClick: ((Dog) -> Unit)? = null
+    var onLongItemClick: ((Dog) -> Unit)? = null
 
     inner class ViewHolder(private val binding: DogListItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(dog: Dog) {
             with(binding) {
                 dogName.text = dog.name_es
                 if(dog.inCollection){
+                    dogListCard.setBackgroundColor(ContextCompat.getColor(dogImage.context,R.color.white))
                     dogImage.load(dog.image_url) {
                         crossfade(true)
                     }
                     dogListCard.setOnClickListener{onItemClick?.invoke(dog)}
                 }else{
+                    dogListCard.setOnLongClickListener {
+                        onLongItemClick?.invoke(dog)
+                        true
+                    }
                     dogImage.setImageDrawable(ContextCompat.getDrawable(dogImage.context,R.drawable.round_question_mark_24))
                 }
 
