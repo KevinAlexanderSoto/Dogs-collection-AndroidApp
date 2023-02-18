@@ -61,7 +61,6 @@
         android:elevation="8dp"
         android:layout_marginBottom="120dp"
         android:layout_marginEnd="8dp"
-
         android:contentDescription="take a photo" />
 
 
