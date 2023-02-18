@@ -1,8 +1,14 @@
 package com.kalex.dogescollection
 
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -11,8 +17,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.kalex.dogescollection.api.ApiServiceInterceptor
 import com.kalex.dogescollection.camera.CameraFragment
 import com.kalex.dogescollection.common.PreferencesHandler
 import com.kalex.dogescollection.databinding.ActivityMainBinding
@@ -27,6 +33,7 @@ class MainActivity : AppCompatActivity(), DogListFragment.DogListFragmentActions
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private lateinit var camerabutton: FloatingActionButton
+    private var isUserLogged = true
 
     @Inject
     lateinit var preferencesHandler: PreferencesHandler
@@ -35,36 +42,49 @@ class MainActivity : AppCompatActivity(), DogListFragment.DogListFragmentActions
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         camerabutton = binding.cameraActionButton
+        setNavBar()
 
+        camerabutton.setOnClickListener {
+            // Request camera permissions
+            if (allPermissionsGranted()) {
+                startCameraFragment()
+            } else {
+                aksToPermission()
+            }
+        }
+    }
+
+    private fun startCameraFragment() {
+        CameraFragment().show(supportFragmentManager, CAMERA_FRAGMENT_TAG)
+    }
+
+    private fun setNavBar() {
         setSupportActionBar(binding.toolbar)
-        var isUserLogged = true
-
-        if (preferencesHandler.getLoggedInUser() == null) { isUserLogged = false}
-
-       val buildNavController = setStartDestination(isUserLogged)
-
-        //Set Up bottom bar
+        if (preferencesHandler.getLoggedInUser() == null) {
+            isUserLogged = false
+        }
+        val buildNavController = setStartDestination(isUserLogged)
         NavigationUI.setupWithNavController(binding.bottomAppBar, buildNavController)
 
         appBarConfiguration = AppBarConfiguration(buildNavController.graph)
         setupActionBarWithNavController(buildNavController, appBarConfiguration)
-        camerabutton.setOnClickListener{
-            CameraFragment().show(supportFragmentManager, "camera_fragment")
-        }
     }
-    private fun setStartDestination(isUserLogged : Boolean): NavController {
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main) as NavHostFragment
+
+    private fun setStartDestination(isUserLogged: Boolean): NavController {
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main) as NavHostFragment
         val inflater = navHostFragment.navController.navInflater
         val graph = inflater.inflate(R.navigation.nav_graph)
 
-        if (isUserLogged){
+        if (isUserLogged) {
 
             binding.cameraActionButton.visibility = View.VISIBLE
             binding.bottomAppBar.visibility = View.VISIBLE
             graph.setStartDestination(R.id.DogListFragment)
 
-        }else {
+        } else {
             binding.cameraActionButton.visibility = View.GONE
             binding.bottomAppBar.visibility = View.GONE
             graph.setStartDestination(R.id.LoginFragment)
@@ -74,6 +94,7 @@ class MainActivity : AppCompatActivity(), DogListFragment.DogListFragmentActions
         navController.setGraph(graph, intent.extras)
         return navController
     }
+
     override fun showMenuItem() {
         binding.toolbar.visibility = View.VISIBLE
     }
@@ -83,7 +104,62 @@ class MainActivity : AppCompatActivity(), DogListFragment.DogListFragmentActions
         binding.bottomAppBar.visibility = View.VISIBLE
         binding.toolbar.visibility = View.GONE
     }
+    private fun aksToPermission() {
+        REQUIRED_PERMISSIONS.forEach {
+            when {
+                shouldShowRequestPermissionRationale(it) -> {
+                    //TODO: Add strings resources and style
+                    MaterialAlertDialogBuilder(this)
+                        .setTitle("ACEPTE LOS PERMISOS")
+                        .setMessage("Quiero usar tu camara!!!")
+                        .setNegativeButton("No quiero") { _, _ ->
+                            executeDialogForNegativePermission(true)
+                        }
+                        .setPositiveButton("SI, espiame ") { dialog, which ->
+                            requestPermissionLauncher.launch(it)
+                        }
+                        .show()
 
+                }
+                else -> {
+                    // The registered ActivityResultCallback gets the result of this request.
+                    requestPermissionLauncher.launch(it)
+                }
+            }
+        }
+    }
+
+    private fun executeDialogForNegativePermission(isRationale :Boolean){
+        //TODO: Add strings resources and style
+        MaterialAlertDialogBuilder(this)
+            .setTitle("ACEPTE LOS PERMISOS")
+            .setMessage("Si no los aceptas, no vas a poder tener mas perritos en la coleccion." +
+                    "Intenta ejecutar la camara otra vez, y dale al boton de ACEPTAR!!!!"
+                    )
+            .setPositiveButton("Vale, voy a reflexionar ") { dialog, _ ->
+                if(!isRationale){
+                    //Take the User to the app settings
+                    val intent = Intent(
+                        Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                        Uri.fromParts("package", packageName, null)
+                    )
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    startActivity(intent)
+                }
+                dialog.dismiss()
+            }
+            .show()
+    }
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            if (isGranted) startCameraFragment() else executeDialogForNegativePermission(false)
+
+        }
+    private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
+        ContextCompat.checkSelfPermission(this, it) == PackageManager.PERMISSION_GRANTED
+    }
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration)
@@ -91,11 +167,9 @@ class MainActivity : AppCompatActivity(), DogListFragment.DogListFragmentActions
     }
 
     companion object {
-        private const val TAG = "CameraXApp"
-        private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
-        private const val REQUEST_CODE_PERMISSIONS = 10
+        private const val CAMERA_FRAGMENT_TAG = "camera_fragment"
         private val REQUIRED_PERMISSIONS =
-            mutableListOf (
+            mutableListOf(
                 android.Manifest.permission.CAMERA
             ).toTypedArray()
     }
