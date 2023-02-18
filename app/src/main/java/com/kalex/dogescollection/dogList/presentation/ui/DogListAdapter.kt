@@ -2,9 +2,12 @@ package com.kalex.dogescollection.dogList.presentation.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import com.kalex.dogescollection.R
 import com.kalex.dogescollection.databinding.DogListItemBinding
 import com.kalex.dogescollection.dogList.model.data.alldogs.Dog
 import javax.inject.Inject
@@ -14,11 +17,19 @@ class DogListAdapter @Inject constructor() : ListAdapter<Dog, DogListAdapter.Vie
 
     var onItemClick: ((Dog) -> Unit)? = null
 
-    inner class ViewHolder(val view: DogListItemBinding) : RecyclerView.ViewHolder(view.root) {
+    inner class ViewHolder(private val binding: DogListItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(dog: Dog) {
-            with(view) {
-                itemtitle.text = dog.name_es
-                dogListCard.setOnClickListener{onItemClick?.invoke(dog)}
+            with(binding) {
+                dogName.text = dog.name_es
+                if(dog.inCollection){
+                    dogImage.load(dog.image_url) {
+                        crossfade(true)
+                    }
+                    dogListCard.setOnClickListener{onItemClick?.invoke(dog)}
+                }else{
+                    dogImage.setImageDrawable(ContextCompat.getDrawable(dogImage.context,R.drawable.round_question_mark_24))
+                }
+
             }
         }
     }
