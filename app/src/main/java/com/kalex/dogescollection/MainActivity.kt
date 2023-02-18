@@ -13,6 +13,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kalex.dogescollection.api.ApiServiceInterceptor
+import com.kalex.dogescollection.camera.CameraFragment
 import com.kalex.dogescollection.common.PreferencesHandler
 import com.kalex.dogescollection.databinding.ActivityMainBinding
 import com.kalex.dogescollection.dogList.presentation.ui.DogListFragment
@@ -25,16 +26,16 @@ class MainActivity : AppCompatActivity(), DogListFragment.DogListFragmentActions
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-    private var camerabutton: FloatingActionButton = binding.cameraActionButton
+    private lateinit var camerabutton: FloatingActionButton
 
     @Inject
     lateinit var preferencesHandler: PreferencesHandler
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        camerabutton = binding.cameraActionButton
 
         setSupportActionBar(binding.toolbar)
         var isUserLogged = true
@@ -48,7 +49,9 @@ class MainActivity : AppCompatActivity(), DogListFragment.DogListFragmentActions
 
         appBarConfiguration = AppBarConfiguration(buildNavController.graph)
         setupActionBarWithNavController(buildNavController, appBarConfiguration)
-
+        camerabutton.setOnClickListener{
+            CameraFragment().show(supportFragmentManager, "camera_fragment")
+        }
     }
     private fun setStartDestination(isUserLogged : Boolean): NavController {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main) as NavHostFragment
@@ -85,5 +88,15 @@ class MainActivity : AppCompatActivity(), DogListFragment.DogListFragmentActions
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
+    }
+
+    companion object {
+        private const val TAG = "CameraXApp"
+        private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
+        private const val REQUEST_CODE_PERMISSIONS = 10
+        private val REQUIRED_PERMISSIONS =
+            mutableListOf (
+                android.Manifest.permission.CAMERA
+            ).toTypedArray()
     }
 }
