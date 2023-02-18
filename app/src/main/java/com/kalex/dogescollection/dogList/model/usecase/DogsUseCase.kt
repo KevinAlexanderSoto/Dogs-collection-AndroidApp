@@ -44,7 +44,7 @@ class DogsUseCase @Inject constructor(
                     if (  userDogsList.await().body_data.dogs.contains(it)){
                         it
                     }else{
-                        Dog(index = it.index, id = it.id)
+                        Dog(index = it.index, id = it.id, inCollection = false, name_es = it.name_es)
                     }
                 }.sorted()
             }else{

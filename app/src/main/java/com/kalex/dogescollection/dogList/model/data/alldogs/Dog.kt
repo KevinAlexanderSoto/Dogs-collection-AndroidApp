@@ -20,7 +20,8 @@ data class Dog(
     val temperament_en: String = "",
     val updated_at: String = "",
     val weight_female: String = "",
-    val weight_male: String = ""
+    val weight_male: String = "",
+    val inCollection: Boolean = true
 ):Parcelable,Comparable<Dog>{
     /**
      * To order the list of dogs
