@@ -38,6 +38,7 @@ fun <T> makeNetworkCallHandler(
             "sign_up_error" -> R.string.sign_up_error
             "sign_in_error" -> R.string.sign_in_error
             "user_already_exists" -> R.string.user_already_exists
+            "error_adding_gos" -> R.string.add_dog_error
             else -> R.string.unknown_error_message
         }
 
@@ -46,6 +47,9 @@ fun <T> makeNetworkCallHandler(
 
 }
 
+/**
+ * Usually use this in the UI layer, to handler the ViewModel Status
+ * **/
 fun <T> Fragment.handleViewModelState(
     call: Flow<ViewModelNewsUiState<T>>,
     onSuccess: (T) -> Unit,

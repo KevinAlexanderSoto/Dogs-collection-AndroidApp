@@ -9,22 +9,16 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kalex.dogescollection.R
-import com.kalex.dogescollection.common.networkstates.ViewModelNewsUiState
 import com.kalex.dogescollection.common.networkstates.handleViewModelState
 import com.kalex.dogescollection.databinding.DogListFragmentBinding
-import com.kalex.dogescollection.dogList.model.data.dto.Dog
+import com.kalex.dogescollection.dogList.model.data.alldogs.Dog
+import com.kalex.dogescollection.dogList.presentation.viewmodel.DogCollectionViewModel
 import com.kalex.dogescollection.dogList.presentation.viewmodel.DogsViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.dog_list_fragment.*
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -41,9 +35,10 @@ class DogListFragment : Fragment() {
     private lateinit var dogListFragmentActions: DogListFragmentActions
     private var _binding: DogListFragmentBinding? = null
     private val dogsViewModel: DogsViewModel by viewModels()
+    private val collectionViewModel: DogCollectionViewModel by viewModels()
 
     @Inject
-    lateinit var dogListAdapter :DogListAdapter
+    lateinit var dogListAdapter: DogListAdapter
 
     private val binding get() = _binding!!
 
@@ -75,18 +70,32 @@ class DogListFragment : Fragment() {
         dogListFragmentActions.hideMenuItem()
         setUpRecycler(dogListAdapter)
 
-        dogsViewModel.getAllDogs()
+        collectionViewModel.getDogCollection()
 
-        getDogsByViewModel(dogListAdapter)
+        handleDogsByViewModel(dogListAdapter)
         //
 
     }
 
-    private fun getDogsByViewModel(dogListAdapter: DogListAdapter) {
+    private fun setUpRecycler(dogListAdapter: DogListAdapter) {
+        binding.doglistRecycler.layoutManager = GridLayoutManager(context, 2)
+        binding.doglistRecycler.adapter = dogListAdapter
+        dogListAdapter.onLongItemClick = {
+            collectionViewModel.addDogToCollection(it.id.toLong())
+            handleAddDogByViewModel()
+        }
+        dogListAdapter.onItemClick = { dog ->
+            val bundle = DogListFragmentDirections.actionDogListFragmentToDogListDetailFragment(dog)
+            findNavController().navigate(bundle)
+            dogListFragmentActions.showMenuItem()
+        }
+    }
 
-        handleViewModelState(dogsViewModel.dogState,
+    private fun handleDogsByViewModel(dogListAdapter: DogListAdapter) {
+
+        handleViewModelState(collectionViewModel.getCollectionState,
             onSuccess = {
-                handleSuccessStatus(it.dogs, dogListAdapter)
+                handleSuccessStatus(it, dogListAdapter)
             },
             onLoading = {
                 handleLoadingStatus(it)
@@ -96,6 +105,22 @@ class DogListFragment : Fragment() {
             }
         )
     }
+
+    private fun handleAddDogByViewModel() {
+
+        handleViewModelState(collectionViewModel.currentAddState,
+            onSuccess = {
+                handleAddSuccessStatus(it)
+            },
+            onLoading = {
+                handleLoadingStatus(it)
+            },
+            onError = {
+                handleErrorStatus(getString(it))
+            }
+        )
+    }
+
 
     private fun handleErrorStatus(exception: String) {
         handleLoadingStatus(false)
@@ -114,23 +139,24 @@ class DogListFragment : Fragment() {
         dogListAdapter.submitList(dogList)
     }
 
-    private fun handleLoadingStatus(isLoading : Boolean){
-        if (isLoading){
-            binding.linearProgress.visibility = View.VISIBLE
-        }else{
-            binding.linearProgress.visibility = View.GONE
+    private fun handleAddSuccessStatus(isAdded: Boolean) {
+        handleLoadingStatus(false)
+        if (isAdded) {
+            collectionViewModel.getDogCollection()
+            handleDogsByViewModel(dogListAdapter)
+        } else {
+            handleErrorStatus("No se anadio ")
         }
 
     }
 
-    private fun setUpRecycler(dogListAdapter: DogListAdapter) {
-        binding.doglistRecycler.layoutManager = GridLayoutManager(context, 2)
-        binding.doglistRecycler.adapter = dogListAdapter
-        dogListAdapter.onItemClick = {dog ->
-            val bundle = DogListFragmentDirections.actionDogListFragmentToDogListDetailFragment(dog)
-            findNavController().navigate(bundle)
-            dogListFragmentActions.showMenuItem()
+    private fun handleLoadingStatus(isLoading: Boolean) {
+        if (isLoading) {
+            binding.linearProgress.visibility = View.VISIBLE
+        } else {
+            binding.linearProgress.visibility = View.GONE
         }
+
     }
 
     override fun onDestroyView() {

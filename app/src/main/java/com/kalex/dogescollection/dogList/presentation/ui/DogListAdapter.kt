@@ -2,23 +2,40 @@ package com.kalex.dogescollection.dogList.presentation.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import com.kalex.dogescollection.R
 import com.kalex.dogescollection.databinding.DogListItemBinding
-import com.kalex.dogescollection.dogList.model.data.dto.Dog
+import com.kalex.dogescollection.dogList.model.data.alldogs.Dog
 import javax.inject.Inject
 
 
 class DogListAdapter @Inject constructor() : ListAdapter<Dog, DogListAdapter.ViewHolder>(DiffUtilCallback) {
 
     var onItemClick: ((Dog) -> Unit)? = null
+    var onLongItemClick: ((Dog) -> Unit)? = null
 
-    inner class ViewHolder(val view: DogListItemBinding) : RecyclerView.ViewHolder(view.root) {
+    inner class ViewHolder(private val binding: DogListItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(dog: Dog) {
-            with(view) {
-                itemtitle.text = dog.name_es
-                dogListCard.setOnClickListener{onItemClick?.invoke(dog)}
+            with(binding) {
+                dogName.text = dog.name_es
+                if(dog.inCollection){
+                    dogListCard.setBackgroundColor(ContextCompat.getColor(dogImage.context,R.color.white))
+                    dogImage.load(dog.image_url) {
+                        crossfade(true)
+                    }
+                    dogListCard.setOnClickListener{onItemClick?.invoke(dog)}
+                }else{
+                    dogListCard.setOnLongClickListener {
+                        onLongItemClick?.invoke(dog)
+                        true
+                    }
+                    dogImage.setImageDrawable(ContextCompat.getDrawable(dogImage.context,R.drawable.round_question_mark_24))
+                }
+
             }
         }
     }

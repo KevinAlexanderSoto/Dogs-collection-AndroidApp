@@ -11,6 +11,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.kalex.dogescollection.api.ApiServiceInterceptor
 import com.kalex.dogescollection.common.PreferencesHandler
 import com.kalex.dogescollection.databinding.ActivityMainBinding
 import com.kalex.dogescollection.dogList.presentation.ui.DogListFragment
@@ -53,6 +54,7 @@ class MainActivity : AppCompatActivity(), DogListFragment.DogListFragmentActions
         val graph = inflater.inflate(R.navigation.nav_graph)
 
         if (isUserLogged){
+
             binding.cameraActionButton.visibility = View.VISIBLE
             binding.bottomAppBar.visibility = View.VISIBLE
             graph.setStartDestination(R.id.DogListFragment)
