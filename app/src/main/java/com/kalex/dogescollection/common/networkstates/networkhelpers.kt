@@ -22,7 +22,8 @@ fun <T> makeNetworkCallHandler(
 ) = flow<UseCaseFlowStatus<T>> {
     try {
         emit(UseCaseFlowStatus.Loading(""))
-        emit(UseCaseFlowStatus.Success(call()))
+        val data = call()
+        emit(UseCaseFlowStatus.Success(data))
 
     } catch (e: UnknownHostException) {
         emit(UseCaseFlowStatus.Error(R.string.Internet_error_message))

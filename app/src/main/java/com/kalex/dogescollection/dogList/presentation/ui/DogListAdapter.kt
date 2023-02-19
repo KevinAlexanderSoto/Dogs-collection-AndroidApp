@@ -24,6 +24,7 @@ class DogListAdapter @Inject constructor() : ListAdapter<Dog, DogListAdapter.Vie
                 dogName.text = dog.name_es
                 if(dog.inCollection){
                     dogListCard.setBackgroundColor(ContextCompat.getColor(dogImage.context,R.color.white))
+                    dogImage.setImageDrawable(null)
                     dogImage.load(dog.image_url) {
                         crossfade(true)
                     }
