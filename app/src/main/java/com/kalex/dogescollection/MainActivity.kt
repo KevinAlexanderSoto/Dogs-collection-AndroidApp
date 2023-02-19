@@ -79,20 +79,21 @@ class MainActivity : AppCompatActivity(), DogListFragment.DogListFragmentActions
         val graph = inflater.inflate(R.navigation.nav_graph)
 
         if (isUserLogged) {
-
-            binding.cameraActionButton.visibility = View.VISIBLE
-            binding.bottomAppBar.visibility = View.VISIBLE
+            setBottomActionVisibility(View.VISIBLE)
             graph.setStartDestination(R.id.DogListFragment)
 
         } else {
-            binding.cameraActionButton.visibility = View.GONE
-            binding.bottomAppBar.visibility = View.GONE
+            setBottomActionVisibility(View.GONE)
             graph.setStartDestination(R.id.LoginFragment)
         }
 
         val navController = navHostFragment.navController
         navController.setGraph(graph, intent.extras)
         return navController
+    }
+    private fun setBottomActionVisibility(state : Int ){
+        binding.cameraActionButton.visibility = state
+        binding.bottomAppBar.visibility = state
     }
 
     override fun showMenuItem() {
