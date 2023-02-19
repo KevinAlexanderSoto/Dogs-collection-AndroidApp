@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity(), DogListFragment.DogListFragmentActions
             if (allPermissionsGranted()) {
                 startCameraFragment()
             } else {
-                aksToPermission()
+                aksToPermission(REQUIRED_PERMISSIONS)
             }
         }
     }
@@ -104,32 +104,40 @@ class MainActivity : AppCompatActivity(), DogListFragment.DogListFragmentActions
         binding.bottomAppBar.visibility = View.VISIBLE
         binding.toolbar.visibility = View.GONE
     }
-    private fun aksToPermission() {
-        REQUIRED_PERMISSIONS.forEach {
-            when {
-                shouldShowRequestPermissionRationale(it) -> {
-                    //TODO: Add strings resources and style
-                    MaterialAlertDialogBuilder(this)
-                        .setTitle("ACEPTE LOS PERMISOS")
-                        .setMessage("Quiero usar tu camara!!!")
-                        .setNegativeButton("No quiero") { _, _ ->
-                            executeDialogForNegativePermission(true)
-                        }
-                        .setPositiveButton("SI, espiame ") { dialog, which ->
-                            requestPermissionLauncher.launch(it)
-                        }
-                        .show()
+    private fun aksToPermission(REQUIRED_PERMISSIONS: Array<String>) {
+                    requestPermissionLauncher.launch(REQUIRED_PERMISSIONS)
+    }
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { isGranted: Map<String, Boolean> ->
+            val permissionToAsk = mutableListOf<String>()
 
+            if (isGranted.values.contains(false)) {
+                REQUIRED_PERMISSIONS.forEach {
+                    when {
+                        shouldShowRequestPermissionRationale(it) -> {
+                            //se pueden pedir otra vez
+                            permissionToAsk.add(it)
+                        }
+                    }
                 }
-                else -> {
-                    // The registered ActivityResultCallback gets the result of this request.
-                    requestPermissionLauncher.launch(it)
+                if (permissionToAsk.size > 0) {
+                    executeDialogForNegativePermission(true) {
+                        aksToPermission(permissionToAsk.toTypedArray())
+                    }
+                } else {
+                    executeDialogForNegativePermission(false) {
+
+                    }
                 }
+
+            } else {
+                //acepto los permisos
+                startCameraFragment()
             }
         }
-    }
-
-    private fun executeDialogForNegativePermission(isRationale :Boolean){
+    private fun executeDialogForNegativePermission(isRationale :Boolean,callback : ()->Unit){
         //TODO: Add strings resources and style
         MaterialAlertDialogBuilder(this)
             .setTitle("ACEPTE LOS PERMISOS")
@@ -137,6 +145,7 @@ class MainActivity : AppCompatActivity(), DogListFragment.DogListFragmentActions
                     "Intenta ejecutar la camara otra vez, y dale al boton de ACEPTAR!!!!"
                     )
             .setPositiveButton("Vale, voy a reflexionar ") { dialog, _ ->
+                callback.invoke()
                 if(!isRationale){
                     //Take the User to the app settings
                     val intent = Intent(
@@ -150,13 +159,7 @@ class MainActivity : AppCompatActivity(), DogListFragment.DogListFragmentActions
             }
             .show()
     }
-    private val requestPermissionLauncher =
-        registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
-        ) { isGranted: Boolean ->
-            if (isGranted) startCameraFragment() else executeDialogForNegativePermission(false)
 
-        }
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
         ContextCompat.checkSelfPermission(this, it) == PackageManager.PERMISSION_GRANTED
     }
@@ -170,7 +173,9 @@ class MainActivity : AppCompatActivity(), DogListFragment.DogListFragmentActions
         private const val CAMERA_FRAGMENT_TAG = "camera_fragment"
         private val REQUIRED_PERMISSIONS =
             mutableListOf(
-                android.Manifest.permission.CAMERA
+                android.Manifest.permission.CAMERA,
+               android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+
             ).toTypedArray()
     }
 }
