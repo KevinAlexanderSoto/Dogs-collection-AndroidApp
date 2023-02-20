@@ -11,10 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageCapture
-import androidx.camera.core.ImageCaptureException
-import androidx.camera.core.Preview
+import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
@@ -25,6 +22,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kalex.dogescollection.R
 import com.kalex.dogescollection.databinding.DogListFragmentBinding
 import kotlinx.android.synthetic.main.fragment_camera.*
+import kotlinx.coroutines.scheduling.DefaultIoScheduler.executor
+import kotlinx.coroutines.scheduling.DefaultScheduler.executor
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService
@@ -77,16 +76,7 @@ class CameraFragment : BottomSheetDialogFragment(R.layout.fragment_camera) {
         // Get a stable reference of the modifiable image capture use case
         val imageCapture = imageCapture ?: return
 
-        // Create time stamped name and MediaStore entry.
-        val name = SimpleDateFormat(FILENAME_FORMAT, Locale.US)
-            .format(System.currentTimeMillis())
-        val contentValues = ContentValues().apply {
-            put(MediaStore.MediaColumns.DISPLAY_NAME, name)
-            put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
-            if(Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
-                put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/CameraX-Image")
-            }
-        }
+        val contentValues =  createContentValuesNameEntry()
 
         // Create output options object which contains file + metadata
         val outputOptions = ImageCapture.OutputFileOptions
@@ -115,6 +105,33 @@ class CameraFragment : BottomSheetDialogFragment(R.layout.fragment_camera) {
         )
     }
 
+    private fun createContentValuesNameEntry(): ContentValues {
+        // Create time stamped name and MediaStore entry.
+        val name = SimpleDateFormat(FILENAME_FORMAT, Locale.US)
+            .format(System.currentTimeMillis())
+
+        return ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, name)
+            put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
+            if(Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
+                put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/CameraX-Image")
+            }
+        }
+    }
+
+    private fun imageAnalysisUseCase(): ImageAnalysis{
+        //ImageAnalysis UseCase Section
+        val imageAnalysis = ImageAnalysis.Builder()
+            .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+            .build()
+        imageAnalysis.setAnalyzer(cameraExecutor, ImageAnalysis.Analyzer { imageProxy ->
+            val rotationDegrees = imageProxy.imageInfo.rotationDegrees
+
+            imageProxy.close()
+        })
+        return imageAnalysis
+    }
+
     private fun cameraPreviewUseCase() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
 
@@ -129,16 +146,18 @@ class CameraFragment : BottomSheetDialogFragment(R.layout.fragment_camera) {
                     it.setSurfaceProvider(cameraPreviewView.surfaceProvider)
                 }
             imageCapture = ImageCapture.Builder().build()
+
             // Select back camera as a default
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
+            val imageAnalysis = imageAnalysisUseCase()
             try {
                 // Unbind use cases before rebinding
                 cameraProvider.unbindAll()
 
                 // Bind use cases to camera
                 cameraProvider.bindToLifecycle(
-                    this, cameraSelector, preview,imageCapture)
+                    this, cameraSelector, preview,imageCapture,imageAnalysis)
 
             } catch(exc: Exception) {
                 Log.e("kevs", "Use case binding failed", exc)
