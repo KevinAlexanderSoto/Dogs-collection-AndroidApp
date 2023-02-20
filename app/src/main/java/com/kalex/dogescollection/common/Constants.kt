@@ -7,4 +7,5 @@ object Constants {
     const val GET_USER_DOGS_URL = "get_user_dogs"
     const val CREATE_ACCOUNT_URL = "sign_up"
     const val LOGIN_URL = "sign_in"
+    const val MAX_RECOGNITION_DOG_RESULTS = 5
 }
