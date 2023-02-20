@@ -19,6 +19,9 @@ import com.kalex.dogescollection.dogList.model.data.alldogs.Dog
 import com.kalex.dogescollection.dogList.presentation.viewmodel.DogCollectionViewModel
 import com.kalex.dogescollection.dogList.presentation.viewmodel.DogsViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import javax.inject.Inject
 
 /**
@@ -135,8 +138,8 @@ class DogListFragment : Fragment() {
     }
 
     private fun handleSuccessStatus(dogList: List<Dog>, dogListAdapter: DogListAdapter) {
-        handleLoadingStatus(false)
         dogListAdapter.submitList(dogList)
+        handleLoadingStatus(false)
     }
 
     private fun handleAddSuccessStatus(isAdded: Boolean) {

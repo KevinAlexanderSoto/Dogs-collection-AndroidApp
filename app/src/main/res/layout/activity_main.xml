@@ -56,12 +56,12 @@
         android:id="@+id/cameraActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_100tb"
+        app:srcCompat="@drawable/ic_camera_alt_24"
         android:layout_gravity="bottom|end"
         android:elevation="8dp"
+        app:fabCustomSize = "64dp"
         android:layout_marginBottom="120dp"
-        android:layout_marginEnd="8dp"
-
+        android:layout_marginEnd="12dp"
         android:contentDescription="take a photo" />
 
 

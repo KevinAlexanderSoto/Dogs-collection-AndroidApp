@@ -35,4 +35,11 @@
        <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="Base.Widget.Material3.FloatingActionButton.Large" parent="Base.Widget.Material3.FloatingActionButton">
+        <item name="fabCustomSize">76dp</item>
+        <item name="maxImageSize">@dimen/m3_comp_fab_primary_large_icon_size</item>
+        <item name="shapeAppearance">@macro/m3_comp_fab_primary_large_container_shape</item>
+        <item name="shapeAppearanceOverlay">@null</item>
+    </style>
+
 </resources>

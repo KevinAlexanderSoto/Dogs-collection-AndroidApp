@@ -38,4 +38,5 @@
     <string name="authentication_log_out_title">Salir de la aplicacion</string>
     <string name="authentication_log_out_message">deseas cerrar la aplicacion?</string>
     <string name="add_dog_error">Error adding the dog to the collection</string>
+    <string name="menu_dog_list">tus perros</string>
 </resources>

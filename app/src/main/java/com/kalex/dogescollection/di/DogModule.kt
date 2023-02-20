@@ -2,6 +2,8 @@ package com.kalex.dogescollection.di
 
 import android.app.Activity
 import android.content.Context
+import androidx.appcompat.app.AppCompatActivity
+import com.kalex.dogescollection.PermissionHandler
 import com.kalex.dogescollection.api.ApiServiceInterceptor
 import com.kalex.dogescollection.authentication.model.AuthenticationRepository
 import com.kalex.dogescollection.authentication.model.AuthenticationRepositoryImpl
@@ -66,5 +68,9 @@ object SharedPreferencesModule {
     fun providePreferencesHandler(@ActivityContext context: Context): PreferencesHandler {
         return PreferencesHandler(context as Activity)
     }
-
+    @Provides
+    @ActivityScoped
+    fun providePermissionHandler(@ActivityContext context: Context): PermissionHandler {
+        return PermissionHandler(context as AppCompatActivity)
+    }
 }

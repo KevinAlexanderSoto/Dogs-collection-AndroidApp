@@ -8,13 +8,14 @@
         android:id="@+id/SettingsFragment"
         android:orderInCategory="100"
         android:title="@string/action_settings"
+        android:icon="@drawable/ic_settings_24"
         app:showAsAction="ifRoom" />
 
 
     <item
         android:id="@+id/DogListFragment"
-        android:icon="@drawable/ic_100tb"
-        android:title="dashboard"
+        android:icon="@drawable/ic_pets_24"
+        android:title="@string/menu_dog_list"
         android:contentDescription="content_description_dashboard"
         app:showAsAction="ifRoom"/>
 </menu>
