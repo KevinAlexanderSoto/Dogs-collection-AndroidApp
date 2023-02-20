@@ -1,7 +1,10 @@
 package com.kalex.dogescollection.camera
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.ContentValues
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -18,12 +21,18 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kalex.dogescollection.R
+import com.kalex.dogescollection.authentication.RegexValidationState
+import com.kalex.dogescollection.common.Constants
+import com.kalex.dogescollection.tensorflow.Classifier
+import dagger.hilt.android.AndroidEntryPoint
+import org.tensorflow.lite.support.common.FileUtil
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class CameraFragment : BottomSheetDialogFragment(R.layout.fragment_camera) {
     private var imageCapture: ImageCapture? = null
     private lateinit var cameraExecutor: ExecutorService
@@ -33,6 +42,8 @@ class CameraFragment : BottomSheetDialogFragment(R.layout.fragment_camera) {
     private val takePhotoButton: FloatingActionButton
         get() = requireView().findViewById(R.id.cameraButton)
 
+    @Inject
+    lateinit var classifier: Classifier
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = BottomSheetDialog(requireContext(), theme)
         dialog.setOnShowListener {
@@ -96,7 +107,9 @@ class CameraFragment : BottomSheetDialogFragment(R.layout.fragment_camera) {
                         onImageSaved(output: ImageCapture.OutputFileResults) {
                     val msg = "Photo capture succeeded: ${output.savedUri}"
                     Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
-                    Log.d("kevs", msg)
+                    val imageBitmap = MediaStore.Images.Media.getBitmap(requireContext().contentResolver, output.savedUri)
+                    // BitmapFactory.decodeFile(output.savedUri.toString().replace("content://",""))
+                    classifier.recognizeImage(imageBitmap)
                 }
             }
         )
