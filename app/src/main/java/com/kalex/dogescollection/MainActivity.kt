@@ -13,7 +13,6 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.kalex.dogescollection.camera.CameraFragment
 import com.kalex.dogescollection.common.PreferencesHandler
 import com.kalex.dogescollection.databinding.ActivityMainBinding
 import com.kalex.dogescollection.dogList.presentation.ui.DogListFragment
@@ -44,20 +43,10 @@ class MainActivity : AppCompatActivity(), DogListFragment.DogListFragmentActions
 
         camerabutton = binding.cameraActionButton
         setNavBar()
-
-        camerabutton.setOnClickListener {
-            // Request camera permissions
-            permissionHandler.start()
-            lifecycleScope.launch {
-                permissionHandler.currentAddState.collectLatest {
-                    if (it) startCameraFragment()
-                }
-            }
-        }
     }
 
-    private fun startCameraFragment() {
-        CameraFragment().show(supportFragmentManager, CAMERA_FRAGMENT_TAG)
+    private fun startCameraFragment(buildNavController: NavController) {
+        buildNavController.navigate(R.id.CameraFragmentNav)
     }
 
     private fun setNavBar() {
@@ -66,10 +55,34 @@ class MainActivity : AppCompatActivity(), DogListFragment.DogListFragmentActions
             isUserLogged = false
         }
         val buildNavController = setStartDestination(isUserLogged)
+
         NavigationUI.setupWithNavController(binding.bottomAppBar, buildNavController)
 
         appBarConfiguration = AppBarConfiguration(buildNavController.graph)
+
         setupActionBarWithNavController(buildNavController, appBarConfiguration)
+
+       /* buildNavController.addOnDestinationChangedListener{ _, destination, _ ->
+            if(destination.id == R.id.DogListDetailFragment) {
+                supportActionBar?.show()
+            } else {
+                supportActionBar?.hide()
+            }
+        }*/
+        setCameraButtonListiner(buildNavController)
+
+    }
+
+    private fun setCameraButtonListiner(buildNavController: NavController) {
+        camerabutton.setOnClickListener {
+            // Request camera permissions
+            permissionHandler.start()
+            lifecycleScope.launch {
+                permissionHandler.currentAddState.collectLatest {
+                    if (it) startCameraFragment(buildNavController)
+                }
+            }
+        }
     }
 
     private fun setStartDestination(isUserLogged: Boolean): NavController {

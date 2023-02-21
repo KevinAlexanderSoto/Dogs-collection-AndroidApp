@@ -1,6 +1,7 @@
 package com.kalex.dogescollection.dogList.model.repository
 
 import com.kalex.dogescollection.dogList.model.data.alldogs.Dogs
+import com.kalex.dogescollection.dogList.model.data.alldogs.SingleDog
 import com.kalex.dogescollection.dogList.model.data.collection.AddDogCollectionResponse
 
 interface DogRepository {
@@ -13,4 +14,8 @@ interface DogRepository {
      * Get the dog by user, if it is added to the use collection
      * **/
     suspend fun getDogCollection(): Dogs
+    /**
+     * Get the dog by id, using the machine learning id predicted
+     * **/
+    suspend fun getDogByPredictedId(predictedId : String): SingleDog
 }

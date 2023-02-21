@@ -16,11 +16,8 @@ class DogsUseCase @Inject constructor(
 ) {
     fun getAllDogs(): Flow<UseCaseFlowStatus<Data>> = makeNetworkCallHandler {
         val result = dogRepository.getDogs()
-        if (result.is_success) {
-            result.body_data
-        } else {
-            throw Exception(result.message)
-        }
+        if (result.is_success) return@makeNetworkCallHandler  result.body_data
+        throw Exception(result.message)
     }
 
     fun addDogToCollection(dogId: Long): Flow<UseCaseFlowStatus<Boolean>> = makeNetworkCallHandler {
@@ -62,6 +59,12 @@ class DogsUseCase @Inject constructor(
                 throw Exception("dog_collection_error")
             }
         }
+    }
+
+    suspend fun getDogByPredictedId(predictedId : String): Flow<UseCaseFlowStatus<Dog>> = makeNetworkCallHandler {
+        val result = dogRepository.getDogByPredictedId(predictedId)
+        if (result.is_success) return@makeNetworkCallHandler result.body_data.dog
+        throw java.lang.Exception(result.message)
     }
 }
 

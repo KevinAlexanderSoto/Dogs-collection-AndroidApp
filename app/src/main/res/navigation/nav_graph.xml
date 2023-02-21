@@ -5,6 +5,7 @@
     android:id="@+id/nav_graph"
     app:startDestination="@+id/LoginFragment"
     >
+    <include app:graph="@navigation/main_graph" />
     <fragment
         android:id="@+id/LoginFragment"
         android:name="com.kalex.dogescollection.authentication.login.presentation.LoginFragment"
@@ -13,7 +14,7 @@
 
         <action
             android:id="@+id/action_LoginFragment_to_DogListFragment"
-            app:destination="@id/DogListFragment" />
+            app:destination="@id/MainNavigation" />
 
         <action
             android:id="@+id/action_LoginFragment_to_CreateAccountFragment"
@@ -29,53 +30,11 @@
 
         <action
             android:id="@+id/action_CreateAccountFragment_to_DogListFragment"
-            app:destination="@id/DogListFragment"
+            app:destination="@id/MainNavigation"
             app:popUpTo="@+id/LoginFragment"
             app:popUpToInclusive="true"
             />
 
     </fragment>
 
-    <fragment
-        android:id="@+id/DogListFragment"
-        android:name="com.kalex.dogescollection.dogList.presentation.ui.DogListFragment"
-        android:label="@string/dog_list_fragment_label"
-        tools:layout="@layout/dog_list_fragment"
-
-        >
-
-        <action
-            android:id="@+id/action_DogListFragment_to_DogListDetailFragment"
-            app:destination="@id/DogListDetailFragment" >
-            <argument
-                android:name="dog"
-                app:argType="com.kalex.dogescollection.dogList.model.data.alldogs.Dog"
-                app:nullable="true"
-                android:defaultValue="@null" />
-        </action>
-    </fragment>
-
-    <fragment
-        android:id="@+id/DogListDetailFragment"
-        android:name="com.kalex.dogescollection.dogList.presentation.ui.DogDetailFragment"
-        android:label="@string/dog_detail_fragment_label"
-        tools:layout="@layout/dog_detail_fragment">
-
-        <action
-            android:id="@+id/action_DogListDetailFragment_to_DogListFragment"
-            app:destination="@id/DogListFragment" />
-        <argument
-            android:name="dog"
-            app:argType="com.kalex.dogescollection.dogList.model.data.alldogs.Dog"
-            app:nullable="true"
-            android:defaultValue="@null" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/SettingsFragment"
-        android:name="com.kalex.dogescollection.settings.SettingsFragment"
-        android:label="@string/dog_detail_fragment_label"
-        tools:layout="@layout/fragment_settings">
-
-    </fragment>
 </navigation>
