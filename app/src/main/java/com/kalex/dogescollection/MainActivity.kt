@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity(), DogListFragment.DogListFragmentActions
     }
 
     private fun setNavBar() {
-        setSupportActionBar(binding.toolbar)
+
         if (preferencesHandler.getLoggedInUser() == null) {
             isUserLogged = false
         }
@@ -60,8 +60,6 @@ class MainActivity : AppCompatActivity(), DogListFragment.DogListFragmentActions
         NavigationUI.setupWithNavController(binding.bottomAppBar, buildNavController)
 
         appBarConfiguration = AppBarConfiguration(buildNavController.graph)
-
-        setupActionBarWithNavController(buildNavController, appBarConfiguration)
 
        /* buildNavController.addOnDestinationChangedListener{ _, destination, _ ->
             if(destination.id == R.id.DogListDetailFragment) {

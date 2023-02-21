@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import coil.load
 import com.airbnb.epoxy.group
 import com.kalex.dogescollection.R
@@ -39,9 +40,20 @@ class DogDetailFragment : Fragment() {
 
         if (args != null) {
             setUpViews(args.dog!!)
+            setUpNavBar()
         }
 
     }
+
+    private fun setUpNavBar() {
+        binding.toolbar.title = "Dog detail"
+        binding.toolbar.setNavigationIcon(com.google.android.material.R.drawable.ic_arrow_back_black_24)
+        binding.toolbar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
+
+    }
+
     private fun setUpViews(dog: Dog) {
         with(binding) {
             dogimage.load(dog.image_url) {
