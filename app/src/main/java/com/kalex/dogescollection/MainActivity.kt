@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -89,15 +90,14 @@ class MainActivity : AppCompatActivity(), DogListFragment.DogListFragmentActions
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main) as NavHostFragment
         val inflater = navHostFragment.navController.navInflater
-        val graph = inflater.inflate(R.navigation.nav_graph)
 
-        if (isUserLogged) {
+        val graph : NavGraph = if (isUserLogged) {
             setBottomActionVisibility(View.VISIBLE)
-            graph.setStartDestination(R.id.DogListFragment)
+            inflater.inflate(R.navigation.main_graph)
 
         } else {
             setBottomActionVisibility(View.GONE)
-            graph.setStartDestination(R.id.LoginFragment)
+            inflater.inflate(R.navigation.nav_graph)
         }
 
         val navController = navHostFragment.navController
@@ -110,13 +110,13 @@ class MainActivity : AppCompatActivity(), DogListFragment.DogListFragmentActions
     }
 
     override fun showMenuItem() {
-        binding.toolbar.visibility = View.VISIBLE
+        //binding.toolbar.visibility = View.VISIBLE
     }
 
     override fun hideMenuItem() {
         binding.cameraActionButton.visibility = View.VISIBLE
         binding.bottomAppBar.visibility = View.VISIBLE
-        binding.toolbar.visibility = View.GONE
+      //  binding.toolbar.visibility = View.GONE
     }
 
     override fun onSupportNavigateUp(): Boolean {

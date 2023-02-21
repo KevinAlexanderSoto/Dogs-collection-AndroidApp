@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat.finishAffinity
 import com.kalex.dogescollection.MainActivity
 import com.kalex.dogescollection.R
@@ -34,7 +35,8 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(false)
+        (requireActivity() as AppCompatActivity).supportActionBar?.setHomeButtonEnabled(false)
         binding.SettingEpoxyRecyclerView.withModels {
             epoxyTextTitle{
                 id(0)
