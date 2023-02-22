@@ -12,11 +12,9 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kalex.dogescollection.common.PreferencesHandler
 import com.kalex.dogescollection.databinding.ActivityMainBinding
-import com.kalex.dogescollection.dogList.presentation.ui.DogListFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -24,7 +22,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), DogListFragment.DogListFragmentActions {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
@@ -61,13 +59,6 @@ class MainActivity : AppCompatActivity(), DogListFragment.DogListFragmentActions
 
         appBarConfiguration = AppBarConfiguration(buildNavController.graph)
 
-       /* buildNavController.addOnDestinationChangedListener{ _, destination, _ ->
-            if(destination.id == R.id.DogListDetailFragment) {
-                supportActionBar?.show()
-            } else {
-                supportActionBar?.hide()
-            }
-        }*/
         setCameraButtonListiner(buildNavController)
 
     }
@@ -106,24 +97,10 @@ class MainActivity : AppCompatActivity(), DogListFragment.DogListFragmentActions
         binding.cameraActionButton.visibility = state
         binding.bottomAppBar.visibility = state
     }
-
-    override fun showMenuItem() {
-        //binding.toolbar.visibility = View.VISIBLE
-    }
-
-    override fun hideMenuItem() {
-        binding.cameraActionButton.visibility = View.VISIBLE
-        binding.bottomAppBar.visibility = View.VISIBLE
-      //  binding.toolbar.visibility = View.GONE
-    }
-
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
     }
 
-    companion object {
-        private const val CAMERA_FRAGMENT_TAG = "camera_fragment"
-    }
 }

@@ -30,12 +30,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class DogListFragment : Fragment() {
 
-    interface DogListFragmentActions {
-        fun showMenuItem()
-        fun hideMenuItem()
-    }
-
-    private lateinit var dogListFragmentActions: DogListFragmentActions
     private var _binding: DogListFragmentBinding? = null
     private val dogsViewModel: DogsViewModel by viewModels()
     private val collectionViewModel: DogCollectionViewModel by viewModels()
@@ -47,7 +41,7 @@ class DogListFragment : Fragment() {
 
     private val backPressedDispatcher = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
-            // Redirect to our own function
+            // Redirect to our own function, this close the app, but first ask the user for sure
             this@DogListFragment.onBackPressed()
         }
     }
@@ -69,13 +63,11 @@ class DogListFragment : Fragment() {
             // Redirect system "Back" press to our dispatcher
             onBackPressedDispatcher.addCallback(viewLifecycleOwner, backPressedDispatcher)
         }
-        dogListFragmentActions.hideMenuItem()
         setUpRecycler(dogListAdapter)
 
         collectionViewModel.getDogCollection()
 
         handleDogsByViewModel(dogListAdapter)
-        //
 
     }
 
@@ -89,7 +81,6 @@ class DogListFragment : Fragment() {
         dogListAdapter.onItemClick = { dog ->
             val bundle = DogListFragmentDirections.actionDogListFragmentToDogListDetailFragment(dog)
             findNavController().navigate(bundle)
-            dogListFragmentActions.showMenuItem()
         }
     }
 
@@ -125,6 +116,7 @@ class DogListFragment : Fragment() {
 
 
     private fun handleErrorStatus(exception: String) {
+        //TODO: set strings and styles
         handleLoadingStatus(false)
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(resources.getString(R.string.ErrorTitle))
@@ -149,7 +141,6 @@ class DogListFragment : Fragment() {
         } else {
             handleErrorStatus("No se anadio ")
         }
-
     }
 
     private fun handleLoadingStatus(isLoading: Boolean) {
@@ -158,7 +149,6 @@ class DogListFragment : Fragment() {
         } else {
             binding.linearProgress.visibility = View.GONE
         }
-
     }
 
     override fun onDestroyView() {
@@ -166,15 +156,6 @@ class DogListFragment : Fragment() {
         backPressedDispatcher.remove()
         super.onDestroyView()
         _binding = null
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        dogListFragmentActions = try {
-            context as DogListFragmentActions
-        } catch (e: ClassCastException) {
-            throw ClassCastException("$context must implement LoginFragmentActions")
-        }
     }
 
     private fun onBackPressed() {
