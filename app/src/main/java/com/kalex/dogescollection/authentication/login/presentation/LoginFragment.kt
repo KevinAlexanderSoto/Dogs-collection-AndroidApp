@@ -1,5 +1,6 @@
 package com.kalex.dogescollection.authentication.login.presentation
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Patterns
 import android.view.LayoutInflater
@@ -11,20 +12,18 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kalex.dogescollection.R
 import com.kalex.dogescollection.authentication.FieldKey
 import com.kalex.dogescollection.authentication.RegexPatterns
 import com.kalex.dogescollection.authentication.RegexValidationState
-import com.kalex.dogescollection.authentication.createaccount.presentation.CreateAccountFragmentDirections
 import com.kalex.dogescollection.authentication.epoxy.epoxyButton
 import com.kalex.dogescollection.authentication.epoxy.epoxyInputField
 import com.kalex.dogescollection.authentication.epoxy.epoxyInputPassword
 import com.kalex.dogescollection.authentication.epoxy.epoxyTextButton
 import com.kalex.dogescollection.authentication.epoxy.epoxyTextTitle
-import com.kalex.dogescollection.authentication.login.presentation.LoginFragmentDirections
+import com.kalex.dogescollection.common.AuthenticationSwitcherNavigator
 import com.kalex.dogescollection.common.PreferencesHandler
 import com.kalex.dogescollection.common.networkstates.handleViewModelState
 import com.kalex.dogescollection.databinding.FragmentLoginBinding
@@ -38,6 +37,7 @@ class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
     private val loginViewModel : LoginViewModel by viewModels()
+    private lateinit var authSwitcherNavigator: AuthenticationSwitcherNavigator
     @Inject
     lateinit var regexValidationState: RegexValidationState
 
@@ -111,7 +111,7 @@ class LoginFragment : Fragment() {
                 buttonText(getString(R.string.authentication_login_buttonText_text))
                 topButtonText(getString(R.string.authentication_login_buttonText_title))
                 onClickListener {
-                    findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToCreateAccountFragment())
+                    authSwitcherNavigator.onCreateNewUser()
                 }
             }
         }
@@ -122,11 +122,10 @@ class LoginFragment : Fragment() {
             onSuccess = {
                 Toast.makeText(requireContext(),getString(R.string.authentication_login_success_message),Toast.LENGTH_LONG).show()
                 preferencesHandler.setLoggedInUser(it)
-                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToDogListFragment())
+                authSwitcherNavigator.onUserAuthenticated()
             },
             onLoading = {},
             onError = {
-
                 MaterialAlertDialogBuilder(requireContext())
                     .setTitle(resources.getString(R.string.error_title))
                     .setMessage(resources.getString(it))
@@ -136,5 +135,13 @@ class LoginFragment : Fragment() {
                     .show()
             }
         )
+    }
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        authSwitcherNavigator = try {
+            context as AuthenticationSwitcherNavigator
+        } catch (e: ClassCastException) {
+            throw ClassCastException("$context must implement LoginFragmentActions")
+        }
     }
 }

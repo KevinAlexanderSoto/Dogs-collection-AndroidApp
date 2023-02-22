@@ -2,6 +2,8 @@ package com.kalex.dogescollection.camera
 
 import android.app.Dialog
 import android.content.ContentValues
+import android.graphics.*
+import android.media.Image
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -21,11 +23,13 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kalex.dogescollection.R
+import com.kalex.dogescollection.camera.utils.BitmapUtils
 import com.kalex.dogescollection.common.networkstates.handleViewModelState
 import com.kalex.dogescollection.dogList.model.data.alldogs.Dog
 import com.kalex.dogescollection.dogList.presentation.viewmodel.DogPredictViewModel
 import com.kalex.dogescollection.tensorflow.Classifier
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService
@@ -74,13 +78,10 @@ class CameraFragment : BottomSheetDialogFragment(R.layout.fragment_camera) {
 
         cameraPreviewUseCase()
 
-        takePhotoButton.setOnClickListener {
-            takePhoto()
-        }
     }
 
 
-    private fun takePhoto() {
+    private fun takePictureUseCase() {
         // Get a stable reference of the modifiable image capture use case
         val imageCapture = imageCapture ?: return
 
@@ -177,17 +178,36 @@ class CameraFragment : BottomSheetDialogFragment(R.layout.fragment_camera) {
         }
 
     }
-
+    @androidx.annotation.OptIn(androidx.camera.core.ExperimentalGetImage::class)
         private fun imageAnalysisUseCase(): ImageAnalysis {
         //ImageAnalysis UseCase Section
         val imageAnalysis = ImageAnalysis.Builder()
             .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
             .build()
-        imageAnalysis.setAnalyzer(cameraExecutor, ImageAnalysis.Analyzer { imageProxy ->
-            val rotationDegrees = imageProxy.imageInfo.rotationDegrees
+        imageAnalysis.setAnalyzer(cameraExecutor) { imageProxy ->
 
+            val bitMapImage = BitmapUtils.getBitmap(imageProxy)
+
+            val firstDog = bitMapImage?.let { classifier.recognizeImage(it).first() }
+
+            if (firstDog != null) {
+                if (firstDog.confidence > 80.0) {
+                    takePhotoButton.alpha = 1f
+                    takePhotoButton.setOnClickListener {
+                        dogPredictViewModel.getDogByPredictedId(firstDog.DogId)
+                        handlePredictedViewModel()
+                        //takePictureUseCase()
+                    }
+                } else {
+                    takePhotoButton.setOnClickListener {
+                        null
+                    }
+                    takePhotoButton.alpha = 0.3f
+                }
+            }
             imageProxy.close()
-        })
+
+        }
         return imageAnalysis
     }
 
@@ -226,7 +246,13 @@ class CameraFragment : BottomSheetDialogFragment(R.layout.fragment_camera) {
         }, ContextCompat.getMainExecutor(requireContext()))
 
     }
-
+    private fun ImageProxy.convertImageProxyToBitmap(): Bitmap {
+        val buffer = planes[0].buffer
+        buffer.rewind()
+        val bytes = ByteArray(buffer.capacity())
+        buffer.get(bytes)
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+    }
     override fun onDestroy() {
         super.onDestroy()
         cameraExecutor.shutdown()

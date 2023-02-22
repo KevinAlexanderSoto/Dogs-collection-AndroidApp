@@ -1,5 +1,6 @@
 package com.kalex.dogescollection.authentication.createaccount.presentation
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Patterns
 import androidx.fragment.app.Fragment
@@ -19,6 +20,7 @@ import com.kalex.dogescollection.authentication.FieldKey
 import com.kalex.dogescollection.authentication.RegexPatterns
 import com.kalex.dogescollection.authentication.RegexValidationState
 import com.kalex.dogescollection.authentication.epoxy.*
+import com.kalex.dogescollection.common.AuthenticationSwitcherNavigator
 import com.kalex.dogescollection.common.PreferencesHandler
 import com.kalex.dogescollection.common.networkstates.handleViewModelState
 import com.kalex.dogescollection.databinding.FragmentCreateAccountBinding
@@ -31,7 +33,7 @@ import javax.inject.Inject
 class CreateAccountFragment : Fragment() {
     private var _binding: FragmentCreateAccountBinding? = null
     private val binding get() = _binding!!
-
+    private lateinit var authSwitcherNavigator: AuthenticationSwitcherNavigator
     @Inject
     lateinit var regexValidationState: RegexValidationState
 
@@ -138,7 +140,7 @@ class CreateAccountFragment : Fragment() {
         handleViewModelState(createAccountViewModel.authenticationState,
             onSuccess = {
                 preferencesHandler.setLoggedInUser(it)
-                findNavController().navigate(CreateAccountFragmentDirections.actionCreateAccountFragmentToDogListFragment())
+                authSwitcherNavigator.onUserCreated()
                         },
             onLoading = {},
             onError = {
@@ -152,5 +154,14 @@ class CreateAccountFragment : Fragment() {
                     .show()
             }
         )
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        authSwitcherNavigator = try {
+            context as AuthenticationSwitcherNavigator
+        } catch (e: ClassCastException) {
+            throw ClassCastException("$context must implement LoginFragmentActions")
+        }
     }
 }

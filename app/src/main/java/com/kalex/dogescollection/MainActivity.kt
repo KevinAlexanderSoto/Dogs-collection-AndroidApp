@@ -7,12 +7,13 @@ import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.navigateUp
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.kalex.dogescollection.authentication.login.presentation.LoginFragmentDirections
+import com.kalex.dogescollection.common.AuthenticationSwitcherNavigator
 import com.kalex.dogescollection.common.PreferencesHandler
 import com.kalex.dogescollection.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,13 +23,13 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), AuthenticationSwitcherNavigator {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private lateinit var camerabutton: FloatingActionButton
     private var isUserLogged = true
-
+    private lateinit var navController : NavController
     @Inject
     lateinit var preferencesHandler: PreferencesHandler
 
@@ -54,7 +55,7 @@ class MainActivity : AppCompatActivity() {
             isUserLogged = false
         }
         val buildNavController = setStartDestination(isUserLogged)
-
+        navController = buildNavController
         NavigationUI.setupWithNavController(binding.bottomAppBar, buildNavController)
 
         appBarConfiguration = AppBarConfiguration(buildNavController.graph)
@@ -98,9 +99,22 @@ class MainActivity : AppCompatActivity() {
         binding.bottomAppBar.visibility = state
     }
     override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
+    }
+
+    override fun onUserAuthenticated() {
+        setBottomActionVisibility(View.VISIBLE)
+        navController.navigate(LoginFragmentDirections.actionLoginFragmentToDogListFragment())
+    }
+
+    override fun onCreateNewUser() {
+        navController.navigate(LoginFragmentDirections.actionLoginFragmentToCreateAccountFragment())
+    }
+
+    override fun onUserCreated() {
+        setBottomActionVisibility(View.VISIBLE)
+        navController.navigate(LoginFragmentDirections.actionLoginFragmentToDogListFragment())
     }
 
 }
