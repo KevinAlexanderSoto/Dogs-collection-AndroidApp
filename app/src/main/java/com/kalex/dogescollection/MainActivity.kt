@@ -13,9 +13,13 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.navigateUp
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kalex.dogescollection.authentication.login.presentation.LoginFragmentDirections
+import com.kalex.dogescollection.camera.CameraFragmentDirections
+import com.kalex.dogescollection.camera.DogResultFragmentDirections
 import com.kalex.dogescollection.common.AuthenticationSwitcherNavigator
+import com.kalex.dogescollection.common.CameraSwitcherNavigator
 import com.kalex.dogescollection.common.PreferencesHandler
 import com.kalex.dogescollection.databinding.ActivityMainBinding
+import com.kalex.dogescollection.dogList.model.data.alldogs.Dog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -23,7 +27,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), AuthenticationSwitcherNavigator {
+class MainActivity : AppCompatActivity(), AuthenticationSwitcherNavigator, CameraSwitcherNavigator {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
@@ -115,6 +119,22 @@ class MainActivity : AppCompatActivity(), AuthenticationSwitcherNavigator {
     override fun onUserCreated() {
         setBottomActionVisibility(View.VISIBLE)
         navController.navigate(LoginFragmentDirections.actionLoginFragmentToDogListFragment())
+    }
+
+    override fun onDogRecognised(foundDog: Dog) {
+        val bundle = CameraFragmentDirections.actionCameraFragmentToDogResultFragment(foundDog)
+        setBottomActionVisibility(View.GONE)
+        navController.navigate(bundle)
+    }
+
+    override fun onDogAddToCollection() {
+        setBottomActionVisibility(View.VISIBLE)
+        navController.navigate(DogResultFragmentDirections.actionDogResultFragmentToDogListFragment())
+    }
+
+    override fun onRetryRecognizeDog() {
+        navController.navigate(DogResultFragmentDirections.actionDogResultFragmentToCameraFragment())
+        setBottomActionVisibility(View.VISIBLE)
     }
 
 }

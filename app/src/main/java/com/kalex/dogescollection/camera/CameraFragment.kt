@@ -2,6 +2,7 @@ package com.kalex.dogescollection.camera
 
 import android.app.Dialog
 import android.content.ContentValues
+import android.content.Context
 import android.graphics.*
 import android.media.Image
 import android.os.Build
@@ -24,6 +25,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kalex.dogescollection.R
 import com.kalex.dogescollection.camera.utils.BitmapUtils
+import com.kalex.dogescollection.common.AuthenticationSwitcherNavigator
+import com.kalex.dogescollection.common.CameraSwitcherNavigator
 import com.kalex.dogescollection.common.networkstates.handleViewModelState
 import com.kalex.dogescollection.dogList.model.data.alldogs.Dog
 import com.kalex.dogescollection.dogList.presentation.viewmodel.DogPredictViewModel
@@ -43,8 +46,8 @@ class CameraFragment : BottomSheetDialogFragment(R.layout.fragment_camera) {
     private val cameraPreviewView: PreviewView
         get() = requireView().findViewById(R.id.viewFinder)
 
-    private val takePhotoButton: FloatingActionButton
-        get() = requireView().findViewById(R.id.cameraButton)
+    private lateinit var takePhotoButton: FloatingActionButton
+    private lateinit var cameraSwitcherNavigator: CameraSwitcherNavigator
 
     @Inject
     lateinit var classifier: Classifier
@@ -73,13 +76,13 @@ class CameraFragment : BottomSheetDialogFragment(R.layout.fragment_camera) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+         takePhotoButton = view.findViewById<FloatingActionButton>(R.id.cameraButton)
 
         cameraExecutor = Executors.newSingleThreadExecutor()
 
         cameraPreviewUseCase()
 
     }
-
 
     private fun takePictureUseCase() {
         // Get a stable reference of the modifiable image capture use case
@@ -164,9 +167,7 @@ class CameraFragment : BottomSheetDialogFragment(R.layout.fragment_camera) {
 
     private fun handleSuccessStatus(foundDog: Dog) {
         handleLoadingStatus(false)
-        val bundle = CameraFragmentDirections.actionCameraFragmentToDogListDetailFragment(foundDog)
-        findNavController().navigate(bundle)
-
+        cameraSwitcherNavigator.onDogRecognised(foundDog)
     }
 
     private fun handleLoadingStatus(isLoading: Boolean) {
@@ -246,18 +247,18 @@ class CameraFragment : BottomSheetDialogFragment(R.layout.fragment_camera) {
         }, ContextCompat.getMainExecutor(requireContext()))
 
     }
-    private fun ImageProxy.convertImageProxyToBitmap(): Bitmap {
-        val buffer = planes[0].buffer
-        buffer.rewind()
-        val bytes = ByteArray(buffer.capacity())
-        buffer.get(bytes)
-        return BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
-    }
     override fun onDestroy() {
         super.onDestroy()
         cameraExecutor.shutdown()
     }
-
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        cameraSwitcherNavigator = try {
+            context as CameraSwitcherNavigator
+        } catch (e: ClassCastException) {
+            throw ClassCastException("$context must implement cameraSwitcherNavigator")
+        }
+    }
     companion object {
         private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
 

@@ -33,9 +33,6 @@
             android:id="@+id/action_DogListDetailFragment_to_DogListFragment"
             app:destination="@id/DogListFragment" />
 
-        <action
-            android:id="@+id/action_DogListDetailFragment_to_CameraFragment"
-            app:destination="@id/CameraFragmentNav" />
         <argument
             android:name="dog"
             android:defaultValue="@null"
@@ -56,8 +53,8 @@
         android:label="camera"
         tools:layout="@layout/fragment_camera">
         <action
-            android:id="@+id/action_CameraFragment_to_DogListDetailFragment"
-            app:destination="@id/DogListDetailFragment">
+            android:id="@+id/action_CameraFragment_to_DogResultFragment"
+            app:destination="@id/dogResultFragment">
             <argument
                 android:name="dog"
                 android:defaultValue="@null"
@@ -66,4 +63,24 @@
         </action>
 
     </dialog>
+    <fragment
+        android:id="@+id/dogResultFragment"
+        android:name="com.kalex.dogescollection.camera.DogResultFragment"
+        android:label="fragment_dog_result"
+        tools:layout="@layout/fragment_dog_result"
+        >
+        <action
+            android:id="@+id/action_DogResultFragment_to_CameraFragment"
+            app:destination="@id/CameraFragmentNav" />
+        <argument
+            android:name="dog"
+            android:defaultValue="@null"
+            app:argType="com.kalex.dogescollection.dogList.model.data.alldogs.Dog"
+            app:nullable="true" />
+
+        <action
+            android:id="@+id/action_dogResultFragment_to_DogListFragment"
+            app:destination="@id/DogListFragment" />
+
+    </fragment>
 </navigation>
