@@ -4,7 +4,6 @@ import android.app.Dialog
 import android.content.ContentValues
 import android.content.Context
 import android.graphics.*
-import android.media.Image
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -17,22 +16,20 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kalex.dogescollection.R
-import com.kalex.dogescollection.camera.utils.BitmapUtils
-import com.kalex.dogescollection.common.AuthenticationSwitcherNavigator
 import com.kalex.dogescollection.common.CameraSwitcherNavigator
 import com.kalex.dogescollection.common.networkstates.handleViewModelState
 import com.kalex.dogescollection.dogList.model.data.alldogs.Dog
 import com.kalex.dogescollection.dogList.presentation.viewmodel.DogPredictViewModel
-import com.kalex.dogescollection.tensorflow.Classifier
+import com.kalex.dogescollection.tensorflow.ClassifierRepository
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.ByteArrayOutputStream
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService
@@ -50,7 +47,7 @@ class CameraFragment : BottomSheetDialogFragment(R.layout.fragment_camera) {
     private lateinit var cameraSwitcherNavigator: CameraSwitcherNavigator
 
     @Inject
-    lateinit var classifier: Classifier
+    lateinit var classifierRepository: ClassifierRepository
 
     private val dogPredictViewModel: DogPredictViewModel by viewModels()
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -76,7 +73,7 @@ class CameraFragment : BottomSheetDialogFragment(R.layout.fragment_camera) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-         takePhotoButton = view.findViewById<FloatingActionButton>(R.id.cameraButton)
+        takePhotoButton = view.findViewById<FloatingActionButton>(R.id.cameraButton)
 
         cameraExecutor = Executors.newSingleThreadExecutor()
 
@@ -118,9 +115,6 @@ class CameraFragment : BottomSheetDialogFragment(R.layout.fragment_camera) {
                         output.savedUri
                     )
                     // BitmapFactory.decodeFile(output.savedUri.toString().replace("content://",""))
-                    val firstDog = classifier.recognizeImage(imageBitmap).first()
-                    dogPredictViewModel.getDogByPredictedId(firstDog.DogId)
-                    handlePredictedViewModel()
                 }
             }
         )
@@ -139,6 +133,7 @@ class CameraFragment : BottomSheetDialogFragment(R.layout.fragment_camera) {
             }
         }
     }
+
     private fun handlePredictedViewModel() {
 
         handleViewModelState(dogPredictViewModel.dogState,
@@ -153,6 +148,7 @@ class CameraFragment : BottomSheetDialogFragment(R.layout.fragment_camera) {
             }
         )
     }
+
     private fun handleErrorStatus(exception: String) {
         handleLoadingStatus(false)
         MaterialAlertDialogBuilder(requireContext())
@@ -179,35 +175,30 @@ class CameraFragment : BottomSheetDialogFragment(R.layout.fragment_camera) {
         }
 
     }
+
     @androidx.annotation.OptIn(androidx.camera.core.ExperimentalGetImage::class)
-        private fun imageAnalysisUseCase(): ImageAnalysis {
+    private fun imageAnalysisUseCase(): ImageAnalysis {
         //ImageAnalysis UseCase Section
         val imageAnalysis = ImageAnalysis.Builder()
             .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
             .build()
         imageAnalysis.setAnalyzer(cameraExecutor) { imageProxy ->
+            lifecycleScope.launch {
+                val confidence = classifierRepository.recognizeImage(imageProxy)
 
-            val bitMapImage = BitmapUtils.getBitmap(imageProxy)
-
-            val firstDog = bitMapImage?.let { classifier.recognizeImage(it).first() }
-
-            if (firstDog != null) {
-                if (firstDog.confidence > 80.0) {
+                if (confidence.confidence > 80.0) {
                     takePhotoButton.alpha = 1f
                     takePhotoButton.setOnClickListener {
-                        dogPredictViewModel.getDogByPredictedId(firstDog.DogId)
+                        dogPredictViewModel.getDogByPredictedId(confidence.DogId)
                         handlePredictedViewModel()
-                        //takePictureUseCase()
                     }
                 } else {
-                    takePhotoButton.setOnClickListener {
-                        null
-                    }
+                    takePhotoButton.setOnClickListener { null }
                     takePhotoButton.alpha = 0.3f
                 }
-            }
-            imageProxy.close()
 
+                imageProxy.close()
+            }
         }
         return imageAnalysis
     }
@@ -247,10 +238,12 @@ class CameraFragment : BottomSheetDialogFragment(R.layout.fragment_camera) {
         }, ContextCompat.getMainExecutor(requireContext()))
 
     }
+
     override fun onDestroy() {
         super.onDestroy()
         cameraExecutor.shutdown()
     }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         cameraSwitcherNavigator = try {
@@ -259,6 +252,7 @@ class CameraFragment : BottomSheetDialogFragment(R.layout.fragment_camera) {
             throw ClassCastException("$context must implement cameraSwitcherNavigator")
         }
     }
+
     companion object {
         private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
 
