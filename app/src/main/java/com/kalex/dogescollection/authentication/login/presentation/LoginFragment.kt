@@ -69,9 +69,7 @@ class LoginFragment : Fragment() {
                     //TODO: implementEror message
                     regexValidationState.updateInputFieldState(valid,currentText)
                 }
-                onIsFocus {
-                    regexValidationState.updateInputFieldState(false)
-                }
+
             }
             epoxyInputPassword {
                 id(2)
@@ -81,9 +79,7 @@ class LoginFragment : Fragment() {
                     //TODO: implement Eror message
                     regexValidationState.updateInputPasswordState(valid,currentText)
                 }
-                onIsFocus {
-                    regexValidationState.updateInputPasswordState(false)
-                }
+
             }
             epoxyButton {
                 id(3)

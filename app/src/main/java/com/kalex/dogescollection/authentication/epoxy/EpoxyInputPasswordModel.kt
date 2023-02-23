@@ -1,5 +1,10 @@
 package com.kalex.dogescollection.authentication.epoxy
 
+import android.os.CountDownTimer
+import android.text.Editable
+import android.text.TextWatcher
+import android.widget.TextView
+import androidx.core.widget.doOnTextChanged
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
@@ -18,7 +23,7 @@ abstract class EpoxyInputPasswordModel : EpoxyModelWithHolder<EpoxyInputPassword
     lateinit var regexValidation: Regex
 
     @EpoxyAttribute
-    lateinit var onIsFocus: () -> Unit
+    var onIsFocus: () -> Unit = {}
 
     @EpoxyAttribute
     lateinit var comparablePassword: () -> Map<ComparableKey,String>
@@ -51,6 +56,15 @@ abstract class EpoxyInputPasswordModel : EpoxyModelWithHolder<EpoxyInputPassword
                 textFieldLayoutView.error = null
             }
         }
+        holder.textFieldEditView.afterTextChangedDelayed{
+            handleComparable{
+                handleRegex(it)
+            }
+        }
+        holder.textFieldEditView.doOnTextChanged { text, start, before, count ->
+            onValidationResult.invoke(false,"")
+            textFieldLayoutView.error = null
+        }
     }
 
     fun handleComparable(function: () -> Unit){
@@ -80,8 +94,10 @@ abstract class EpoxyInputPasswordModel : EpoxyModelWithHolder<EpoxyInputPassword
 
     private fun handleRegex(currentText: String) {
         if (regexValidation.matches(currentText)) {
+            textFieldLayoutView.error = null
             onValidationResult.invoke(true,currentText)
         } else {
+            //TODO: Add message string
             handleError("Validation do not mach")
         }
     }
@@ -89,6 +105,25 @@ abstract class EpoxyInputPasswordModel : EpoxyModelWithHolder<EpoxyInputPassword
     inner class Holder():  KotlinEpoxyHolder(){
         val textFieldLayoutView by bind<TextInputLayout>(R.id.passwordInputText)
         val textFieldEditView by bind<TextInputEditText>(R.id.passwordEditText)
+    }
+    private fun TextView.afterTextChangedDelayed(afterTextChanged: (String) -> Unit) {
+        this.addTextChangedListener(object : TextWatcher {
+            var timer: CountDownTimer? = null
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun afterTextChanged(editable: Editable?) {
+                timer?.cancel()
+                timer = object : CountDownTimer(1300, 1800) {
+                    override fun onTick(millisUntilFinished: Long) {}
+                    override fun onFinish() {
+                        afterTextChanged.invoke(editable.toString())
+                    }
+                }.start()
+            }
+        })
     }
 }
 

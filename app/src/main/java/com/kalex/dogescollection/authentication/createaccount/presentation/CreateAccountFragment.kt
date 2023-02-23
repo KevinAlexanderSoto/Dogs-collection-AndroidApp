@@ -65,9 +65,6 @@ class CreateAccountFragment : Fragment() {
                     //TODO: implementEror message
                     regexValidationState.updateInputFieldState(valid,currentText)
                 }
-                onIsFocus {
-                    regexValidationState.updateInputFieldState(false)
-                }
             }
             epoxyInputPassword {
                 id(28)
@@ -77,9 +74,6 @@ class CreateAccountFragment : Fragment() {
                     //TODO: implement Eror message
                     regexValidationState.updateInputPasswordState(valid,currentText)
                 }
-                onIsFocus {
-                    regexValidationState.updateInputPasswordState(false)
-                }
             }
             epoxyInputPassword {
                 id(39)
@@ -88,9 +82,6 @@ class CreateAccountFragment : Fragment() {
                 onValidationResult { valid, currentText ->
                     //TODO: implement Eror message
                     regexValidationState.updateInputPassword2State(valid,currentText)
-                }
-                onIsFocus {
-                    regexValidationState.updateInputPassword2State(false)
                 }
                 isComparable(true)
                 comparablePassword{
@@ -128,6 +119,7 @@ class CreateAccountFragment : Fragment() {
     }
 
     private fun setUpNavBar() {
+        //TODO: Add strings
         binding.toolbar.title = "Create Account"
         binding.toolbar.setNavigationIcon(R.drawable.ic_arrow_back_24)
         binding.toolbar.setNavigationOnClickListener {
@@ -161,7 +153,7 @@ class CreateAccountFragment : Fragment() {
         authSwitcherNavigator = try {
             context as AuthenticationSwitcherNavigator
         } catch (e: ClassCastException) {
-            throw ClassCastException("$context must implement LoginFragmentActions")
+            throw ClassCastException("$context must implement authSwitcherNavigator")
         }
     }
 }
