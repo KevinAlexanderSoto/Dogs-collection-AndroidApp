@@ -10,12 +10,11 @@
         android:id="@+id/toolbarcontainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?colorSecondary">
+        >
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:contentScrim="?colorSecondary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:titleEnabled="false">
 
@@ -24,10 +23,9 @@
                 style="?toolbarStyle"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="?colorSecondary"
                 app:layout_collapseMode="pin"
                 app:layout_scrollFlags="scroll|enterAlways|snap"
-                app:titleTextColor="?colorOnSecondary"
+                app:titleTextColor="@color/colorOnBackground"
                 tools:title="Account Details" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -60,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:elevation="10dp"
-                app:cardBackgroundColor="@color/aquamarineligthnes"
+                app:cardBackgroundColor="@color/SecondaryContainer"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/dogimage">
@@ -98,7 +96,7 @@
                         android:id="@+id/dog_list_divider"
                         style="@style/line_divide"
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="2dp"
                         app:layout_constraintTop_toBottomOf="@+id/dogdescriptiontext" />
 
                     <com.airbnb.epoxy.EpoxyRecyclerView

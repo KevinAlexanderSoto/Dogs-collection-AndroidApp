@@ -10,12 +10,11 @@
         android:id="@+id/toolbarcontainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?colorSecondary">
+        >
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:contentScrim="?colorSecondary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:titleEnabled="false">
 
@@ -24,10 +23,8 @@
                 style="?toolbarStyle"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="?colorSecondary"
                 app:layout_collapseMode="pin"
                 app:layout_scrollFlags="scroll|enterAlways|snap"
-                app:titleTextColor="?colorOnSecondary"
                 tools:title="Account Details" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
