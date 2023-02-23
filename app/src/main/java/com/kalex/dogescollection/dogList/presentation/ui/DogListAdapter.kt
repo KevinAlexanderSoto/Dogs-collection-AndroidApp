@@ -30,13 +30,8 @@ class DogListAdapter @Inject constructor() : ListAdapter<Dog, DogListAdapter.Vie
                     }
                     dogListCard.setOnClickListener{onItemClick?.invoke(dog)}
                 }else{
-                    dogListCard.setOnLongClickListener {
-                        onLongItemClick?.invoke(dog)
-                        true
-                    }
                     dogImage.setImageDrawable(ContextCompat.getDrawable(dogImage.context,R.drawable.round_question_mark_24))
                 }
-
             }
         }
     }

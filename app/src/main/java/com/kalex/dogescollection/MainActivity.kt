@@ -1,5 +1,6 @@
 package com.kalex.dogescollection
 
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -44,7 +45,7 @@ class MainActivity : AppCompatActivity(), AuthenticationSwitcherNavigator, Camer
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
         camerabutton = binding.cameraActionButton
         setNavBar()
     }

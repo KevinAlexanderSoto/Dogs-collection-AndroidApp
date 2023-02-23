@@ -47,7 +47,7 @@ class DogDetailFragment : Fragment() {
 
     private fun setUpNavBar() {
         binding.toolbar.title = "Dog detail"
-        binding.toolbar.setNavigationIcon(com.google.android.material.R.drawable.ic_arrow_back_black_24)
+        binding.toolbar.setNavigationIcon(R.drawable.ic_arrow_back_24)
         binding.toolbar.setNavigationOnClickListener {
             findNavController().navigateUp()
         }
