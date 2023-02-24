@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import coil.load
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.kalex.dogescollection.R
 import com.kalex.dogescollection.common.CameraSwitcherNavigator
 import com.kalex.dogescollection.common.networkstates.handleViewModelState
@@ -58,7 +59,7 @@ class DogResultFragment : Fragment() {
             }
             //TODO: Add strings resources
             confirmtext.text = "Este es tu Perror?"
-
+            binding.linearProgress.indeterminateAnimationType = LinearProgressIndicator.INDETERMINATE_ANIMATION_TYPE_DISJOINT
             positiveButton.setOnClickListener{addDogToUserCollection(dog)}
             negativeButton.setOnClickListener{goBackToCameraFragment()}
         }

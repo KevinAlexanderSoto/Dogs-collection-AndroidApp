@@ -9,6 +9,7 @@ object Constants {
     const val CREATE_ACCOUNT_URL = "sign_up"
     const val LOGIN_URL = "sign_in"
     const val GET_DOG_BY_ML_ID = "find_dog_by_ml_id"
+    const val GET_PREDICTED_QUERY = "ml_id"
 
     const val MAX_RECOGNITION_DOG_RESULTS = 5
     const val MODEL_PATH = "model.tflite"

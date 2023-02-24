@@ -33,6 +33,14 @@
         android:contentDescription="take a photo" />
 
 
-
+    <!-- Circular progress indicator -->
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+       android:id="@+id/circularindicator"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:indeterminate="true"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

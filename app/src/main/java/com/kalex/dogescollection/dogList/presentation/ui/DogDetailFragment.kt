@@ -46,12 +46,11 @@ class DogDetailFragment : Fragment() {
     }
 
     private fun setUpNavBar() {
-        binding.toolbar.title = "Dog detail"
+        binding.toolbar.title = resources.getString(R.string.dog_detail_title)
         binding.toolbar.setNavigationIcon(R.drawable.ic_arrow_back_24)
         binding.toolbar.setNavigationOnClickListener {
             findNavController().navigateUp()
         }
-
     }
 
     private fun setUpViews(dog: Dog) {

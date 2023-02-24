@@ -39,4 +39,12 @@
     <string name="authentication_log_out_message">deseas cerrar la aplicacion?</string>
     <string name="add_dog_error">Error adding the dog to the collection</string>
     <string name="menu_dog_list">tus perros</string>
+    <string name="permission_rationale_title">\"Aceptar los permisos\"</string>
+    <string name="permission_rationale_message">"Por favor acepta los permisos para poder agregar mas perritos a tu coleccion. Dale en aceptar y vuelve a intentarlo "</string>
+    <string name="permission_positive_button_title">Aceptar</string>
+    <string name="settings_title">Configuraciones</string>
+    <string name="settings_log_out_button_text">"cerrar sesion "</string>
+    <string name="dog_detail_title">Detalles del perro</string>
+    <string name="dog_collection_error">Error descargando tu lista de perros, intentalo mas tarde.</string>
+    <string name="create_user_screen_title">Crear Cuenta</string>
 </resources>

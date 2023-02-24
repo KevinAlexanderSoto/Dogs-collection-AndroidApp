@@ -22,9 +22,13 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.progressindicator.CircularProgressIndicator
+import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.kalex.dogescollection.R
 import com.kalex.dogescollection.common.CameraSwitcherNavigator
 import com.kalex.dogescollection.common.networkstates.handleViewModelState
+import com.kalex.dogescollection.databinding.DogListFragmentBinding
+import com.kalex.dogescollection.databinding.FragmentCameraBinding
 import com.kalex.dogescollection.dogList.model.data.alldogs.Dog
 import com.kalex.dogescollection.dogList.presentation.viewmodel.DogPredictViewModel
 import com.kalex.dogescollection.tensorflow.ClassifierRepository
@@ -38,10 +42,15 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class CameraFragment : BottomSheetDialogFragment(R.layout.fragment_camera) {
+
     private var imageCapture: ImageCapture? = null
     private lateinit var cameraExecutor: ExecutorService
+
     private val cameraPreviewView: PreviewView
         get() = requireView().findViewById(R.id.viewFinder)
+
+    private val circularindicator: CircularProgressIndicator
+        get() = requireView().findViewById(R.id.circularindicator)
 
     private lateinit var takePhotoButton: FloatingActionButton
     private lateinit var cameraSwitcherNavigator: CameraSwitcherNavigator
@@ -154,9 +163,8 @@ class CameraFragment : BottomSheetDialogFragment(R.layout.fragment_camera) {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(resources.getString(R.string.ErrorTitle))
             .setMessage(exception)
-            .setPositiveButton(resources.getString(R.string.ErrorbuttonText)) { dialog, which ->
-                //TODO : Implement this
-
+            .setPositiveButton(resources.getString(R.string.ErrorbuttonText)) { dialog, _ ->
+               dialog.dismiss()
             }
             .show()
     }
@@ -167,13 +175,11 @@ class CameraFragment : BottomSheetDialogFragment(R.layout.fragment_camera) {
     }
 
     private fun handleLoadingStatus(isLoading: Boolean) {
-        //TODO : Implement this
         if (isLoading) {
-            //binding.linearProgress.visibility = View.VISIBLE
+            circularindicator.visibility = View.VISIBLE
         } else {
-            //binding.linearProgress.visibility = View.GONE
+            circularindicator.visibility = View.GONE
         }
-
     }
 
     @androidx.annotation.OptIn(androidx.camera.core.ExperimentalGetImage::class)

@@ -18,15 +18,13 @@ import com.kalex.dogescollection.R
 import com.kalex.dogescollection.authentication.FieldKey
 import com.kalex.dogescollection.authentication.RegexPatterns
 import com.kalex.dogescollection.authentication.RegexValidationState
-import com.kalex.dogescollection.authentication.epoxy.epoxyButton
-import com.kalex.dogescollection.authentication.epoxy.epoxyInputField
-import com.kalex.dogescollection.authentication.epoxy.epoxyInputPassword
-import com.kalex.dogescollection.authentication.epoxy.epoxyTextButton
-import com.kalex.dogescollection.authentication.epoxy.epoxyTextTitle
+import com.kalex.dogescollection.authentication.model.dto.User
 import com.kalex.dogescollection.common.AuthenticationSwitcherNavigator
+import com.kalex.dogescollection.common.EpoxyMarginCon
 import com.kalex.dogescollection.common.PreferencesHandler
 import com.kalex.dogescollection.common.networkstates.handleViewModelState
 import com.kalex.dogescollection.databinding.FragmentLoginBinding
+import com.kalex.dogescollection.epoxy.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -60,6 +58,7 @@ class LoginFragment : Fragment() {
             epoxyTextTitle {
                 id(0)
                 titleText(getString(R.string.authentication_login_title))
+                textMargin(EpoxyMarginCon(1f,20f,1f,40f))
             }
             epoxyInputField {
                 id(1)
@@ -69,7 +68,6 @@ class LoginFragment : Fragment() {
                     //TODO: implementEror message
                     regexValidationState.updateInputFieldState(valid,currentText)
                 }
-
             }
             epoxyInputPassword {
                 id(2)
@@ -79,7 +77,6 @@ class LoginFragment : Fragment() {
                     //TODO: implement Eror message
                     regexValidationState.updateInputPasswordState(valid,currentText)
                 }
-
             }
             epoxyButton {
                 id(3)
@@ -106,31 +103,39 @@ class LoginFragment : Fragment() {
                 id(4)
                 buttonText(getString(R.string.authentication_login_buttonText_text))
                 topButtonText(getString(R.string.authentication_login_buttonText_title))
-                onClickListener {
-                    authSwitcherNavigator.onCreateNewUser()
-                }
+                onClickListener { authSwitcherNavigator.onCreateNewUser() }
             }
         }
-
     }
     private fun handleOnCreateAccountStates() {
         handleViewModelState(loginViewModel.signInState,
-            onSuccess = {
-                Toast.makeText(requireContext(),getString(R.string.authentication_login_success_message),Toast.LENGTH_LONG).show()
-                preferencesHandler.setLoggedInUser(it)
-                authSwitcherNavigator.onUserAuthenticated()
-            },
-            onLoading = {},
+            onSuccess = { handleSuccessStatus(it) },
+            onLoading = { handleLoadingStatus(true) },
             onError = {
+                handleLoadingStatus(false)
                 MaterialAlertDialogBuilder(requireContext())
                     .setTitle(resources.getString(R.string.error_title))
                     .setMessage(resources.getString(it))
-                    .setPositiveButton(resources.getString(R.string.error_accept)) { dialog, which ->
+                    .setPositiveButton(resources.getString(R.string.error_accept)) { dialog, _ ->
                         dialog.dismiss()
                     }
                     .show()
             }
         )
+    }
+    private fun handleSuccessStatus(user: User) {
+        Toast.makeText(requireContext(),getString(R.string.authentication_login_success_message),Toast.LENGTH_SHORT).show()
+        preferencesHandler.setLoggedInUser(user)
+        authSwitcherNavigator.onUserAuthenticated()
+    }
+    private fun handleLoadingStatus(isLoading: Boolean) {
+        if (isLoading) {
+            binding.linearProgress.visibility = View.VISIBLE
+            binding.loginEpoxyRecyclerView.visibility = View.GONE
+        } else {
+            binding.loginEpoxyRecyclerView.visibility = View.VISIBLE
+            binding.linearProgress.visibility = View.GONE
+        }
     }
     override fun onAttach(context: Context) {
         super.onAttach(context)

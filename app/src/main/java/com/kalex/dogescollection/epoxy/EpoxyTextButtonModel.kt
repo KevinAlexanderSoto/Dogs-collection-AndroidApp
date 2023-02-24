@@ -1,4 +1,4 @@
-package com.kalex.dogescollection.authentication.epoxy
+package com.kalex.dogescollection.epoxy
 
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass

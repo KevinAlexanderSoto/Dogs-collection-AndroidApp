@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity(), AuthenticationSwitcherNavigator, Camer
             // Request camera permissions
             permissionHandler.start()
             lifecycleScope.launch {
-                permissionHandler.currentAddState.collectLatest {
+                permissionHandler.currentPermissionState.collectLatest {
                     if (it) startCameraFragment(buildNavController)
                 }
             }

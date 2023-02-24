@@ -19,11 +19,15 @@ import com.kalex.dogescollection.R
 import com.kalex.dogescollection.authentication.FieldKey
 import com.kalex.dogescollection.authentication.RegexPatterns
 import com.kalex.dogescollection.authentication.RegexValidationState
-import com.kalex.dogescollection.authentication.epoxy.*
+import com.kalex.dogescollection.authentication.model.dto.User
 import com.kalex.dogescollection.common.AuthenticationSwitcherNavigator
 import com.kalex.dogescollection.common.PreferencesHandler
 import com.kalex.dogescollection.common.networkstates.handleViewModelState
 import com.kalex.dogescollection.databinding.FragmentCreateAccountBinding
+import com.kalex.dogescollection.epoxy.ComparableKey
+import com.kalex.dogescollection.epoxy.epoxyButton
+import com.kalex.dogescollection.epoxy.epoxyInputField
+import com.kalex.dogescollection.epoxy.epoxyInputPassword
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -34,13 +38,14 @@ class CreateAccountFragment : Fragment() {
     private var _binding: FragmentCreateAccountBinding? = null
     private val binding get() = _binding!!
     private lateinit var authSwitcherNavigator: AuthenticationSwitcherNavigator
+
     @Inject
     lateinit var regexValidationState: RegexValidationState
 
     @Inject
     lateinit var preferencesHandler: PreferencesHandler
 
-    private val createAccountViewModel : CreateAccountViewModel by viewModels()
+    private val createAccountViewModel: CreateAccountViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -62,8 +67,7 @@ class CreateAccountFragment : Fragment() {
                 textHint(getString(R.string.authentication_login_user_text_hint))
                 regexValidation(Patterns.EMAIL_ADDRESS.toRegex())
                 onValidationResult { valid, currentText ->
-                    //TODO: implementEror message
-                    regexValidationState.updateInputFieldState(valid,currentText)
+                    regexValidationState.updateInputFieldState(valid, currentText)
                 }
             }
             epoxyInputPassword {
@@ -71,8 +75,7 @@ class CreateAccountFragment : Fragment() {
                 textHint(getString(R.string.authentication_login_password_text_hint))
                 regexValidation(Regex(RegexPatterns.PASSWORD_REGEX_PATTERN))
                 onValidationResult { valid, currentText ->
-                    //TODO: implement Eror message
-                    regexValidationState.updateInputPasswordState(valid,currentText)
+                    regexValidationState.updateInputPasswordState(valid, currentText)
                 }
             }
             epoxyInputPassword {
@@ -80,17 +83,16 @@ class CreateAccountFragment : Fragment() {
                 textHint(getString(R.string.authentication_login_password_text_hint))
                 regexValidation(Regex(RegexPatterns.PASSWORD_REGEX_PATTERN))
                 onValidationResult { valid, currentText ->
-                    //TODO: implement Eror message
-                    regexValidationState.updateInputPassword2State(valid,currentText)
+                    regexValidationState.updateInputPassword2State(valid, currentText)
                 }
                 isComparable(true)
-                comparablePassword{
+                comparablePassword {
                     mapOf(
-                        ComparableKey.COMPARABLE_PASSWORD_TEXT to regexValidationState.getFieldValue(FieldKey.PASSWORD_ONE)
-                    ,
-                    ComparableKey.COMPARABLE_PASSWORD_ERROR to getString(R.string.not_equals_passwords_error)
+                        ComparableKey.COMPARABLE_PASSWORD_TEXT to regexValidationState.getFieldValue(
+                            FieldKey.PASSWORD_ONE
+                        ),
+                        ComparableKey.COMPARABLE_PASSWORD_ERROR to getString(R.string.not_equals_passwords_error)
                     )
-
                 }
             }
             epoxyButton {
@@ -106,10 +108,8 @@ class CreateAccountFragment : Fragment() {
                 }
                 enableButton { isEnable: MaterialButton ->
                     lifecycleScope.launch {
-                        viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                            regexValidationState.regexState.collectLatest {
-                                isEnable.isEnabled = it
-                            }
+                        regexValidationState.regexState.collectLatest {
+                            isEnable.isEnabled = it
                         }
                     }
                 }
@@ -119,33 +119,45 @@ class CreateAccountFragment : Fragment() {
     }
 
     private fun setUpNavBar() {
-        //TODO: Add strings
-        binding.toolbar.title = "Create Account"
+        binding.toolbar.title = resources.getString(R.string.create_user_screen_title)
         binding.toolbar.setNavigationIcon(R.drawable.ic_arrow_back_24)
-        binding.toolbar.setNavigationOnClickListener {
-            findNavController().navigateUp()
-        }
-
+        binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
     }
 
     private fun handleOnCreateAccountStates() {
         handleViewModelState(createAccountViewModel.authenticationState,
-            onSuccess = {
-                preferencesHandler.setLoggedInUser(it)
-                authSwitcherNavigator.onUserCreated()
-                        },
-            onLoading = {},
+            onSuccess = { handleSuccessStatus(it) },
+            onLoading = { handleLoadingStatus(true) },
             onError = {
-
                 MaterialAlertDialogBuilder(requireContext())
                     .setTitle(resources.getString(R.string.error_title))
                     .setMessage(resources.getString(it))
-                    .setPositiveButton(resources.getString(R.string.error_accept)) { dialog, which ->
+                    .setPositiveButton(resources.getString(R.string.error_accept)) { dialog, _ ->
                         dialog.dismiss()
                     }
                     .show()
             }
         )
+    }
+
+    private fun handleSuccessStatus(user: User) {
+        Toast.makeText(
+            requireContext(),
+            getString(R.string.authentication_login_success_message),
+            Toast.LENGTH_SHORT
+        ).show()
+        preferencesHandler.setLoggedInUser(user)
+        authSwitcherNavigator.onUserCreated()
+    }
+
+    private fun handleLoadingStatus(isLoading: Boolean) {
+        if (isLoading) {
+            binding.linearProgress.visibility = View.VISIBLE
+            binding.CreateAccountEpoxyRecyclerView.visibility = View.GONE
+        } else {
+            binding.CreateAccountEpoxyRecyclerView.visibility = View.VISIBLE
+            binding.linearProgress.visibility = View.GONE
+        }
     }
 
     override fun onAttach(context: Context) {

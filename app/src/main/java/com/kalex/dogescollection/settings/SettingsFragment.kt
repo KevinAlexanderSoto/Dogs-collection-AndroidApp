@@ -2,19 +2,18 @@ package com.kalex.dogescollection.settings
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat.finishAffinity
+import androidx.fragment.app.Fragment
 import com.kalex.dogescollection.MainActivity
 import com.kalex.dogescollection.R
-import com.kalex.dogescollection.authentication.epoxy.epoxyButton
-import com.kalex.dogescollection.authentication.epoxy.epoxyTextTitle
+import com.kalex.dogescollection.common.EpoxyMarginCon
 import com.kalex.dogescollection.common.PreferencesHandler
-import com.kalex.dogescollection.databinding.FragmentLoginBinding
 import com.kalex.dogescollection.databinding.FragmentSettingsBinding
+import com.kalex.dogescollection.epoxy.epoxyButton
+import com.kalex.dogescollection.epoxy.epoxyTextTitle
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -40,26 +39,21 @@ class SettingsFragment : Fragment() {
         binding.SettingEpoxyRecyclerView.withModels {
             epoxyTextTitle{
                 id(0)
-                //TODO:add strings resources
-                titleText("Configuraciones")
+                titleText(resources.getString(R.string.settings_title))
+                textMargin(EpoxyMarginCon(1f,20f,1f,10f))
             }
             epoxyButton{
                 id(1)
-                //TODO:add strings resources
-                buttonText("Cerrar seccion")
+                buttonText(resources.getString(R.string.settings_log_out_button_text))
                 initialButtonEnableState(true)
                 onClickListener{
                     preferencesHandler.onLogOutUser()
                     val intent = Intent(this@SettingsFragment.requireContext(),MainActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(intent)
-                    //getActivity()?.finish()
                 }
-                enableButton{
-
-                }
+                enableButton{}
             }
         }
     }
-
 }

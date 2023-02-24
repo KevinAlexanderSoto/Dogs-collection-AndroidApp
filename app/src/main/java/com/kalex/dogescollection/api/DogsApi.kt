@@ -32,6 +32,6 @@ interface DogsApi {
     suspend fun getDogCollection(): Dogs
 
     @GET(Constants.GET_DOG_BY_ML_ID)
-    suspend fun getDogPredicted(@Query("ml_id") id : String) : SingleDog
+    suspend fun getDogPredicted(@Query(Constants.GET_PREDICTED_QUERY) id : String) : SingleDog
 
 }

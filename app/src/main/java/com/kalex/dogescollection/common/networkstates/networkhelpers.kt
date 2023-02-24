@@ -5,6 +5,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.kalex.dogescollection.R
+import com.kalex.dogescollection.common.ErrorMessages
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flow
@@ -36,10 +37,11 @@ fun <T> makeNetworkCallHandler(
     } catch (e: Exception) {
 
         val errorMessage = when (e.message) {
-            "sign_up_error" -> R.string.sign_up_error
-            "sign_in_error" -> R.string.sign_in_error
-            "user_already_exists" -> R.string.user_already_exists
-            "error_adding_gos" -> R.string.add_dog_error
+            ErrorMessages.SIGN_UP_ERROR -> R.string.sign_up_error
+            ErrorMessages.SIGN_IN_ERROR -> R.string.sign_in_error
+            ErrorMessages.USER_ALREADY_EXIST -> R.string.user_already_exists
+            ErrorMessages.ERROR_ADDING_DOGS -> R.string.add_dog_error
+            ErrorMessages.DOG_COLLECTION_ERROR -> R.string.dog_collection_error
             else -> R.string.unknown_error_message
         }
 

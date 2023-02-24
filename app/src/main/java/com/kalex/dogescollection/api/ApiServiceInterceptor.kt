@@ -6,6 +6,8 @@ import okhttp3.Response
 
 /**
  * this will help to add the Auth token if it is needed
+ *
+ * @author Kevin Alexander (Kalex)
  * **/
 object ApiServiceInterceptor : Interceptor {
     const val AUTH_HEADER_KEY = "authentication_requested"
