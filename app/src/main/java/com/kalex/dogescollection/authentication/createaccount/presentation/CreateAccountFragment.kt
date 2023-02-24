@@ -119,7 +119,7 @@ class CreateAccountFragment : Fragment() {
     }
 
     private fun setUpNavBar() {
-        binding.toolbar.title = resources.getString(R.string.create_user_screen_title)
+        binding.toolbar.title = resources.getString(R.string.authentication_create_user_screen_title)
         binding.toolbar.setNavigationIcon(R.drawable.ic_arrow_back_24)
         binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
     }

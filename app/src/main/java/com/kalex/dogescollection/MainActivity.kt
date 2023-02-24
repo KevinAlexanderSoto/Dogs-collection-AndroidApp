@@ -92,7 +92,7 @@ class MainActivity : AppCompatActivity(), AuthenticationSwitcherNavigator, Camer
 
         } else {
             setBottomActionVisibility(View.GONE)
-            inflater.inflate(R.navigation.nav_graph)
+            inflater.inflate(R.navigation.authentication_graph)
         }
 
         val navController = navHostFragment.navController

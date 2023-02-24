@@ -2,32 +2,32 @@
     <string name="app_name">DogesCollection</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label"></string>
-    <string name="second_fragment_label">Create an account</string>
+    <string name="first_fragment_label" />
+    <string name="second_fragment_label">crear una cuenta</string>
     <string name="dog_list_fragment_label">Dog list</string>
     <string name="dog_detail_fragment_label">Dog list</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-    <string name="ErrorTitle">Errror</string>
+    <string name="ErrorTitle">Ups... hay un errror</string>
     <string name="ErrorText">Un error ha ocurrido</string>
     <string name="ErrorbuttonText">Aceptar</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="sign_up_error">sign up error</string>
-    <string name="sign_in_error">sign in error</string>
-    <string name="user_already_exists">"the user already exist "</string>
-    <string name="unknown_error_message">Unknown Error</string>
-    <string name="Internet_error_message">No internet connection</string>
-    <string name="not_equals_passwords_error">The passwords must match</string>
+    <string name="sign_up_error">Error creando usuario</string>
+    <string name="sign_in_error">Error iniciando seccion</string>
+    <string name="user_already_exists">El usuario ya existe, por favor inicie seccion</string>
+    <string name="unknown_error_message">Error desconocido, intenta otra vez</string>
+    <string name="Internet_error_message">No tienes conexion a internet</string>
+    <string name="not_equals_passwords_error">Las contrasenas deben ser iguales</string>
     <string name="error_accept">Accept</string>
     <string name="error_title">Error</string>
-    <string name="wrong_user_or_password_error_message">Check the User email or the password</string>
+    <string name="wrong_user_or_password_error_message">Revisa tu usuario o la contrasena</string>
 
     <string name="positive_button_text">aceptar</string>
+
     <string name="dog_detail_famale_title">Hembra</string>
     <string name="dog_detail_height_title">Altura</string>
     <string name="dog_detail_weight_title">Peso</string>
     <string name="dog_detail_male_title">Macho</string>
+
     <string name="authentication_login_title">Iniciar seccion</string>
     <string name="authentication_login_user_text_hint">Correo Electronico</string>
     <string name="authentication_login_password_text_hint">Contrasena</string>
@@ -39,15 +39,18 @@
     <string name="authentication_log_out_message">deseas cerrar la aplicacion?</string>
     <string name="authentication_password_regex_error">Contrasena no valida, ingresa letras, numeros y
     mayusculas</string>
-    <string name="add_dog_error">Error adding the dog to the collection</string>
+    <string name="authentication_login_password_confirm_text_hint">confirmar contrasena</string>
+    <string name="authentication_create_user_screen_title">Crear Cuenta</string>
+
+    <string name="add_dog_error">Error anadiendo perrito a la coleccion :(</string>
     <string name="menu_dog_list">tus perros</string>
-    <string name="permission_rationale_title">\"Aceptar los permisos\"</string>
-    <string name="permission_rationale_message">"Por favor acepta los permisos para poder agregar mas perritos a tu coleccion. Dale en aceptar y vuelve a intentarlo "</string>
+    <string name="permission_rationale_title">Aceptar los permisos</string>
+    <string name="permission_rationale_message">Por favor acepta los permisos para poder agregar mas perritos a tu coleccion. Dale en aceptar y vuelve a intentarlo </string>
     <string name="permission_positive_button_title">Aceptar</string>
     <string name="settings_title">Configuraciones</string>
-    <string name="settings_log_out_button_text">"cerrar sesion "</string>
+    <string name="settings_log_out_button_text">cerrar sesion</string>
     <string name="dog_detail_title">Detalles del perro</string>
     <string name="dog_collection_error">Error descargando tu lista de perros, intentalo mas tarde.</string>
-    <string name="create_user_screen_title">Crear Cuenta</string>
-    <string name="authentication_login_password_confirm_text_hint">confirmar contrasena</string>
+
+
 </resources>
