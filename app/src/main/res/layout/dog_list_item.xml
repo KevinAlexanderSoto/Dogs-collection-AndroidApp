@@ -12,17 +12,18 @@
         android:layout_height="wrap_content"
         android:text="hola mundo"
         android:layout_marginTop="8dp"
+        android:ellipsize="end"
         android:gravity="center"
         />
 <com.google.android.material.card.MaterialCardView
     android:id="@+id/dog_list_card"
-    android:layout_height="100dp"
+    android:layout_height="110dp"
     android:layout_width="match_parent"
     android:clickable="true"
     android:focusable="true"
     android:layout_margin="8dp"
     android:padding="4dp"
-    app:cardBackgroundColor="@color/CyanProcessligthnes">
+    app:cardBackgroundColor="@color/SecondaryContainer">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/dogImage"

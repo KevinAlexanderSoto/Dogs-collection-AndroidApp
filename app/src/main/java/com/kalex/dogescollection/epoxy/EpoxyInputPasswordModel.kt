@@ -1,5 +1,10 @@
-package com.kalex.dogescollection.authentication.epoxy
+package com.kalex.dogescollection.epoxy
 
+import android.os.CountDownTimer
+import android.text.Editable
+import android.text.TextWatcher
+import android.widget.TextView
+import androidx.core.widget.doOnTextChanged
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
@@ -18,7 +23,10 @@ abstract class EpoxyInputPasswordModel : EpoxyModelWithHolder<EpoxyInputPassword
     lateinit var regexValidation: Regex
 
     @EpoxyAttribute
-    lateinit var onIsFocus: () -> Unit
+    lateinit var regexError: String
+
+    @EpoxyAttribute
+    var onIsFocus: () -> Unit = {}
 
     @EpoxyAttribute
     lateinit var comparablePassword: () -> Map<ComparableKey,String>
@@ -36,12 +44,12 @@ abstract class EpoxyInputPasswordModel : EpoxyModelWithHolder<EpoxyInputPassword
     
     private var currentText: String = ""
     private lateinit var textFieldLayoutView: TextInputLayout
-    override fun bind(holder: EpoxyInputPasswordModel.Holder) {
+    override fun bind(holder: Holder) {
         super.bind(holder)
         textFieldLayoutView = holder.textFieldLayoutView
         holder.textFieldLayoutView.hint = textHint
         holder.textFieldEditView.setOnFocusChangeListener { _, focus: Boolean ->
-            currentText = holder.textFieldEditView.text.toString()
+
             if (!focus) {
                 handleComparable{
                     handleRegex(currentText)
@@ -51,9 +59,19 @@ abstract class EpoxyInputPasswordModel : EpoxyModelWithHolder<EpoxyInputPassword
                 textFieldLayoutView.error = null
             }
         }
+        holder.textFieldEditView.afterTextChangedDelayed{
+            handleComparable{
+                handleRegex(it)
+            }
+        }
+        holder.textFieldEditView.doOnTextChanged { text, _, _, _ ->
+            onValidationResult.invoke(false,"")
+            currentText = text.toString()
+            textFieldLayoutView.error = null
+        }
     }
 
-    fun handleComparable(function: () -> Unit){
+    private fun handleComparable(function: () -> Unit){
 
         if(isComparable){
             val map = comparablePassword.invoke()
@@ -72,23 +90,43 @@ abstract class EpoxyInputPasswordModel : EpoxyModelWithHolder<EpoxyInputPassword
         textFieldLayoutView.error = errorMessage
     }
 
-    private fun handleError(get: String?) {
+    private fun handleError(errorMessage: String?) {
 
-        onValidationError(get ?:"Unknown")
+        onValidationError(errorMessage ?:"Unknown")
         onValidationResult.invoke(false,"")
     }
 
     private fun handleRegex(currentText: String) {
         if (regexValidation.matches(currentText)) {
+            textFieldLayoutView.error = null
             onValidationResult.invoke(true,currentText)
         } else {
-            handleError("Validation do not mach")
+            handleError(regexError)
         }
     }
 
     inner class Holder():  KotlinEpoxyHolder(){
         val textFieldLayoutView by bind<TextInputLayout>(R.id.passwordInputText)
         val textFieldEditView by bind<TextInputEditText>(R.id.passwordEditText)
+    }
+    private fun TextView.afterTextChangedDelayed(afterTextChanged: (String) -> Unit) {
+        this.addTextChangedListener(object : TextWatcher {
+            var timer: CountDownTimer? = null
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun afterTextChanged(editable: Editable?) {
+                timer?.cancel()
+                timer = object : CountDownTimer(1300, 1800) {
+                    override fun onTick(millisUntilFinished: Long) {}
+                    override fun onFinish() {
+                        afterTextChanged.invoke(editable.toString())
+                    }
+                }.start()
+            }
+        })
     }
 }
 

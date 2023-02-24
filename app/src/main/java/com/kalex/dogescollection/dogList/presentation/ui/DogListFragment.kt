@@ -1,6 +1,6 @@
 package com.kalex.dogescollection.dogList.presentation.ui
 
-import android.content.Context
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +12,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.progressindicator.LinearProgressIndicator
+import com.google.android.material.progressindicator.LinearProgressIndicator.IndeterminateAnimationType
 import com.kalex.dogescollection.R
 import com.kalex.dogescollection.common.networkstates.handleViewModelState
 import com.kalex.dogescollection.databinding.DogListFragmentBinding
@@ -19,9 +21,6 @@ import com.kalex.dogescollection.dogList.model.data.alldogs.Dog
 import com.kalex.dogescollection.dogList.presentation.viewmodel.DogCollectionViewModel
 import com.kalex.dogescollection.dogList.presentation.viewmodel.DogsViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
 import javax.inject.Inject
 
 /**
@@ -30,24 +29,18 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class DogListFragment : Fragment() {
 
-    interface DogListFragmentActions {
-        fun showMenuItem()
-        fun hideMenuItem()
-    }
-
-    private lateinit var dogListFragmentActions: DogListFragmentActions
     private var _binding: DogListFragmentBinding? = null
+    private val binding get() = _binding!!
+
     private val dogsViewModel: DogsViewModel by viewModels()
     private val collectionViewModel: DogCollectionViewModel by viewModels()
 
     @Inject
     lateinit var dogListAdapter: DogListAdapter
 
-    private val binding get() = _binding!!
-
     private val backPressedDispatcher = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
-            // Redirect to our own function
+            // Redirect to our own function, this close the app, but first ask the user for sure
             this@DogListFragment.onBackPressed()
         }
     }
@@ -55,13 +48,12 @@ class DogListFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         _binding = DogListFragmentBinding.inflate(inflater, container, false)
         return binding.root
 
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true) //Set this to true in order to trigger callbacks to Fragment#onOptionsItemSelected
@@ -70,27 +62,20 @@ class DogListFragment : Fragment() {
             // Redirect system "Back" press to our dispatcher
             onBackPressedDispatcher.addCallback(viewLifecycleOwner, backPressedDispatcher)
         }
-        dogListFragmentActions.hideMenuItem()
         setUpRecycler(dogListAdapter)
-
+        binding.linearProgress.indeterminateAnimationType = LinearProgressIndicator.INDETERMINATE_ANIMATION_TYPE_DISJOINT
         collectionViewModel.getDogCollection()
 
         handleDogsByViewModel(dogListAdapter)
-        //
 
     }
 
     private fun setUpRecycler(dogListAdapter: DogListAdapter) {
         binding.doglistRecycler.layoutManager = GridLayoutManager(context, 2)
         binding.doglistRecycler.adapter = dogListAdapter
-        dogListAdapter.onLongItemClick = {
-            collectionViewModel.addDogToCollection(it.id.toLong())
-            handleAddDogByViewModel()
-        }
         dogListAdapter.onItemClick = { dog ->
             val bundle = DogListFragmentDirections.actionDogListFragmentToDogListDetailFragment(dog)
             findNavController().navigate(bundle)
-            dogListFragmentActions.showMenuItem()
         }
     }
 
@@ -109,28 +94,13 @@ class DogListFragment : Fragment() {
         )
     }
 
-    private fun handleAddDogByViewModel() {
-
-        handleViewModelState(collectionViewModel.currentAddState,
-            onSuccess = {
-                handleAddSuccessStatus(it)
-            },
-            onLoading = {
-                handleLoadingStatus(it)
-            },
-            onError = {
-                handleErrorStatus(getString(it))
-            }
-        )
-    }
-
-
     private fun handleErrorStatus(exception: String) {
+        //TODO: set strings and styles
         handleLoadingStatus(false)
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(resources.getString(R.string.ErrorTitle))
             .setMessage(exception)
-            .setPositiveButton(resources.getString(R.string.ErrorbuttonText)) { dialog, which ->
+            .setPositiveButton(resources.getString(R.string.ErrorbuttonText)) { _, _ ->
                 dogsViewModel.getAllDogs()
 
             }
@@ -142,24 +112,12 @@ class DogListFragment : Fragment() {
         handleLoadingStatus(false)
     }
 
-    private fun handleAddSuccessStatus(isAdded: Boolean) {
-        handleLoadingStatus(false)
-        if (isAdded) {
-            collectionViewModel.getDogCollection()
-            handleDogsByViewModel(dogListAdapter)
-        } else {
-            handleErrorStatus("No se anadio ")
-        }
-
-    }
-
     private fun handleLoadingStatus(isLoading: Boolean) {
         if (isLoading) {
             binding.linearProgress.visibility = View.VISIBLE
         } else {
             binding.linearProgress.visibility = View.GONE
         }
-
     }
 
     override fun onDestroyView() {
@@ -169,21 +127,12 @@ class DogListFragment : Fragment() {
         _binding = null
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        dogListFragmentActions = try {
-            context as DogListFragmentActions
-        } catch (e: ClassCastException) {
-            throw ClassCastException("$context must implement LoginFragmentActions")
-        }
-    }
-
     private fun onBackPressed() {
         //TODO: set strings and styles
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(resources.getString(R.string.authentication_log_out_title))
             .setMessage(resources.getString(R.string.authentication_log_out_message))
-            .setPositiveButton(resources.getString(R.string.positive_button_text)) { dialog, which ->
+            .setPositiveButton(resources.getString(R.string.positive_button_text)) { _, _ ->
                 activity?.finish()
             }
             .show()

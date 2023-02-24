@@ -18,16 +18,15 @@ import javax.inject.Inject
 class PermissionHandler @Inject constructor(
     private val context: AppCompatActivity
 ) {
-    private val _dogCollectionState = MutableStateFlow<Boolean>(false)
-    val currentAddState: StateFlow<Boolean>
-        get() = _dogCollectionState
+    private val _permissionHandlerState = MutableStateFlow<Boolean>(false)
+    val currentPermissionState: StateFlow<Boolean>
+        get() = _permissionHandlerState
 
     fun start() {
         if (allPermissionsGranted()) {
-            _dogCollectionState.value = true
+            _permissionHandlerState.value = true
         } else {
             aksToPermission(REQUIRED_PERMISSIONS)
-
         }
     }
 
@@ -58,30 +57,25 @@ class PermissionHandler @Inject constructor(
                     aksToPermission(permissionToAsk.toTypedArray())
                 }
             } else {
-                executeDialogForNegativePermission(false) {
-
-                }
+                executeDialogForNegativePermission(false)
             }
 
         } else {
             //acepto los permisos
-            _dogCollectionState.value = true
+            _permissionHandlerState.value = true
         }
     }
 
 
-    private fun executeDialogForNegativePermission(isRationale: Boolean, callback: () -> Unit) {
-        //TODO: Add strings resources and style
+    private fun executeDialogForNegativePermission(isRationale: Boolean, callback: () -> Unit = {}) {
+        //TODO: Add  style
         MaterialAlertDialogBuilder(context)
-            .setTitle("ACEPTE LOS PERMISOS")
-            .setMessage(
-                "Si no los aceptas, no vas a poder tener mas perritos en la coleccion." +
-                        "Intenta ejecutar la camara otra vez, y dale al boton de ACEPTAR!!!!"
-            )
-            .setPositiveButton("Vale, voy a reflexionar ") { dialog, _ ->
+            .setTitle(R.string.permission_rationale_title)
+            .setMessage(R.string.permission_rationale_message)
+            .setPositiveButton(R.string.permission_positive_button_title) { dialog, _ ->
                 callback.invoke()
                 if (!isRationale) {
-                    //Take the User to the app settings
+                    //Take the User to the app settings if the user do not accept and click on Do not show again
                     val intent = Intent(
                         Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
                         Uri.fromParts("package", context.packageName, null)

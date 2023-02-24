@@ -1,6 +1,11 @@
-package com.kalex.dogescollection.authentication.epoxy
+package com.kalex.dogescollection.epoxy
 
 
+import android.os.CountDownTimer
+import android.text.Editable
+import android.text.TextWatcher
+import android.widget.TextView
+import androidx.core.widget.doOnTextChanged
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
@@ -23,7 +28,7 @@ abstract class EpoxyInputFieldModel : EpoxyModelWithHolder<EpoxyInputFieldModel.
     lateinit var onValidationResult: (result: Boolean,text:String) -> Unit
 
     @EpoxyAttribute
-    lateinit var onIsFocus: () -> Unit
+    var onIsFocus: () -> Unit = {}
 
     @JvmField
     @EpoxyAttribute
@@ -48,9 +53,21 @@ abstract class EpoxyInputFieldModel : EpoxyModelWithHolder<EpoxyInputFieldModel.
                 textFieldLayoutView.error = null
             }
         }
+        holder.textFieldEditView.afterTextChangedDelayed{
+            currentText = holder.textFieldEditView.text.toString()
+            handleOptional {
+                handleNullOrEmpty(currentText) {
+                    handleRegex(currentText)
+                }
+            }
+        }
+        holder.textFieldEditView.doOnTextChanged { text, start, before, count ->
+            onValidationResult.invoke(false,"")
+            textFieldLayoutView.error = null
+        }
     }
 
-    private fun onValidationError(textFieldLayoutView: TextInputLayout) {
+    private fun onValidationError() {
         //TODO: Add error messages
         textFieldLayoutView.error = "error"
     }
@@ -64,12 +81,13 @@ abstract class EpoxyInputFieldModel : EpoxyModelWithHolder<EpoxyInputFieldModel.
     }
 
     private fun handleError() {
-        onValidationError(textFieldLayoutView)
+        onValidationError()
         onValidationResult.invoke(false,"")
     }
 
     private fun handleRegex(currentText: String) {
         if (regexValidation.matches(currentText)) {
+            textFieldLayoutView.error = null
             onValidationResult.invoke(true,currentText)
         } else {
             handleError()
@@ -83,7 +101,25 @@ abstract class EpoxyInputFieldModel : EpoxyModelWithHolder<EpoxyInputFieldModel.
             handleRegex(currentText)
         }
     }
+    private fun TextView.afterTextChangedDelayed(afterTextChanged: (String) -> Unit) {
+        this.addTextChangedListener(object : TextWatcher {
+            var timer: CountDownTimer? = null
 
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun afterTextChanged(editable: Editable?) {
+                timer?.cancel()
+                timer = object : CountDownTimer(1300, 1800) {
+                    override fun onTick(millisUntilFinished: Long) {}
+                    override fun onFinish() {
+                        afterTextChanged.invoke(editable.toString())
+                    }
+                }.start()
+            }
+        })
+    }
     inner class Holder() : KotlinEpoxyHolder() {
         val textFieldLayoutView by bind<TextInputLayout>(R.id.textFieldlayout)
         val textFieldEditView by bind<TextInputEditText>(R.id.textFieldEdit)

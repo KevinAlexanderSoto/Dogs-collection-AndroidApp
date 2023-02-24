@@ -7,10 +7,12 @@ import com.kalex.dogescollection.common.Constants
 import com.kalex.dogescollection.dogList.model.data.collection.AddDogCollectionResponse
 import com.kalex.dogescollection.dogList.model.data.collection.DogCollectionItem
 import com.kalex.dogescollection.dogList.model.data.alldogs.Dogs
+import com.kalex.dogescollection.dogList.model.data.alldogs.SingleDog
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface DogsApi {
 
@@ -28,5 +30,8 @@ interface DogsApi {
     @Headers("${ApiServiceInterceptor.AUTH_HEADER_KEY}:true")
     @GET(Constants.GET_USER_DOGS_URL)
     suspend fun getDogCollection(): Dogs
+
+    @GET(Constants.GET_DOG_BY_ML_ID)
+    suspend fun getDogPredicted(@Query(Constants.GET_PREDICTED_QUERY) id : String) : SingleDog
 
 }

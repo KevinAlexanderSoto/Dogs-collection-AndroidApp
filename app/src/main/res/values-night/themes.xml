@@ -2,6 +2,35 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.DogesCollection" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <!-- Customize your light theme here. -->
+        <item name="colorPrimary">@color/Primary</item>
+        <item name="colorOnPrimary">@color/OnPrimary</item>
+        <item name="colorPrimaryContainer">@color/PrimaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/OnPrimaryContainer</item>
+
+        <item name="colorSecondary">@color/Secondary</item>
+        <item name="colorOnSecondary">@color/SecondaryContainer</item>
+        <item name="colorSecondaryContainer">@color/SecondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/OnSecondaryContainer</item>
+
+        <item name="colorTertiary">@color/Tertiary</item>
+        <item name="colorOnTertiary">@color/OnTertiary</item>
+        <item name="colorTertiaryContainer">@color/TertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/OnTertiaryContainer</item>
+
+        <item name="colorSurface">@color/Surface</item>
+        <item name="colorOnSurface">@color/OnSurface</item>
+        <item name="colorSurfaceVariant">@color/SurfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/OnSurfaceVariant</item>
+
+        <item name="colorOnBackground">@color/colorOnBackground</item>
+
+        <item name="colorOutline">@color/colorOutline</item>
+
+
+        <item name="colorError">@color/RedSalsa</item>
+        <item name="colorOnError">@color/RedSalsa</item>
+        <item name="colorErrorContainer">@color/RedSalsa</item>
+        <item name="colorOnErrorContainer">@color/RedSalsa</item>
     </style>
 </resources>

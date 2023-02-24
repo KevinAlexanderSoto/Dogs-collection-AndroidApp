@@ -1,4 +1,4 @@
-package com.kalex.dogescollection.authentication.epoxy
+package com.kalex.dogescollection.epoxy
 
 import android.util.MutableBoolean
 import com.airbnb.epoxy.EpoxyAttribute

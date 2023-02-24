@@ -13,16 +13,16 @@
     <color name="PrimaryContainer" >#c3e8ff</color>
     <color name="OnPrimaryContainer" >#001e2c</color>-->
 
-    <color name="Primary" >#48680d</color>
-    <color name="OnPrimary" >#ffffff</color>
-    <color name="PrimaryContainer" >#c9f088</color>
-    <color name="OnPrimaryContainer" >#121f00</color>
+    <color name="Primary" >#add36f</color>
+    <color name="OnPrimary" >#223600</color>
+    <color name="PrimaryContainer" >#344e00</color>
+    <color name="OnPrimaryContainer" >#c8f087</color>
 
     <!--secondary color -->
-    <color name="Secondary" >#396661</color>
-    <color name="OnSecondary" >#ffffff</color>
-    <color name="SecondaryContainer" >#bcece6</color>
-    <color name="OnSecondaryContainer" >#00201d</color>
+    <color name="Secondary" >#50dbce</color>
+    <color name="OnSecondary" >#003733</color>
+    <color name="SecondaryContainer" >#00504a</color>
+    <color name="OnSecondaryContainer" >#72f7ea</color>
 
     <!--secondary color -->
    <!-- <color name="Secondary" >#4e616d</color>
@@ -31,20 +31,20 @@
     <color name="OnSecondaryContainer" >#0a1e28</color>-->
 
     <!--tertiary color -->
-    <color name="Tertiary" >#006c4e</color>
-    <color name="OnTertiary" >#ffffff</color>
-    <color name="TertiaryContainer" >#86f8ca</color>
-    <color name="OnTertiaryContainer" >#002115</color>
+    <color name="Tertiary" >#69dbae</color>
+    <color name="OnTertiary" >#003827</color>
+    <color name="TertiaryContainer" >#00513a</color>
+    <color name="OnTertiaryContainer" >#87f8c9</color>
 
     <!--surface color -->
-    <color name="Surface" >#fdfcff</color>
-    <color name="OnSurface" >#1a1c1e</color>
-    <color name="SurfaceVariant" >#dfe2eb</color>
-    <color name="OnSurfaceVariant" >#43474e</color>
+    <color name="Surface" >#1b1c18</color>
+    <color name="OnSurface" >#e4e3db</color>
+    <color name="SurfaceVariant" >#45483d</color>
+    <color name="OnSurfaceVariant" >#c5c8b9</color>
 
 
-    <color name="colorOnBackground" >#1a1c1e</color>
-    <color name="colorOutline" >#73777f</color>
+    <color name="colorOnBackground" >#e4e3db</color>
+    <color name="colorOutline" >#8f9285</color>
 
     <!--Success color-->
     <color name="Aquamarine"  >#A5FFD6</color>
