@@ -69,7 +69,7 @@ abstract class EpoxyInputFieldModel : EpoxyModelWithHolder<EpoxyInputFieldModel.
 
     private fun onValidationError() {
         //TODO: Add error messages
-        textFieldLayoutView.error = "error"
+        textFieldLayoutView.error = "Valida tu usuario"
     }
 
     private fun handleNullOrEmpty(currentText: String, nextStep: () -> Unit) {
