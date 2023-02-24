@@ -73,6 +73,7 @@ class LoginFragment : Fragment() {
                 id(2)
                 textHint(getString(R.string.authentication_login_password_text_hint))
                 regexValidation(Regex(RegexPatterns.PASSWORD_REGEX_PATTERN))
+                regexError(resources.getString(R.string.authentication_password_regex_error))
                 onValidationResult { valid, currentText ->
                     //TODO: implement Eror message
                     regexValidationState.updateInputPasswordState(valid,currentText)

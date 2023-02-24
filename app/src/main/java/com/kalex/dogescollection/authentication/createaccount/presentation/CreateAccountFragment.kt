@@ -9,9 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -73,6 +71,7 @@ class CreateAccountFragment : Fragment() {
             epoxyInputPassword {
                 id(28)
                 textHint(getString(R.string.authentication_login_password_text_hint))
+                regexError(resources.getString(R.string.authentication_password_regex_error))
                 regexValidation(Regex(RegexPatterns.PASSWORD_REGEX_PATTERN))
                 onValidationResult { valid, currentText ->
                     regexValidationState.updateInputPasswordState(valid, currentText)
@@ -80,11 +79,12 @@ class CreateAccountFragment : Fragment() {
             }
             epoxyInputPassword {
                 id(39)
-                textHint(getString(R.string.authentication_login_password_text_hint))
+                textHint(getString(R.string.authentication_login_password_confirm_text_hint))
                 regexValidation(Regex(RegexPatterns.PASSWORD_REGEX_PATTERN))
                 onValidationResult { valid, currentText ->
                     regexValidationState.updateInputPassword2State(valid, currentText)
                 }
+                regexError(resources.getString(R.string.authentication_password_regex_error))
                 isComparable(true)
                 comparablePassword {
                     mapOf(
@@ -129,6 +129,7 @@ class CreateAccountFragment : Fragment() {
             onSuccess = { handleSuccessStatus(it) },
             onLoading = { handleLoadingStatus(true) },
             onError = {
+                handleLoadingStatus(false)
                 MaterialAlertDialogBuilder(requireContext())
                     .setTitle(resources.getString(R.string.error_title))
                     .setMessage(resources.getString(it))

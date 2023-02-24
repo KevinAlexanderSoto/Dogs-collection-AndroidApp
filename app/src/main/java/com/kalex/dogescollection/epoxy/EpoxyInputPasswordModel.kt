@@ -23,6 +23,9 @@ abstract class EpoxyInputPasswordModel : EpoxyModelWithHolder<EpoxyInputPassword
     lateinit var regexValidation: Regex
 
     @EpoxyAttribute
+    lateinit var regexError: String
+
+    @EpoxyAttribute
     var onIsFocus: () -> Unit = {}
 
     @EpoxyAttribute
@@ -46,7 +49,7 @@ abstract class EpoxyInputPasswordModel : EpoxyModelWithHolder<EpoxyInputPassword
         textFieldLayoutView = holder.textFieldLayoutView
         holder.textFieldLayoutView.hint = textHint
         holder.textFieldEditView.setOnFocusChangeListener { _, focus: Boolean ->
-            currentText = holder.textFieldEditView.text.toString()
+
             if (!focus) {
                 handleComparable{
                     handleRegex(currentText)
@@ -61,13 +64,14 @@ abstract class EpoxyInputPasswordModel : EpoxyModelWithHolder<EpoxyInputPassword
                 handleRegex(it)
             }
         }
-        holder.textFieldEditView.doOnTextChanged { text, start, before, count ->
+        holder.textFieldEditView.doOnTextChanged { text, _, _, _ ->
             onValidationResult.invoke(false,"")
+            currentText = text.toString()
             textFieldLayoutView.error = null
         }
     }
 
-    fun handleComparable(function: () -> Unit){
+    private fun handleComparable(function: () -> Unit){
 
         if(isComparable){
             val map = comparablePassword.invoke()
@@ -86,9 +90,9 @@ abstract class EpoxyInputPasswordModel : EpoxyModelWithHolder<EpoxyInputPassword
         textFieldLayoutView.error = errorMessage
     }
 
-    private fun handleError(get: String?) {
+    private fun handleError(errorMessage: String?) {
 
-        onValidationError(get ?:"Unknown")
+        onValidationError(errorMessage ?:"Unknown")
         onValidationResult.invoke(false,"")
     }
 
@@ -97,8 +101,7 @@ abstract class EpoxyInputPasswordModel : EpoxyModelWithHolder<EpoxyInputPassword
             textFieldLayoutView.error = null
             onValidationResult.invoke(true,currentText)
         } else {
-            //TODO: Add message string
-            handleError("Validation do not mach")
+            handleError(regexError)
         }
     }
 

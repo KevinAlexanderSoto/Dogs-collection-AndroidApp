@@ -110,7 +110,7 @@ class MainActivity : AppCompatActivity(), AuthenticationSwitcherNavigator, Camer
 
     override fun onUserAuthenticated() {
         setBottomActionVisibility(View.VISIBLE)
-        navController.navigate(LoginFragmentDirections.actionLoginFragmentToDogListFragment())
+        navController.navigate(R.id.MainNavigation)
     }
 
     override fun onCreateNewUser() {
@@ -119,7 +119,7 @@ class MainActivity : AppCompatActivity(), AuthenticationSwitcherNavigator, Camer
 
     override fun onUserCreated() {
         setBottomActionVisibility(View.VISIBLE)
-        navController.navigate(LoginFragmentDirections.actionLoginFragmentToDogListFragment())
+        navController.navigate(R.id.MainNavigation)
     }
 
     override fun onDogRecognised(foundDog: Dog) {
