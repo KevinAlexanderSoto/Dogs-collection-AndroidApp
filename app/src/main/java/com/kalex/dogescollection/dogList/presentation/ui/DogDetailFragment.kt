@@ -59,7 +59,7 @@ class DogDetailFragment : Fragment() {
                 crossfade(true)
             }
             dognametext.text = dog.name_es
-            dogdescriptiontext.text = dog.temperament_en
+            dogdescriptiontext.text = dog.temperament
             //Epoxy SetUp
             recyclerView.withModels {
                 group {

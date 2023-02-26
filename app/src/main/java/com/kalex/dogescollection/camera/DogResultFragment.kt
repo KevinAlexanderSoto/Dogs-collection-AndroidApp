@@ -20,9 +20,10 @@ import com.kalex.dogescollection.dogList.presentation.viewmodel.DogCollectionVie
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
- * A simple [Fragment] subclass.
- * Use the [DogResultFragment.newInstance] factory method to
- * create an instance of this fragment.
+ *This fragment show the dog recognized and ask the user if it is correct
+ *when the user click the positive button, the dog is add to the collection
+ *else the fragment camera is going to open again.
+ *@author Kevin Alexander Soto (Kalex)
  */
 @AndroidEntryPoint
 class DogResultFragment : Fragment() {
@@ -57,8 +58,7 @@ class DogResultFragment : Fragment() {
             dogimage.load(dog.image_url) {
                 crossfade(true)
             }
-            //TODO: Add strings resources
-            confirmtext.text = "Este es tu Perror?"
+            confirmtext.text = resources.getText(R.string.result_screen_confirm_text)
             binding.linearProgress.indeterminateAnimationType = LinearProgressIndicator.INDETERMINATE_ANIMATION_TYPE_DISJOINT
             positiveButton.setOnClickListener{addDogToUserCollection(dog)}
             negativeButton.setOnClickListener{goBackToCameraFragment()}
@@ -93,7 +93,7 @@ class DogResultFragment : Fragment() {
         if (isAdded) {
             cameraSwitcherNavigator.onDogAddToCollection()
         } else {
-            handleErrorStatus("No se anadio ")
+            handleErrorStatus(resources.getString(R.string.result_screen_add_error))
         }
     }
 
@@ -111,7 +111,7 @@ class DogResultFragment : Fragment() {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(resources.getString(R.string.ErrorTitle))
             .setMessage(exception)
-            .setPositiveButton(resources.getString(R.string.ErrorbuttonText)) { dialog, which ->
+            .setPositiveButton(resources.getString(R.string.ErrorButtonText)) { dialog, which ->
                //TODO:
 
             }

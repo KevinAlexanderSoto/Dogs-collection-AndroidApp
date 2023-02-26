@@ -100,7 +100,7 @@ class DogListFragment : Fragment() {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(resources.getString(R.string.ErrorTitle))
             .setMessage(exception)
-            .setPositiveButton(resources.getString(R.string.ErrorbuttonText)) { _, _ ->
+            .setPositiveButton(resources.getString(R.string.ErrorButtonText)) { _, _ ->
                 dogsViewModel.getAllDogs()
 
             }

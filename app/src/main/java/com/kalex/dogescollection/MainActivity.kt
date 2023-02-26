@@ -4,6 +4,7 @@ import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -32,7 +33,7 @@ class MainActivity : AppCompatActivity(), AuthenticationSwitcherNavigator, Camer
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-    private lateinit var camerabutton: FloatingActionButton
+    private lateinit var cameraButton: FloatingActionButton
     private var isUserLogged = true
     private lateinit var navController : NavController
     @Inject
@@ -41,13 +42,18 @@ class MainActivity : AppCompatActivity(), AuthenticationSwitcherNavigator, Camer
     @Inject
     lateinit var permissionHandler: PermissionHandler
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Handle the splash screen transition.
+        val splashScreen = installSplashScreen()
+
         WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
-        camerabutton = binding.cameraActionButton
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        cameraButton = binding.cameraActionButton
         setNavBar()
+        // Keep the splash screen visible for this Activity
+        splashScreen.setKeepOnScreenCondition { false }
     }
 
     private fun startCameraFragment(buildNavController: NavController) {
@@ -65,12 +71,12 @@ class MainActivity : AppCompatActivity(), AuthenticationSwitcherNavigator, Camer
 
         appBarConfiguration = AppBarConfiguration(buildNavController.graph)
 
-        setCameraButtonListiner(buildNavController)
+        setCameraButtonListener(buildNavController)
 
     }
 
-    private fun setCameraButtonListiner(buildNavController: NavController) {
-        camerabutton.setOnClickListener {
+    private fun setCameraButtonListener(buildNavController: NavController) {
+        cameraButton.setOnClickListener {
             // Request camera permissions
             permissionHandler.start()
             lifecycleScope.launch {
