@@ -163,7 +163,7 @@ class CameraFragment : BottomSheetDialogFragment(R.layout.fragment_camera) {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(resources.getString(R.string.ErrorTitle))
             .setMessage(exception)
-            .setPositiveButton(resources.getString(R.string.ErrorbuttonText)) { dialog, _ ->
+            .setPositiveButton(resources.getString(R.string.ErrorButtonText)) { dialog, _ ->
                dialog.dismiss()
             }
             .show()
