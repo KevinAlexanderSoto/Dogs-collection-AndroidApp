@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity(), AuthenticationSwitcherNavigator, Camer
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-    private lateinit var camerabutton: FloatingActionButton
+    private lateinit var cameraButton: FloatingActionButton
     private var isUserLogged = true
     private lateinit var navController : NavController
     @Inject
@@ -49,8 +49,8 @@ class MainActivity : AppCompatActivity(), AuthenticationSwitcherNavigator, Camer
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
-        camerabutton = binding.cameraActionButton
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        cameraButton = binding.cameraActionButton
         setNavBar()
         // Keep the splash screen visible for this Activity
         splashScreen.setKeepOnScreenCondition { false }
@@ -71,12 +71,12 @@ class MainActivity : AppCompatActivity(), AuthenticationSwitcherNavigator, Camer
 
         appBarConfiguration = AppBarConfiguration(buildNavController.graph)
 
-        setCameraButtonListiner(buildNavController)
+        setCameraButtonListener(buildNavController)
 
     }
 
-    private fun setCameraButtonListiner(buildNavController: NavController) {
-        camerabutton.setOnClickListener {
+    private fun setCameraButtonListener(buildNavController: NavController) {
+        cameraButton.setOnClickListener {
             // Request camera permissions
             permissionHandler.start()
             lifecycleScope.launch {
