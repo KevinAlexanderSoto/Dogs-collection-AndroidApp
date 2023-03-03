@@ -17,15 +17,16 @@ import com.kalex.dogescollection.R
 import com.kalex.dogescollection.authentication.FieldKey
 import com.kalex.dogescollection.authentication.RegexPatterns
 import com.kalex.dogescollection.authentication.RegexValidationState
-import com.kalex.dogescollection.authentication.model.dto.User
-import com.kalex.dogescollection.common.AuthenticationSwitcherNavigator
-import com.kalex.dogescollection.common.PreferencesHandler
-import com.kalex.dogescollection.common.networkstates.handleViewModelState
+import com.kalex.dogescollection.core.common.AuthenticationSwitcherNavigator
+import com.kalex.dogescollection.core.common.PreferencesHandler
+import com.kalex.dogescollection.core.common.networkstates.handleViewModelState
 import com.kalex.dogescollection.databinding.FragmentCreateAccountBinding
-import com.kalex.dogescollection.epoxy.ComparableKey
-import com.kalex.dogescollection.epoxy.epoxyButton
-import com.kalex.dogescollection.epoxy.epoxyInputField
-import com.kalex.dogescollection.epoxy.epoxyInputPassword
+import com.kalex.dogescollection.core.epoxy.ComparableKey
+import com.kalex.dogescollection.core.epoxy.epoxyButton
+import com.kalex.dogescollection.core.epoxy.epoxyInputField
+import com.kalex.dogescollection.core.epoxy.epoxyInputPassword
+import com.kalex.dogescollection.core.model.dto.User
+
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -91,7 +92,7 @@ class CreateAccountFragment : Fragment() {
                         ComparableKey.COMPARABLE_PASSWORD_TEXT to regexValidationState.getFieldValue(
                             FieldKey.PASSWORD_ONE
                         ),
-                        ComparableKey.COMPARABLE_PASSWORD_ERROR to getString(R.string.not_equals_passwords_error)
+                       ComparableKey.COMPARABLE_PASSWORD_ERROR to getString(R.string.not_equals_passwords_error)
                     )
                 }
             }

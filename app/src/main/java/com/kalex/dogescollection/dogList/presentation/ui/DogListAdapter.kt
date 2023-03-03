@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.kalex.dogescollection.R
 import com.kalex.dogescollection.databinding.DogListItemBinding
-import com.kalex.dogescollection.dogList.model.data.alldogs.Dog
+import com.kalex.dogescollection.core.model.data.alldogs.Dog
 import javax.inject.Inject
 
 

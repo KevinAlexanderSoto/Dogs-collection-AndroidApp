@@ -17,11 +17,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kalex.dogescollection.authentication.login.presentation.LoginFragmentDirections
 import com.kalex.dogescollection.camera.CameraFragmentDirections
 import com.kalex.dogescollection.camera.DogResultFragmentDirections
-import com.kalex.dogescollection.common.AuthenticationSwitcherNavigator
-import com.kalex.dogescollection.common.CameraSwitcherNavigator
-import com.kalex.dogescollection.common.PreferencesHandler
+import com.kalex.dogescollection.core.common.AuthenticationSwitcherNavigator
+import com.kalex.dogescollection.core.common.CameraSwitcherNavigator
+import com.kalex.dogescollection.core.common.PermissionHandler
 import com.kalex.dogescollection.databinding.ActivityMainBinding
-import com.kalex.dogescollection.dogList.model.data.alldogs.Dog
+import com.kalex.dogescollection.core.model.data.alldogs.Dog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity(), AuthenticationSwitcherNavigator, Camer
     private var isUserLogged = true
     private lateinit var navController : NavController
     @Inject
-    lateinit var preferencesHandler: PreferencesHandler
+    lateinit var preferencesHandler: com.kalex.dogescollection.core.common.PreferencesHandler
 
     @Inject
     lateinit var permissionHandler: PermissionHandler

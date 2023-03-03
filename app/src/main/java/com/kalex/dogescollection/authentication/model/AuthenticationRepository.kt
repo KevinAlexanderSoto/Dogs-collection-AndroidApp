@@ -1,6 +1,6 @@
 package com.kalex.dogescollection.authentication.model
 
-import com.kalex.dogescollection.authentication.model.dto.UserResponse
+import com.kalex.dogescollection.core.model.dto.UserResponse
 
 interface AuthenticationRepository {
     suspend fun createAccount(user: String, password: String, passwordConfirm: String): UserResponse

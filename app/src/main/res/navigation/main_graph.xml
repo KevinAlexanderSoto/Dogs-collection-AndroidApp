@@ -19,7 +19,7 @@
             <argument
                 android:name="dog"
                 android:defaultValue="@null"
-                app:argType="com.kalex.dogescollection.dogList.model.data.alldogs.Dog"
+                app:argType="com.kalex.dogescollection.core.model.data.alldogs.Dog"
                 app:nullable="true" />
         </action>
     </fragment>
@@ -36,7 +36,7 @@
         <argument
             android:name="dog"
             android:defaultValue="@null"
-            app:argType="com.kalex.dogescollection.dogList.model.data.alldogs.Dog"
+            app:argType="com.kalex.dogescollection.core.model.data.alldogs.Dog"
             app:nullable="true" />
 
     </fragment>
@@ -58,7 +58,7 @@
             <argument
                 android:name="dog"
                 android:defaultValue="@null"
-                app:argType="com.kalex.dogescollection.dogList.model.data.alldogs.Dog"
+                app:argType="com.kalex.dogescollection.core.model.data.alldogs.Dog"
                 app:nullable="true" />
         </action>
 
@@ -75,7 +75,7 @@
         <argument
             android:name="dog"
             android:defaultValue="@null"
-            app:argType="com.kalex.dogescollection.dogList.model.data.alldogs.Dog"
+            app:argType="com.kalex.dogescollection.core.model.data.alldogs.Dog"
             app:nullable="true" />
 
         <action

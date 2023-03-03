@@ -2,7 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
-    id 'kotlin-android-extensions'
+    id 'kotlin-parcelize'
     id 'com.google.dagger.hilt.android'
     id 'androidx.navigation.safeargs.kotlin'
 }
@@ -66,6 +66,7 @@ dependencies {
     //Hilt
     implementation "com.google.dagger:hilt-android:2.44"
     implementation 'androidx.preference:preference:1.2.0'
+    implementation 'androidx.core:core-ktx:1.9.0'
     kapt "com.google.dagger:hilt-compiler:2.44"
 
     //Material3
@@ -94,6 +95,9 @@ dependencies {
 
     // Splash Screen
     implementation 'androidx.core:core-splashscreen:1.0.0'
+
+    //core module
+    implementation project(path: ':core')
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

@@ -18,13 +18,13 @@ import com.kalex.dogescollection.R
 import com.kalex.dogescollection.authentication.FieldKey
 import com.kalex.dogescollection.authentication.RegexPatterns
 import com.kalex.dogescollection.authentication.RegexValidationState
-import com.kalex.dogescollection.authentication.model.dto.User
-import com.kalex.dogescollection.common.AuthenticationSwitcherNavigator
-import com.kalex.dogescollection.common.EpoxyMarginCon
-import com.kalex.dogescollection.common.PreferencesHandler
-import com.kalex.dogescollection.common.networkstates.handleViewModelState
+import com.kalex.dogescollection.core.common.AuthenticationSwitcherNavigator
+import com.kalex.dogescollection.core.common.EpoxyMarginCon
+import com.kalex.dogescollection.core.common.PreferencesHandler
+import com.kalex.dogescollection.core.common.networkstates.handleViewModelState
+import com.kalex.dogescollection.core.epoxy.*
+import com.kalex.dogescollection.core.model.dto.User
 import com.kalex.dogescollection.databinding.FragmentLoginBinding
-import com.kalex.dogescollection.epoxy.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -58,7 +58,7 @@ class LoginFragment : Fragment() {
             epoxyTextTitle {
                 id(0)
                 titleText(getString(R.string.authentication_login_title))
-                textMargin(EpoxyMarginCon(1f,20f,1f,40f))
+                textMargin(com.kalex.dogescollection.core.common.EpoxyMarginCon(1f, 20f, 1f, 40f))
             }
             epoxyInputField {
                 id(1)

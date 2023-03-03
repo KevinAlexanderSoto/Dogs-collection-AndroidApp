@@ -1,7 +1,7 @@
 package com.kalex.dogescollection.tensorflow
 
 import android.graphics.Bitmap
-import com.kalex.dogescollection.common.Constants.MAX_RECOGNITION_DOG_RESULTS
+import com.kalex.dogescollection.core.common.Constants.MAX_RECOGNITION_DOG_RESULTS
 import org.tensorflow.lite.Interpreter
 import org.tensorflow.lite.support.common.TensorProcessor
 import org.tensorflow.lite.support.common.ops.DequantizeOp

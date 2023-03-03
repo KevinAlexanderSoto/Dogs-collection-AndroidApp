@@ -3,9 +3,9 @@ package com.kalex.dogescollection.authentication.createaccount.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kalex.dogescollection.authentication.model.AuthenticationUseCase
-import com.kalex.dogescollection.authentication.model.dto.User
-import com.kalex.dogescollection.common.networkstates.UseCaseFlowStatus
-import com.kalex.dogescollection.common.networkstates.ViewModelNewsUiState
+import com.kalex.dogescollection.core.common.networkstates.UseCaseFlowStatus
+import com.kalex.dogescollection.core.common.networkstates.ViewModelNewsUiState
+import com.kalex.dogescollection.core.model.dto.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,7 +16,8 @@ import javax.inject.Inject
 class CreateAccountViewModel @Inject constructor(
     private val authenticationUseCase : AuthenticationUseCase
 ): ViewModel() {
-    private val _authenticationState = MutableStateFlow<ViewModelNewsUiState<User>>(ViewModelNewsUiState.Loading(true))
+    private val _authenticationState = MutableStateFlow<ViewModelNewsUiState<User>>(
+        ViewModelNewsUiState.Loading(true))
     val authenticationState: StateFlow<ViewModelNewsUiState<User>>
         get() = _authenticationState
 

@@ -13,11 +13,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.progressindicator.LinearProgressIndicator
-import com.google.android.material.progressindicator.LinearProgressIndicator.IndeterminateAnimationType
 import com.kalex.dogescollection.R
-import com.kalex.dogescollection.common.networkstates.handleViewModelState
+import com.kalex.dogescollection.core.common.networkstates.handleViewModelState
 import com.kalex.dogescollection.databinding.DogListFragmentBinding
-import com.kalex.dogescollection.dogList.model.data.alldogs.Dog
+import com.kalex.dogescollection.core.model.data.alldogs.Dog
 import com.kalex.dogescollection.dogList.presentation.viewmodel.DogCollectionViewModel
 import com.kalex.dogescollection.dogList.presentation.viewmodel.DogsViewModel
 import dagger.hilt.android.AndroidEntryPoint
