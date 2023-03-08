@@ -1,7 +1,7 @@
-package com.kalex.dogescollection.tensorflow
+package com.kalex.dogescollection.camera.tensorflow
 
 import androidx.camera.core.ImageProxy
-import com.kalex.dogescollection.camera.utils.BitmapUtils
+import com.kalex.dogescollection.camera.camera.utils.BitmapUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

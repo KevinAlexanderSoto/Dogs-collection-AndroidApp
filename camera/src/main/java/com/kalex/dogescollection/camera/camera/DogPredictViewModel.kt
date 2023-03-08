@@ -1,4 +1,4 @@
-package com.kalex.dogescollection.dogList.presentation.viewmodel
+package com.kalex.dogescollection.camera.camera
 
 
 

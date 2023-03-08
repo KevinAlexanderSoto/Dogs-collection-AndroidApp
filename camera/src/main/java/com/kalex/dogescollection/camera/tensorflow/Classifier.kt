@@ -1,4 +1,4 @@
-package com.kalex.dogescollection.tensorflow
+package com.kalex.dogescollection.camera.tensorflow
 
 import android.graphics.Bitmap
 import com.kalex.dogescollection.core.common.Constants.MAX_RECOGNITION_DOG_RESULTS

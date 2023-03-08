@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="ErrorTitle">Ups... hay un error</string>
+    <string name="ErrorText">Un error ha ocurrido</string>
+    <string name="ErrorButtonText">Aceptar</string>
+
+</resources>

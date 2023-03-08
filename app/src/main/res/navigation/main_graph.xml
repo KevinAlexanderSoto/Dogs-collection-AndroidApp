@@ -49,7 +49,7 @@
     </fragment>
     <dialog
         android:id="@+id/CameraFragmentNav"
-        android:name="com.kalex.dogescollection.camera.CameraFragment"
+        android:name="camera.CameraFragment"
         android:label="camera"
         tools:layout="@layout/fragment_camera">
         <action
@@ -65,7 +65,7 @@
     </dialog>
     <fragment
         android:id="@+id/dogResultFragment"
-        android:name="com.kalex.dogescollection.camera.DogResultFragment"
+        android:name="camera.DogResultFragment"
         android:label="fragment_dog_result"
         tools:layout="@layout/fragment_dog_result"
         >

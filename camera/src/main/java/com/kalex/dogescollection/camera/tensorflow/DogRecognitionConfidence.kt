@@ -1,4 +1,4 @@
-package com.kalex.dogescollection.tensorflow
+package com.kalex.dogescollection.camera.tensorflow
 
 data class DogRecognitionConfidence(
     val DogId: String,

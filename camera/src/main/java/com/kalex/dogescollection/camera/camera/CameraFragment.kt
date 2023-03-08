@@ -1,4 +1,4 @@
-package com.kalex.dogescollection.camera
+package com.kalex.dogescollection.camera.camera
 
 import android.app.Dialog
 import android.content.ContentValues
@@ -23,15 +23,11 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.progressindicator.CircularProgressIndicator
-import com.google.android.material.progressindicator.LinearProgressIndicator
-import com.kalex.dogescollection.R
+import com.kalex.dogescollection.camera.R
+import com.kalex.dogescollection.camera.tensorflow.ClassifierRepository
 import com.kalex.dogescollection.core.common.CameraSwitcherNavigator
 import com.kalex.dogescollection.core.common.networkstates.handleViewModelState
-import com.kalex.dogescollection.databinding.DogListFragmentBinding
-import com.kalex.dogescollection.databinding.FragmentCameraBinding
 import com.kalex.dogescollection.core.model.data.alldogs.Dog
-import com.kalex.dogescollection.dogList.presentation.viewmodel.DogPredictViewModel
-import com.kalex.dogescollection.tensorflow.ClassifierRepository
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat

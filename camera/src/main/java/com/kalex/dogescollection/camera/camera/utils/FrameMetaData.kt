@@ -1,4 +1,4 @@
-package com.kalex.dogescollection.camera.utils
+package com.kalex.dogescollection.camera.camera.camera.utils
 
 /*
  * Copyright 2020 Google LLC. All rights reserved.
