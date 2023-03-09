@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--Authentication screen section-->
+    <string name="authentication_login_title">Iniciar sesión</string>
+    <string name="authentication_login_user_text_hint">Correo Electrónico</string>
+    <string name="authentication_login_password_text_hint">Contraseña</string>
+    <string name="authentication_login_button_text">Iniciar sesión</string>
+    <string name="authentication_login_buttonText_text">Registrarse</string>
+    <string name="authentication_login_buttonText_title">No tienes una cuenta?</string>
+    <string name="authentication_login_success_message">Sección iniciada correctamente</string>
+    <string name="authentication_log_out_title">Salir de la aplicación</string>
+    <string name="authentication_log_out_message">deseas cerrar la aplicación?</string>
+    <string name="authentication_password_regex_error">contraseña no valida, ingresa letras, numeros y
+    mayúsculas</string>
+    <string name="authentication_login_password_confirm_text_hint">Confirmar Contraseña</string>
+    <string name="authentication_create_user_screen_title">Crear Cuenta</string>
+
+
+    <!--Error messages section-->
+    <string name="ErrorTitle">Ups... hay un error</string>
+    <string name="ErrorText">Un error ha ocurrido</string>
+    <string name="ErrorButtonText">Aceptar</string>
+    <string name="sign_up_error">Error creando usuario</string>
+    <string name="sign_in_error">Error iniciando sesión</string>
+    <string name="user_already_exists">El usuario ya existe, por favor inicie sesión</string>
+    <string name="unknown_error_message">Error desconocido, intenta otra vez</string>
+    <string name="Internet_error_message">No tienes conexión a internet</string>
+    <string name="not_equals_passwords_error">Las contraseñas deben ser iguales</string>
+    <string name="error_accept">Aceptar</string>
+    <string name="error_title">Error</string>
+    <string name="wrong_user_or_password_error_message">Revisa tu usuario o la contraseña</string>
+    <string name="positive_button_text">aceptar</string>
+
+</resources>

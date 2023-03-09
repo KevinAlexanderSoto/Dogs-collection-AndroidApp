@@ -17,7 +17,7 @@ android {
         targetSdk 33
         versionCode 1
         versionName "1.0.2"
-
+        compileSdkPreview ="UpsideDownCake"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -67,6 +67,7 @@ dependencies {
     implementation "com.google.dagger:hilt-android:2.44"
     implementation 'androidx.preference:preference:1.2.0'
     implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.core:core-ktx:+'
     kapt "com.google.dagger:hilt-compiler:2.44"
 
     //Material3
@@ -100,6 +101,8 @@ dependencies {
     implementation project(path: ':core')
     implementation project(path: ':doglist')
     implementation project(path: ':camera')
+    implementation project(path: ':authentication')
+    implementation project(path: ':navigation')
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

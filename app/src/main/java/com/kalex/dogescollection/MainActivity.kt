@@ -94,11 +94,11 @@ class MainActivity : AppCompatActivity(), AuthenticationSwitcherNavigator, Camer
 
         val graph : NavGraph = if (isUserLogged) {
             setBottomActionVisibility(View.VISIBLE)
-            inflater.inflate(R.navigation.main_graph)
+            inflater.inflate(com.kalex.dogescollection.navigation.R.navigation.main_graph)
 
         } else {
             setBottomActionVisibility(View.GONE)
-            inflater.inflate(R.navigation.authentication_graph)
+            inflater.inflate(com.kalex.dogescollection.authentication.R.navigation.authentication_graph)
         }
 
         val navController = navHostFragment.navController
@@ -116,7 +116,7 @@ class MainActivity : AppCompatActivity(), AuthenticationSwitcherNavigator, Camer
 
     override fun onUserAuthenticated() {
         setBottomActionVisibility(View.VISIBLE)
-        navController.navigate(R.id.MainNavigation)
+        navController.navigate(com.kalex.dogescollection.navigation.R.id.MainNavigation)
     }
 
     override fun onCreateNewUser() {
@@ -125,7 +125,7 @@ class MainActivity : AppCompatActivity(), AuthenticationSwitcherNavigator, Camer
 
     override fun onUserCreated() {
         setBottomActionVisibility(View.VISIBLE)
-        navController.navigate(R.id.MainNavigation)
+        navController.navigate(com.kalex.dogescollection.navigation.R.id.MainNavigation)
     }
 
     override fun onDogRecognised(foundDog: Dog) {

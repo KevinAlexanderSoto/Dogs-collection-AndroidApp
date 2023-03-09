@@ -14,7 +14,7 @@ android {
     defaultConfig {
         minSdk 26
         targetSdk 33
-
+        compileSdkPreview ="UpsideDownCake"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
@@ -46,6 +46,7 @@ dependencies {
     implementation "com.google.dagger:hilt-android:2.44"
     implementation 'androidx.preference:preference:1.2.0'
     implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.core:core-ktx:+'
     kapt "com.google.dagger:hilt-compiler:2.44"
 
     implementation 'androidx.core:core-ktx:1.9.0'
@@ -63,7 +64,7 @@ dependencies {
     //core module
     implementation project(path: ':core')
 
-    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
 
