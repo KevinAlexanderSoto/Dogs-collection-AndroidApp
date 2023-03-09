@@ -5,4 +5,7 @@
     <string name="ErrorText">Un error ha ocurrido</string>
     <string name="ErrorButtonText">Aceptar</string>
 
+    <string name="result_screen_confirm_text">Este es tu perro?</string>
+    <string name="result_screen_add_error">"Hubo un error, no se pudo agregar el perrito a tu colección "</string>
+
 </resources>

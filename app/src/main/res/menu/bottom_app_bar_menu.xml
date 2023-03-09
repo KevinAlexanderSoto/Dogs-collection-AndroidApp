@@ -13,9 +13,8 @@
 
 
     <item
-        android:id="@+id/DogListFragment"
+        android:id="@+id/doglist_graph"
         android:icon="@drawable/ic_pets_24"
         android:title="@string/menu_dog_list"
-        android:contentDescription="content_description_dashboard"
         app:showAsAction="ifRoom"/>
 </menu>

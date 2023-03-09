@@ -1,12 +1,10 @@
-package com.kalex.dogescollection.camera.camera
-
-
+package com.kalex.dogescollection.doglist.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kalex.dogescollection.core.common.networkstates.UseCaseFlowStatus
+import com.kalex.dogescollection.core.model.data.alldogs.Data
 import com.kalex.dogescollection.core.common.networkstates.ViewModelNewsUiState
-import com.kalex.dogescollection.core.model.data.alldogs.Dog
 import com.kalex.dogescollection.doglist.model.usecase.DogsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,18 +14,18 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DogPredictViewModel @Inject constructor(
+class DogsViewModel @Inject constructor(
     private val dogsUseCase: DogsUseCase
 ) : ViewModel() {
 
-    private val _dogState = MutableStateFlow<ViewModelNewsUiState<Dog>>(
+    private val _dogState = MutableStateFlow<ViewModelNewsUiState<Data>>(
         ViewModelNewsUiState.Loading(true))
-    val dogState: StateFlow<ViewModelNewsUiState<Dog>>
+    val dogState: StateFlow<ViewModelNewsUiState<Data>>
         get() = _dogState
 
-    fun getDogByPredictedId(mlId : String) {
+    fun getAllDogs() {
         viewModelScope.launch {
-            dogsUseCase.getDogByPredictedId(mlId).collectLatest {
+            dogsUseCase.getAllDogs().collectLatest {
                 when (it) {
                     is UseCaseFlowStatus.Error -> _dogState.value = ViewModelNewsUiState.Error(it.exception)
                     is UseCaseFlowStatus.Success -> _dogState.value = ViewModelNewsUiState.Success(it.data)

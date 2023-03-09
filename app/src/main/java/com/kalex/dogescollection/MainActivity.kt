@@ -15,8 +15,8 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.navigateUp
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kalex.dogescollection.authentication.login.presentation.LoginFragmentDirections
-import com.kalex.dogescollection.camera.CameraFragmentDirections
-import com.kalex.dogescollection.camera.DogResultFragmentDirections
+import com.kalex.dogescollection.camera.camera.CameraFragmentDirections
+import com.kalex.dogescollection.camera.camera.DogResultFragmentDirections
 import com.kalex.dogescollection.core.common.AuthenticationSwitcherNavigator
 import com.kalex.dogescollection.core.common.CameraSwitcherNavigator
 import com.kalex.dogescollection.core.common.PermissionHandler
@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity(), AuthenticationSwitcherNavigator, Camer
     }
 
     private fun startCameraFragment(buildNavController: NavController) {
-        buildNavController.navigate(R.id.CameraFragmentNav)
+        buildNavController.navigate(com.kalex.dogescollection.camera.R.id.camera_graph)
     }
 
     private fun setNavBar() {

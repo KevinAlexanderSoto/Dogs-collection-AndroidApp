@@ -1,4 +1,4 @@
-package com.kalex.dogescollection.camera.camera.camera
+package com.kalex.dogescollection.camera.camera
 
 import android.content.Context
 import android.os.Bundle
@@ -11,9 +11,12 @@ import coil.load
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.kalex.dogescollection.camera.R
+import com.kalex.dogescollection.camera.databinding.FragmentDogResultBinding
 import com.kalex.dogescollection.core.common.CameraSwitcherNavigator
 import com.kalex.dogescollection.core.common.networkstates.handleViewModelState
 import com.kalex.dogescollection.core.model.data.alldogs.Dog
+import com.kalex.dogescollection.doglist.presentation.ui.DogDetailFragmentArgs
+import com.kalex.dogescollection.doglist.presentation.viewmodel.DogCollectionViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 /**

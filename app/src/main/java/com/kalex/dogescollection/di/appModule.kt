@@ -4,10 +4,7 @@ import android.content.Context
 import com.kalex.dogescollection.authentication.model.AuthenticationRepository
 import com.kalex.dogescollection.authentication.model.AuthenticationRepositoryImpl
 import com.kalex.dogescollection.core.api.DogsApi
-import com.kalex.dogescollection.core.common.Constants
-import com.kalex.dogescollection.dogList.model.repository.DogRepository
-import com.kalex.dogescollection.dogList.model.repository.DogRepositoryImpl
-import tensorflow.Classifier
+
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,31 +21,8 @@ object AppModule {
 
         @Provides
         @Singleton
-        fun provideDogsRepository(api : DogsApi): DogRepository {
-            return DogRepositoryImpl(api)
-        }
-        @Provides
-        @Singleton
         fun provideAuthenticationRepository(api : DogsApi): AuthenticationRepository {
             return AuthenticationRepositoryImpl(api)
         }
 }
 
-@Module
-@InstallIn(ActivityComponent::class)
-object ClassifierModule {
-
-    @Provides
-    @ActivityScoped
-    fun provideTfLiteModel(@ActivityContext context: Context): MappedByteBuffer {
-        return FileUtil.loadMappedFile(context, Constants.MODEL_PATH)
-    }
-    @Provides
-    @ActivityScoped
-    fun provideClassifier(TfLiteModel: MappedByteBuffer, @ActivityContext context: Context): tensorflow.Classifier {
-        return tensorflow.Classifier(
-            TfLiteModel,
-            FileUtil.loadLabels(context, Constants.LABEL_PATH)
-        )
-    }
-}
