@@ -15,13 +15,13 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.navigateUp
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kalex.dogescollection.authentication.login.presentation.LoginFragmentDirections
-import com.kalex.dogescollection.camera.CameraFragmentDirections
-import com.kalex.dogescollection.camera.DogResultFragmentDirections
-import com.kalex.dogescollection.common.AuthenticationSwitcherNavigator
-import com.kalex.dogescollection.common.CameraSwitcherNavigator
-import com.kalex.dogescollection.common.PreferencesHandler
+import com.kalex.dogescollection.camera.camera.CameraFragmentDirections
+import com.kalex.dogescollection.camera.camera.DogResultFragmentDirections
+import com.kalex.dogescollection.core.common.AuthenticationSwitcherNavigator
+import com.kalex.dogescollection.core.common.CameraSwitcherNavigator
+import com.kalex.dogescollection.core.common.PermissionHandler
 import com.kalex.dogescollection.databinding.ActivityMainBinding
-import com.kalex.dogescollection.dogList.model.data.alldogs.Dog
+import com.kalex.dogescollection.core.model.data.alldogs.Dog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity(), AuthenticationSwitcherNavigator, Camer
     private var isUserLogged = true
     private lateinit var navController : NavController
     @Inject
-    lateinit var preferencesHandler: PreferencesHandler
+    lateinit var preferencesHandler: com.kalex.dogescollection.core.common.PreferencesHandler
 
     @Inject
     lateinit var permissionHandler: PermissionHandler
@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity(), AuthenticationSwitcherNavigator, Camer
     }
 
     private fun startCameraFragment(buildNavController: NavController) {
-        buildNavController.navigate(R.id.CameraFragmentNav)
+        buildNavController.navigate(com.kalex.dogescollection.camera.R.id.camera_graph)
     }
 
     private fun setNavBar() {
@@ -94,11 +94,11 @@ class MainActivity : AppCompatActivity(), AuthenticationSwitcherNavigator, Camer
 
         val graph : NavGraph = if (isUserLogged) {
             setBottomActionVisibility(View.VISIBLE)
-            inflater.inflate(R.navigation.main_graph)
+            inflater.inflate(com.kalex.dogescollection.navigation.R.navigation.main_graph)
 
         } else {
             setBottomActionVisibility(View.GONE)
-            inflater.inflate(R.navigation.authentication_graph)
+            inflater.inflate(com.kalex.dogescollection.authentication.R.navigation.authentication_graph)
         }
 
         val navController = navHostFragment.navController
@@ -116,7 +116,7 @@ class MainActivity : AppCompatActivity(), AuthenticationSwitcherNavigator, Camer
 
     override fun onUserAuthenticated() {
         setBottomActionVisibility(View.VISIBLE)
-        navController.navigate(R.id.MainNavigation)
+        navController.navigate(com.kalex.dogescollection.navigation.R.id.MainNavigation)
     }
 
     override fun onCreateNewUser() {
@@ -125,7 +125,7 @@ class MainActivity : AppCompatActivity(), AuthenticationSwitcherNavigator, Camer
 
     override fun onUserCreated() {
         setBottomActionVisibility(View.VISIBLE)
-        navController.navigate(R.id.MainNavigation)
+        navController.navigate(com.kalex.dogescollection.navigation.R.id.MainNavigation)
     }
 
     override fun onDogRecognised(foundDog: Dog) {

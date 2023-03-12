@@ -2,7 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
-    id 'kotlin-android-extensions'
+    id 'kotlin-parcelize'
     id 'com.google.dagger.hilt.android'
     id 'androidx.navigation.safeargs.kotlin'
 }
@@ -17,7 +17,7 @@ android {
         targetSdk 33
         versionCode 1
         versionName "1.0.2"
-
+        compileSdkPreview ="UpsideDownCake"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -59,13 +59,13 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
 
-    //Retrofit-moshi
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
 
     //Hilt
     implementation "com.google.dagger:hilt-android:2.44"
     implementation 'androidx.preference:preference:1.2.0'
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.core:core-ktx:+'
+
     kapt "com.google.dagger:hilt-compiler:2.44"
 
     //Material3
@@ -75,25 +75,16 @@ dependencies {
     implementation "com.airbnb.android:epoxy:5.1.1"
     // Add the annotation processor if you are using Epoxy's annotations (recommended)
     kapt  "com.airbnb.android:epoxy-processor:5.1.1"
-
-    //Coil-img handler
-    implementation "io.coil-kt:coil:2.2.2"
-
-    //tensor flow
-    implementation 'org.tensorflow:tensorflow-lite:2.11.0'
-    implementation 'org.tensorflow:tensorflow-lite-support:0.4.3'
-
-    //camera X
-    def camerax_version = "1.2.1"
-    implementation "androidx.camera:camera-core:${camerax_version}"
-    implementation "androidx.camera:camera-camera2:${camerax_version}"
-    implementation "androidx.camera:camera-lifecycle:${camerax_version}"
-
-    implementation "androidx.camera:camera-view:${camerax_version}"
-    implementation "androidx.camera:camera-extensions:${camerax_version}"
-
+    
     // Splash Screen
     implementation 'androidx.core:core-splashscreen:1.0.0'
+
+    //core module
+    implementation project(path: ':core')
+    implementation project(path: ':doglist')
+    implementation project(path: ':camera')
+    implementation project(path: ':authentication')
+    implementation project(path: ':navigation')
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Dog detail screen section-->
+    <string name="dog_detail_famale_title">Hembra</string>
+    <string name="dog_detail_height_title">Altura</string>
+    <string name="dog_detail_weight_title">Peso</string>
+    <string name="dog_detail_male_title">Macho</string>
+    <string name="dog_detail_title">Detalles del perro</string>
+
+</resources>

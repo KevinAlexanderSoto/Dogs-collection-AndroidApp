@@ -9,11 +9,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.kalex.dogescollection.MainActivity
 import com.kalex.dogescollection.R
-import com.kalex.dogescollection.common.EpoxyMarginCon
-import com.kalex.dogescollection.common.PreferencesHandler
+import com.kalex.dogescollection.core.common.EpoxyMarginCon
+import com.kalex.dogescollection.core.common.PreferencesHandler
 import com.kalex.dogescollection.databinding.FragmentSettingsBinding
-import com.kalex.dogescollection.epoxy.epoxyButton
-import com.kalex.dogescollection.epoxy.epoxyTextTitle
+import com.kalex.dogescollection.core.epoxy.epoxyButton
+import com.kalex.dogescollection.core.epoxy.epoxyTextTitle
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -40,7 +40,7 @@ class SettingsFragment : Fragment() {
             epoxyTextTitle{
                 id(0)
                 titleText(resources.getString(R.string.settings_title))
-                textMargin(EpoxyMarginCon(1f,20f,1f,10f))
+                textMargin(EpoxyMarginCon(1f, 20f, 1f, 10f))
             }
             epoxyButton{
                 id(1)

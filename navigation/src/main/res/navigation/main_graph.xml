@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/MainNavigation"
+    app:startDestination="@id/doglist_graph">
+
+    <include app:graph="@navigation/doglist_graph" />
+
+    <include app:graph="@navigation/camera_graph" />
+
+    <fragment
+        android:id="@+id/SettingsFragment"
+        android:name="com.kalex.dogescollection.settings.SettingsFragment"
+        android:label="@string/dog_detail_fragment_label"
+        tools:layout="@layout/fragment_settings">
+
+    </fragment>
+
+</navigation>

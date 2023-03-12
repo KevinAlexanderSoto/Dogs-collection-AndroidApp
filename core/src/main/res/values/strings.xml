@@ -1,0 +1,37 @@
+<resources>
+
+
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label" />
+    <string name="second_fragment_label">Crear una cuenta</string>
+    <string name="dog_list_fragment_label">Dog list</string>
+    <string name="dog_detail_fragment_label">Dog list</string>
+
+
+
+    <!--Error messages section-->
+    <string name="ErrorTitle">Ups... hay un error</string>
+    <string name="ErrorText">Un error ha ocurrido</string>
+    <string name="ErrorButtonText">Aceptar</string>
+    <string name="sign_up_error">Error creando usuario</string>
+    <string name="sign_in_error">Error iniciando sesión</string>
+    <string name="user_already_exists">El usuario ya existe, por favor inicie sesión</string>
+    <string name="unknown_error_message">Error desconocido, intenta otra vez</string>
+    <string name="Internet_error_message">No tienes conexión a internet</string>
+    <string name="not_equals_passwords_error">Las contraseñas deben ser iguales</string>
+    <string name="error_accept">Aceptar</string>
+    <string name="error_title">Error</string>
+    <string name="wrong_user_or_password_error_message">Revisa tu usuario o la contraseña</string>
+    <string name="positive_button_text">Aceptar</string>
+    <string name="result_screen_add_error">Hubo un error, no se pudo agregar el perrito a tu colección</string>
+    <string name="dog_collection_error">Error descargando tu lista de perros, inténtalo más tarde.</string>
+    <string name="add_dog_error">Error anadiendo perrito a la colección :(</string>
+
+    <!--Permission section-->
+    <string name="permission_rationale_title">Aceptar los permisos</string>
+    <string name="permission_rationale_message">Por favor acepta los permisos para poder agregar más perritos a tu colección. Dale en aceptar y vuelve a intentarlo </string>
+    <string name="permission_positive_button_title">Aceptar</string>
+
+    <string name="app_log_out_title">Salir de la aplicación</string>
+    <string name="app_log_out_message">Deseas cerrar la aplicación?</string>
+</resources>

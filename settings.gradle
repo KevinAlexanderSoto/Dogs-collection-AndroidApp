@@ -18,3 +18,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "DogesCollection"
 include ':app'
+include ':core'
+include ':camera'
+include ':doglist'
+include ':authentication'
+include ':navigation'

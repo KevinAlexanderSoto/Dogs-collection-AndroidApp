@@ -1,61 +1,10 @@
 <resources>
     <string name="app_name">DogesCollection</string>
-    <string name="menu_action_settings">configuración</string>
-    <string name="menu_dog_list">tus perros</string>
+    <string name="menu_action_settings">Configuración</string>
+    <string name="menu_dog_list">Tus perros</string>
 
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label" />
-    <string name="second_fragment_label">Crear una cuenta</string>
-    <string name="dog_list_fragment_label">Dog list</string>
-    <string name="dog_detail_fragment_label">Dog list</string>
-
-    <string name="dog_collection_error">Error descargando tu lista de perros, inténtalo más tarde.</string>
-
-    <!--Error messages section-->
-    <string name="ErrorTitle">Ups... hay un error</string>
-    <string name="ErrorText">Un error ha ocurrido</string>
-    <string name="ErrorButtonText">Aceptar</string>
-    <string name="sign_up_error">Error creando usuario</string>
-    <string name="sign_in_error">Error iniciando sesión</string>
-    <string name="user_already_exists">El usuario ya existe, por favor inicie sesión</string>
-    <string name="unknown_error_message">Error desconocido, intenta otra vez</string>
-    <string name="Internet_error_message">No tienes conexión a internet</string>
-    <string name="not_equals_passwords_error">Las contraseñas deben ser iguales</string>
-    <string name="error_accept">Aceptar</string>
-    <string name="error_title">Error</string>
-    <string name="wrong_user_or_password_error_message">Revisa tu usuario o la contraseña</string>
-    <string name="positive_button_text">aceptar</string>
-    <!--Dog detail screen section-->
-    <string name="dog_detail_famale_title">Hembra</string>
-    <string name="dog_detail_height_title">Altura</string>
-    <string name="dog_detail_weight_title">Peso</string>
-    <string name="dog_detail_male_title">Macho</string>
-    <string name="dog_detail_title">Detalles del perro</string>
-    <!--Authentication screen section-->
-    <string name="authentication_login_title">Iniciar sesión</string>
-    <string name="authentication_login_user_text_hint">Correo Electrónico</string>
-    <string name="authentication_login_password_text_hint">Contraseña</string>
-    <string name="authentication_login_button_text">Iniciar sesión</string>
-    <string name="authentication_login_buttonText_text">Registrarse</string>
-    <string name="authentication_login_buttonText_title">No tienes una cuenta?</string>
-    <string name="authentication_login_success_message">Sección iniciada correctamente</string>
-    <string name="authentication_log_out_title">Salir de la aplicación</string>
-    <string name="authentication_log_out_message">deseas cerrar la aplicación?</string>
-    <string name="authentication_password_regex_error">contraseña no valida, ingresa letras, numeros y
-    mayúsculas</string>
-    <string name="authentication_login_password_confirm_text_hint">Confirmar Contraseña</string>
-    <string name="authentication_create_user_screen_title">Crear Cuenta</string>
-
-    <string name="add_dog_error">Error anadiendo perrito a la colección :(</string>
-    <string name="permission_rationale_title">Aceptar los permisos</string>
-    <string name="permission_rationale_message">Por favor acepta los permisos para poder agregar más perritos a tu colección. Dale en aceptar y vuelve a intentarlo </string>
-    <string name="permission_positive_button_title">Aceptar</string>
     <!--Settings screen section-->
     <string name="settings_title">Configuraciones</string>
-    <string name="settings_log_out_button_text">cerrar sesión</string>
-
-    <string name="result_screen_confirm_text">Este es tu perro?</string>
-    <string name="result_screen_add_error">"Hubo un error, no se pudo agregar el perrito a tu colección "</string>
-
+    <string name="settings_log_out_button_text">Cerrar sesión</string>
 
 </resources>
