@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kalex.dogescollection.authentication.R
+import com.kalex.dogescollection.core.R as coreR
 import com.kalex.dogescollection.authentication.FieldKey
 import com.kalex.dogescollection.authentication.RegexPatterns
 import com.kalex.dogescollection.authentication.RegexValidationState
@@ -92,7 +93,7 @@ class CreateAccountFragment : Fragment() {
                         ComparableKey.COMPARABLE_PASSWORD_TEXT to regexValidationState.getFieldValue(
                             FieldKey.PASSWORD_ONE
                         ),
-                       ComparableKey.COMPARABLE_PASSWORD_ERROR to getString(R.string.not_equals_passwords_error)
+                       ComparableKey.COMPARABLE_PASSWORD_ERROR to getString(coreR.string.not_equals_passwords_error)
                     )
                 }
             }
@@ -132,9 +133,9 @@ class CreateAccountFragment : Fragment() {
             onError = {
                 handleLoadingStatus(false)
                 MaterialAlertDialogBuilder(requireContext())
-                    .setTitle(resources.getString(R.string.error_title))
+                    .setTitle(resources.getString(coreR.string.error_title))
                     .setMessage(resources.getString(it))
-                    .setPositiveButton(resources.getString(R.string.error_accept)) { dialog, _ ->
+                    .setPositiveButton(resources.getString(coreR.string.error_accept)) { dialog, _ ->
                         dialog.dismiss()
                     }
                     .show()

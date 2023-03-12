@@ -15,6 +15,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kalex.dogescollection.authentication.R
+import com.kalex.dogescollection.core.R as coreR
 import com.kalex.dogescollection.authentication.FieldKey
 import com.kalex.dogescollection.authentication.RegexPatterns
 import com.kalex.dogescollection.authentication.RegexValidationState
@@ -115,9 +116,9 @@ class LoginFragment : Fragment() {
             onError = {
                 handleLoadingStatus(false)
                 MaterialAlertDialogBuilder(requireContext())
-                    .setTitle(resources.getString(R.string.error_title))
+                    .setTitle(resources.getString(coreR.string.error_title))
                     .setMessage(resources.getString(it))
-                    .setPositiveButton(resources.getString(R.string.error_accept)) { dialog, _ ->
+                    .setPositiveButton(resources.getString(coreR.string.error_accept)) { dialog, _ ->
                         dialog.dismiss()
                     }
                     .show()

@@ -11,6 +11,7 @@ import coil.load
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.kalex.dogescollection.camera.R
+import com.kalex.dogescollection.core.R as coreR
 import com.kalex.dogescollection.camera.databinding.FragmentDogResultBinding
 import com.kalex.dogescollection.core.common.CameraSwitcherNavigator
 import com.kalex.dogescollection.core.common.networkstates.handleViewModelState
@@ -93,7 +94,7 @@ class DogResultFragment : Fragment() {
         if (isAdded) {
             cameraSwitcherNavigator.onDogAddToCollection()
         } else {
-            handleErrorStatus(resources.getString(R.string.result_screen_add_error))
+            handleErrorStatus(resources.getString(coreR.string.result_screen_add_error))
         }
     }
 
@@ -109,9 +110,9 @@ class DogResultFragment : Fragment() {
         //TODO: set strings and styles
         handleLoadingStatus(false)
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle(resources.getString(R.string.ErrorTitle))
+            .setTitle(resources.getString(coreR.string.ErrorTitle))
             .setMessage(exception)
-            .setPositiveButton(resources.getString(R.string.ErrorButtonText)) { dialog, which ->
+            .setPositiveButton(resources.getString(coreR.string.ErrorButtonText)) { dialog, which ->
                //TODO:
 
             }

@@ -24,6 +24,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.kalex.dogescollection.camera.R
+import com.kalex.dogescollection.core.R as coreR
 import com.kalex.dogescollection.camera.tensorflow.ClassifierRepository
 import com.kalex.dogescollection.core.common.CameraSwitcherNavigator
 import com.kalex.dogescollection.core.common.networkstates.handleViewModelState
@@ -157,9 +158,9 @@ class CameraFragment : BottomSheetDialogFragment(R.layout.fragment_camera) {
     private fun handleErrorStatus(exception: String) {
         handleLoadingStatus(false)
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle(resources.getString(R.string.ErrorTitle))
+            .setTitle(resources.getString(coreR.string.ErrorTitle))
             .setMessage(exception)
-            .setPositiveButton(resources.getString(R.string.ErrorButtonText)) { dialog, _ ->
+            .setPositiveButton(resources.getString(coreR.string.ErrorButtonText)) { dialog, _ ->
                dialog.dismiss()
             }
             .show()

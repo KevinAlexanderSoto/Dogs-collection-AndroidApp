@@ -19,4 +19,6 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
-
+-keep class com.kalex.dogescollection.core.model.dto.*{*;}
+-keep class com.kalex.dogescollection.core.model.data.collection.*{ *;}
+-keep class com.kalex.dogescollection.core.model.data.alldogs.*{ *;}

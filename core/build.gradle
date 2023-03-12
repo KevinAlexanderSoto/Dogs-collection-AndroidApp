@@ -19,18 +19,6 @@ android {
         consumerProguardFiles "consumer-rules.pro"
     }
 
-    buildTypes {
-        release {
-            debuggable false
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-        debug {
-            minifyEnabled false
-            debuggable true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -62,7 +50,7 @@ dependencies {
     implementation "com.google.dagger:hilt-android:2.44"
     implementation 'androidx.preference:preference:1.2.0'
     implementation 'androidx.core:core-ktx:+'
-    implementation 'androidx.core:core-ktx:+'
+
     kapt "com.google.dagger:hilt-compiler:2.44"
 
     //Material3
