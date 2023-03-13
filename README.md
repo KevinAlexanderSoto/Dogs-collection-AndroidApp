@@ -23,7 +23,7 @@ Aplicacion navita Android para coleccionar tus perritos por medio de Inteligenci
 
 - ### pantalla de configuraciones para cerrar sesión. 
 
-![image](https://user-images.githubusercontent.com/86072587/224604069-c9ad60f2-dabb-4614-927b-3f899d904213.png)
+![image](https://user-images.githubusercontent.com/86072587/224604551-ab6e5bce-7cf3-4ace-8bf9-e008d7c535de.png)
 
 
 - ### Activa la cámara para reconocer la raza del perro. 
