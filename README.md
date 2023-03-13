@@ -27,6 +27,10 @@ Aplicacion navita Android para coleccionar tus perritos por medio de Inteligenci
 
 
 - ### Activa la cámara para reconocer la raza del perro. 
+
+![image](https://user-images.githubusercontent.com/86072587/224605104-99635d54-cb27-4397-b930-b07202471603.png)
+
+
 - ### Confirmación del perrito reconocido por la IA. 
 
 ## Tecnologías 
