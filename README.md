@@ -36,12 +36,20 @@ Aplicacion navita Android para coleccionar tus perritos por medio de Inteligenci
 ## Tecnologías 
 - Kotlin 
 - Hilt 
+- Corrutinas
 - Flows
 - Camera X
 - Retrofit-moshi 
 - Epoxy 
 ## Arquitectura 
-Se usa la Arquitectura MVVM para estructurar los modulos y la aplicacion.
+Se usa la Arquitectura MVVM para estructurar los modulos y la aplicación.
+
+![image](https://user-images.githubusercontent.com/86072587/225817080-03a37836-7eaa-4e41-838d-613232c4b69b.png)
+
+
 ## Estrategia de Modularización 
+
+![image](https://user-images.githubusercontent.com/86072587/225807329-69901748-4471-4c5a-abaa-9eb4a68723ed.png)
+
 
 
