@@ -14,6 +14,18 @@ dependencyResolutionManagement {
         google()
 
     }
+    versionCatalogs {
+        create("libs") {
+            library("androidxCore", "androidx.core:core-ktx:1.9.0")
+            library("androidxAppcompat", "androidx.appcompat:appcompat:1.6.1")
+            library("googleMaterial", "com.google.android.material:material:1.8.0")
+            library("constraintlayout", "androidx.constraintlayout:constraintlayout:2.1.4")
+            library("commons-lang3", "org.apache.commons", "commons-lang3").version {
+                strictly("[3.8, 4.0[")
+                prefer("3.9")
+            }
+        }
+    }
 }
 
 rootProject.name = "DogesCollection"
