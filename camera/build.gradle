@@ -41,14 +41,13 @@ dependencies {
     implementation libs.androidxAppcompat
     implementation libs.googleMaterial
 
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
+    implementation libs.navigationFragment
+    implementation libs.navigationUi
     implementation libs.constraintlayout
 
     //Hilt
     implementation 'com.google.dagger:hilt-android:2.45'
-    implementation 'androidx.preference:preference:1.2.0'
-    implementation 'androidx.core:core-ktx:+'
+    implementation libs.androidxPreference
     kapt 'com.google.dagger:hilt-compiler:2.45'
 
     //camera X
@@ -61,7 +60,7 @@ dependencies {
     implementation "androidx.camera:camera-extensions:${camerax_version}"
 
     //Coil-img handler
-    implementation "io.coil-kt:coil:2.2.2"
+    implementation libs.coilImgHandler
 
     //tensor flow
     implementation 'org.tensorflow:tensorflow-lite:2.11.0'
@@ -72,7 +71,7 @@ dependencies {
     //doglist module
     implementation project(path: ':doglist')
 
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    testImplementation libs.junit
+    androidTestImplementation libs.androidxJunitTest
+    androidTestImplementation libs.espressoCore
 }
