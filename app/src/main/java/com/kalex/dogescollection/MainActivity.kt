@@ -20,13 +20,12 @@ import com.kalex.dogescollection.camera.camera.DogResultFragmentDirections
 import com.kalex.dogescollection.core.common.AuthenticationSwitcherNavigator
 import com.kalex.dogescollection.core.common.CameraSwitcherNavigator
 import com.kalex.dogescollection.core.common.PermissionHandler
-import com.kalex.dogescollection.databinding.ActivityMainBinding
 import com.kalex.dogescollection.core.model.data.alldogs.Dog
+import com.kalex.dogescollection.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), AuthenticationSwitcherNavigator, CameraSwitcherNavigator {
@@ -35,7 +34,8 @@ class MainActivity : AppCompatActivity(), AuthenticationSwitcherNavigator, Camer
     private lateinit var binding: ActivityMainBinding
     private lateinit var cameraButton: FloatingActionButton
     private var isUserLogged = true
-    private lateinit var navController : NavController
+    private lateinit var navController: NavController
+
     @Inject
     lateinit var preferencesHandler: com.kalex.dogescollection.core.common.PreferencesHandler
 
@@ -61,7 +61,6 @@ class MainActivity : AppCompatActivity(), AuthenticationSwitcherNavigator, Camer
     }
 
     private fun setNavBar() {
-
         if (preferencesHandler.getLoggedInUser() == null) {
             isUserLogged = false
         }
@@ -72,7 +71,6 @@ class MainActivity : AppCompatActivity(), AuthenticationSwitcherNavigator, Camer
         appBarConfiguration = AppBarConfiguration(buildNavController.graph)
 
         setCameraButtonListener(buildNavController)
-
     }
 
     private fun setCameraButtonListener(buildNavController: NavController) {
@@ -92,10 +90,9 @@ class MainActivity : AppCompatActivity(), AuthenticationSwitcherNavigator, Camer
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main) as NavHostFragment
         val inflater = navHostFragment.navController.navInflater
 
-        val graph : NavGraph = if (isUserLogged) {
+        val graph: NavGraph = if (isUserLogged) {
             setBottomActionVisibility(View.VISIBLE)
             inflater.inflate(com.kalex.dogescollection.navigation.R.navigation.main_graph)
-
         } else {
             setBottomActionVisibility(View.GONE)
             inflater.inflate(com.kalex.dogescollection.authentication.R.navigation.authentication_graph)
@@ -105,13 +102,13 @@ class MainActivity : AppCompatActivity(), AuthenticationSwitcherNavigator, Camer
         navController.setGraph(graph, intent.extras)
         return navController
     }
-    private fun setBottomActionVisibility(state : Int ){
+    private fun setBottomActionVisibility(state: Int) {
         binding.cameraActionButton.visibility = state
         binding.bottomAppBar.visibility = state
     }
     override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp(appBarConfiguration)
-                || super.onSupportNavigateUp()
+        return navController.navigateUp(appBarConfiguration) ||
+            super.onSupportNavigateUp()
     }
 
     override fun onUserAuthenticated() {
@@ -143,5 +140,4 @@ class MainActivity : AppCompatActivity(), AuthenticationSwitcherNavigator, Camer
         navController.navigate(DogResultFragmentDirections.actionDogResultFragmentToCameraFragment())
         setBottomActionVisibility(View.VISIBLE)
     }
-
 }

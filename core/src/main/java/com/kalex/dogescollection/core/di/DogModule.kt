@@ -3,13 +3,11 @@ package com.kalex.dogescollection.core.di
 import android.app.Activity
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
-import com.kalex.dogescollection.core.common.PermissionHandler
 import com.kalex.dogescollection.core.api.ApiServiceInterceptor
-
 import com.kalex.dogescollection.core.api.DogsApi
 import com.kalex.dogescollection.core.common.Constants
+import com.kalex.dogescollection.core.common.PermissionHandler
 import com.kalex.dogescollection.core.common.PreferencesHandler
-
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,7 +26,7 @@ object DogModule {
 
     @Provides
     @Singleton
-    fun provideDogApi(client: OkHttpClient):DogsApi = Retrofit.Builder()
+    fun provideDogApi(client: OkHttpClient): DogsApi = Retrofit.Builder()
         .baseUrl(Constants.BASE_URL)
         .client(client)
         .addConverterFactory(MoshiConverterFactory.create())
@@ -38,10 +36,9 @@ object DogModule {
     @Provides
     @Singleton
     fun provideOkHttpClient(): OkHttpClient = OkHttpClient
-            .Builder()
-            .addInterceptor(ApiServiceInterceptor)
-            .build()
-
+        .Builder()
+        .addInterceptor(ApiServiceInterceptor)
+        .build()
 }
 
 @Module
@@ -53,6 +50,7 @@ object SharedPreferencesModule {
     fun providePreferencesHandler(@ActivityContext context: Context): PreferencesHandler {
         return PreferencesHandler(context as Activity)
     }
+
     @Provides
     @ActivityScoped
     fun providePermissionHandler(@ActivityContext context: Context): PermissionHandler {

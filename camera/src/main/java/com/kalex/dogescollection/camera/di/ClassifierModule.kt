@@ -21,12 +21,13 @@ object ClassifierModule {
     fun provideTfLiteModel(@ActivityContext context: Context): MappedByteBuffer {
         return FileUtil.loadMappedFile(context, Constants.MODEL_PATH)
     }
+
     @Provides
     @ActivityScoped
     fun provideClassifier(TfLiteModel: MappedByteBuffer, @ActivityContext context: Context): Classifier {
         return Classifier(
             TfLiteModel,
-            FileUtil.loadLabels(context, Constants.LABEL_PATH)
+            FileUtil.loadLabels(context, Constants.LABEL_PATH),
         )
     }
 }

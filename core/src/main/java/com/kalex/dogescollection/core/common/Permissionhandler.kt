@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 class PermissionHandler @Inject constructor(
-    private val context: AppCompatActivity
+    private val context: AppCompatActivity,
 ) {
     private val _permissionHandlerState = MutableStateFlow<Boolean>(false)
     val currentPermissionState: StateFlow<Boolean>
@@ -40,7 +40,7 @@ class PermissionHandler @Inject constructor(
     }
 
     private val requestPermissionLauncher = context.registerForActivityResult(
-        ActivityResultContracts.RequestMultiplePermissions()
+        ActivityResultContracts.RequestMultiplePermissions(),
     ) { isGranted: Map<String, Boolean> ->
         val permissionToAsk = mutableListOf<String>()
 
@@ -48,7 +48,7 @@ class PermissionHandler @Inject constructor(
             REQUIRED_PERMISSIONS.forEach {
                 when {
                     shouldShowRequestPermissionRationale(context, it) -> {
-                        //se pueden pedir otra vez
+                        // se pueden pedir otra vez
                         permissionToAsk.add(it)
                     }
                 }
@@ -60,26 +60,24 @@ class PermissionHandler @Inject constructor(
             } else {
                 executeDialogForNegativePermission(false)
             }
-
         } else {
-            //acepto los permisos
+            // acepto los permisos
             _permissionHandlerState.value = true
         }
     }
 
-
     private fun executeDialogForNegativePermission(isRationale: Boolean, callback: () -> Unit = {}) {
-        //TODO: Add  style
+        // TODO: Add  style
         MaterialAlertDialogBuilder(context)
             .setTitle(R.string.permission_rationale_title)
             .setMessage(R.string.permission_rationale_message)
             .setPositiveButton(R.string.permission_positive_button_title) { dialog, _ ->
                 callback.invoke()
                 if (!isRationale) {
-                    //Take the User to the app settings if the user do not accept and click on Do not show again
+                    // Take the User to the app settings if the user do not accept and click on Do not show again
                     val intent = Intent(
                         Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                        Uri.fromParts("package", context.packageName, null)
+                        Uri.fromParts("package", context.packageName, null),
                     )
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(context, intent, null)
@@ -100,7 +98,7 @@ class PermissionHandler @Inject constructor(
                     android.Manifest.permission.CAMERA,
                     android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
 
-                    ).toTypedArray()
+                ).toTypedArray()
             }
     }
 }

@@ -3,19 +3,18 @@ package com.kalex.dogescollection.authentication.createaccount.presentation
 import android.content.Context
 import android.os.Bundle
 import android.util.Patterns
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.kalex.dogescollection.authentication.R
-import com.kalex.dogescollection.core.R as coreR
 import com.kalex.dogescollection.authentication.FieldKey
+import com.kalex.dogescollection.authentication.R
 import com.kalex.dogescollection.authentication.RegexPatterns
 import com.kalex.dogescollection.authentication.RegexValidationState
 import com.kalex.dogescollection.authentication.databinding.FragmentCreateAccountBinding
@@ -27,11 +26,11 @@ import com.kalex.dogescollection.core.epoxy.epoxyButton
 import com.kalex.dogescollection.core.epoxy.epoxyInputField
 import com.kalex.dogescollection.core.epoxy.epoxyInputPassword
 import com.kalex.dogescollection.core.model.dto.User
-
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import com.kalex.dogescollection.core.R as coreR
 
 @AndroidEntryPoint
 class CreateAccountFragment : Fragment() {
@@ -47,8 +46,9 @@ class CreateAccountFragment : Fragment() {
 
     private val createAccountViewModel: CreateAccountViewModel by viewModels()
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View {
         regexValidationState.updateInputFieldState(false)
         regexValidationState.updateInputPasswordState(false)
@@ -56,7 +56,6 @@ class CreateAccountFragment : Fragment() {
         _binding = FragmentCreateAccountBinding.inflate(inflater, container, false)
         return binding.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -91,9 +90,9 @@ class CreateAccountFragment : Fragment() {
                 comparablePassword {
                     mapOf(
                         ComparableKey.COMPARABLE_PASSWORD_TEXT to regexValidationState.getFieldValue(
-                            FieldKey.PASSWORD_ONE
+                            FieldKey.PASSWORD_ONE,
                         ),
-                       ComparableKey.COMPARABLE_PASSWORD_ERROR to getString(coreR.string.not_equals_passwords_error)
+                        ComparableKey.COMPARABLE_PASSWORD_ERROR to getString(coreR.string.not_equals_passwords_error),
                     )
                 }
             }
@@ -104,7 +103,7 @@ class CreateAccountFragment : Fragment() {
                     createAccountViewModel.createAccount(
                         regexValidationState.getFieldValue(FieldKey.DATA_FIELD),
                         regexValidationState.getFieldValue(FieldKey.PASSWORD_ONE),
-                        regexValidationState.getFieldValue(FieldKey.PASSWORD_TWO)
+                        regexValidationState.getFieldValue(FieldKey.PASSWORD_TWO),
                     )
                     handleOnCreateAccountStates()
                 }
@@ -127,7 +126,8 @@ class CreateAccountFragment : Fragment() {
     }
 
     private fun handleOnCreateAccountStates() {
-        handleViewModelState(createAccountViewModel.authenticationState,
+        handleViewModelState(
+            createAccountViewModel.authenticationState,
             onSuccess = { handleSuccessStatus(it) },
             onLoading = { handleLoadingStatus(true) },
             onError = {
@@ -139,7 +139,7 @@ class CreateAccountFragment : Fragment() {
                         dialog.dismiss()
                     }
                     .show()
-            }
+            },
         )
     }
 
@@ -147,7 +147,7 @@ class CreateAccountFragment : Fragment() {
         Toast.makeText(
             requireContext(),
             getString(R.string.authentication_login_success_message),
-            Toast.LENGTH_SHORT
+            Toast.LENGTH_SHORT,
         ).show()
         preferencesHandler.setLoggedInUser(user)
         authSwitcherNavigator.onUserCreated()

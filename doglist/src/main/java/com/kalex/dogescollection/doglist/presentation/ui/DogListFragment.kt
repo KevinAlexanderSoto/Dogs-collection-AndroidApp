@@ -1,6 +1,5 @@
 package com.kalex.dogescollection.doglist.presentation.ui
 
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,15 +12,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.progressindicator.LinearProgressIndicator
-import com.kalex.dogescollection.doglist.R
-import com.kalex.dogescollection.core.R as coreR
 import com.kalex.dogescollection.core.common.networkstates.handleViewModelState
-import com.kalex.dogescollection.doglist.databinding.DogListFragmentBinding
 import com.kalex.dogescollection.core.model.data.alldogs.Dog
+import com.kalex.dogescollection.doglist.databinding.DogListFragmentBinding
 import com.kalex.dogescollection.doglist.presentation.viewmodel.DogCollectionViewModel
 import com.kalex.dogescollection.doglist.presentation.viewmodel.DogsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import com.kalex.dogescollection.core.R as coreR
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -45,18 +43,17 @@ class DogListFragment : Fragment() {
         }
     }
 
-
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View {
-
         _binding = DogListFragmentBinding.inflate(inflater, container, false)
         return binding.root
-
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setHasOptionsMenu(true) //Set this to true in order to trigger callbacks to Fragment#onOptionsItemSelected
+        setHasOptionsMenu(true) // Set this to true in order to trigger callbacks to Fragment#onOptionsItemSelected
 
         (requireActivity() as AppCompatActivity).apply {
             // Redirect system "Back" press to our dispatcher
@@ -67,7 +64,6 @@ class DogListFragment : Fragment() {
         collectionViewModel.getDogCollection()
 
         handleDogsByViewModel(dogListAdapter)
-
     }
 
     private fun setUpRecycler(dogListAdapter: DogListAdapter) {
@@ -80,8 +76,8 @@ class DogListFragment : Fragment() {
     }
 
     private fun handleDogsByViewModel(dogListAdapter: DogListAdapter) {
-
-        handleViewModelState(collectionViewModel.getCollectionState,
+        handleViewModelState(
+            collectionViewModel.getCollectionState,
             onSuccess = {
                 handleSuccessStatus(it, dogListAdapter)
             },
@@ -90,19 +86,18 @@ class DogListFragment : Fragment() {
             },
             onError = {
                 handleErrorStatus(getString(it))
-            }
+            },
         )
     }
 
     private fun handleErrorStatus(exception: String) {
-        //TODO: set strings and styles
+        // TODO: set strings and styles
         handleLoadingStatus(false)
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(resources.getString(coreR.string.ErrorTitle))
             .setMessage(exception)
             .setPositiveButton(resources.getString(coreR.string.ErrorButtonText)) { _, _ ->
                 dogsViewModel.getAllDogs()
-
             }
             .show()
     }
@@ -128,7 +123,7 @@ class DogListFragment : Fragment() {
     }
 
     private fun onBackPressed() {
-        //TODO: set strings and styles
+        // TODO: set strings and styles
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(resources.getString(coreR.string.app_log_out_title))
             .setMessage(resources.getString(coreR.string.app_log_out_message))
@@ -137,5 +132,4 @@ class DogListFragment : Fragment() {
             }
             .show()
     }
-
 }

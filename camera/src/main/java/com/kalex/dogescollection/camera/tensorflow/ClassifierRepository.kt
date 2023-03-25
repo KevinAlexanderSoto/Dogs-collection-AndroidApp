@@ -6,11 +6,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-
-
 class ClassifierRepository @Inject constructor() {
     @Inject
-    lateinit var  classifier: Classifier
+    lateinit var classifier: Classifier
 
     @androidx.annotation.OptIn(androidx.camera.core.ExperimentalGetImage::class)
     suspend fun recognizeImage(imageProxy: ImageProxy): DogRecognitionConfidence =
@@ -23,5 +21,4 @@ class ClassifierRepository @Inject constructor() {
                 return@withContext classifier.recognizeImage(bitMapImage).first()
             }
         }
-
 }

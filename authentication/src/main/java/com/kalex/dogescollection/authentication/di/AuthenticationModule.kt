@@ -15,7 +15,7 @@ object AuthenticationModule {
 
     @Provides
     @Singleton
-    fun provideAuthenticationRepository(api : DogsApi): AuthenticationRepository {
+    fun provideAuthenticationRepository(api: DogsApi): AuthenticationRepository {
         return AuthenticationRepositoryImpl(api)
     }
 }

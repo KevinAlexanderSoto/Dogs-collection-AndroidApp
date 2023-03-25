@@ -68,7 +68,7 @@ class Classifier @Inject constructor(tfLiteModel: MappedByteBuffer, private val 
         // Creates the output tensor and its processor.
         outputProbabilityBuffer = TensorBuffer.createFixedSize(
             probabilityShape,
-            probabilityDataType
+            probabilityDataType,
         )
 
         // Creates the post processor for the output probability.

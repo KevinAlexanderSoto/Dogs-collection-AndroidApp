@@ -11,9 +11,9 @@ import com.kalex.dogescollection.MainActivity
 import com.kalex.dogescollection.R
 import com.kalex.dogescollection.core.common.EpoxyMarginCon
 import com.kalex.dogescollection.core.common.PreferencesHandler
-import com.kalex.dogescollection.databinding.FragmentSettingsBinding
 import com.kalex.dogescollection.core.epoxy.epoxyButton
 import com.kalex.dogescollection.core.epoxy.epoxyTextTitle
+import com.kalex.dogescollection.databinding.FragmentSettingsBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -26,7 +26,9 @@ class SettingsFragment : Fragment() {
     lateinit var preferencesHandler: PreferencesHandler
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
         return binding.root
@@ -37,22 +39,22 @@ class SettingsFragment : Fragment() {
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(false)
         (requireActivity() as AppCompatActivity).supportActionBar?.setHomeButtonEnabled(false)
         binding.SettingEpoxyRecyclerView.withModels {
-            epoxyTextTitle{
+            epoxyTextTitle {
                 id(0)
                 titleText(resources.getString(R.string.settings_title))
                 textMargin(EpoxyMarginCon(1f, 20f, 1f, 10f))
             }
-            epoxyButton{
+            epoxyButton {
                 id(1)
                 buttonText(resources.getString(R.string.settings_log_out_button_text))
                 initialButtonEnableState(true)
-                onClickListener{
+                onClickListener {
                     preferencesHandler.onLogOutUser()
-                    val intent = Intent(this@SettingsFragment.requireContext(),MainActivity::class.java)
+                    val intent = Intent(this@SettingsFragment.requireContext(), MainActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                     startActivity(intent)
                 }
-                enableButton{}
+                enableButton {}
             }
         }
     }

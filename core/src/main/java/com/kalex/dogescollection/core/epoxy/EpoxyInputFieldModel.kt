@@ -1,6 +1,5 @@
 package com.kalex.dogescollection.core.epoxy
 
-
 import android.os.CountDownTimer
 import android.text.Editable
 import android.text.TextWatcher
@@ -14,12 +13,12 @@ import com.google.android.material.textfield.TextInputLayout
 import com.kalex.dogescollection.core.R
 import com.kalex.dogescollection.core.common.epoxyhelpers.KotlinEpoxyHolder
 
-
 @EpoxyModelClass()
 abstract class EpoxyInputFieldModel : EpoxyModelWithHolder<EpoxyInputFieldModel.Holder>() {
     override fun getDefaultLayout(): Int {
-        return  R.layout.authentication_input_field
+        return R.layout.authentication_input_field
     }
+
     @EpoxyAttribute
     lateinit var textHint: String
 
@@ -27,7 +26,7 @@ abstract class EpoxyInputFieldModel : EpoxyModelWithHolder<EpoxyInputFieldModel.
     lateinit var regexValidation: Regex
 
     @EpoxyAttribute
-    lateinit var onValidationResult: (result: Boolean,text:String) -> Unit
+    lateinit var onValidationResult: (result: Boolean, text: String) -> Unit
 
     @EpoxyAttribute
     var onIsFocus: () -> Unit = {}
@@ -55,7 +54,7 @@ abstract class EpoxyInputFieldModel : EpoxyModelWithHolder<EpoxyInputFieldModel.
                 textFieldLayoutView.error = null
             }
         }
-        holder.textFieldEditView.afterTextChangedDelayed{
+        holder.textFieldEditView.afterTextChangedDelayed {
             currentText = holder.textFieldEditView.text.toString()
             handleOptional {
                 handleNullOrEmpty(currentText) {
@@ -64,13 +63,13 @@ abstract class EpoxyInputFieldModel : EpoxyModelWithHolder<EpoxyInputFieldModel.
             }
         }
         holder.textFieldEditView.doOnTextChanged { text, start, before, count ->
-            onValidationResult.invoke(false,"")
+            onValidationResult.invoke(false, "")
             textFieldLayoutView.error = null
         }
     }
 
     private fun onValidationError() {
-        //TODO: Add error messages
+        // TODO: Add error messages
         textFieldLayoutView.error = "Valida tu usuario"
     }
 
@@ -84,13 +83,13 @@ abstract class EpoxyInputFieldModel : EpoxyModelWithHolder<EpoxyInputFieldModel.
 
     private fun handleError() {
         onValidationError()
-        onValidationResult.invoke(false,"")
+        onValidationResult.invoke(false, "")
     }
 
     private fun handleRegex(currentText: String) {
         if (regexValidation.matches(currentText)) {
             textFieldLayoutView.error = null
-            onValidationResult.invoke(true,currentText)
+            onValidationResult.invoke(true, currentText)
         } else {
             handleError()
         }

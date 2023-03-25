@@ -19,13 +19,12 @@ import java.net.UnknownHostException
  *  @param call this is a function to make the request and pass the result or throw an Exception
  * **/
 fun <T> makeNetworkCallHandler(
-    call: suspend () -> T
+    call: suspend () -> T,
 ) = flow<UseCaseFlowStatus<T>> {
     try {
         emit(UseCaseFlowStatus.Loading(""))
         val data = call()
         emit(UseCaseFlowStatus.Success(data))
-
     } catch (e: UnknownHostException) {
         emit(UseCaseFlowStatus.Error(R.string.Internet_error_message))
     } catch (e: HttpException) {
@@ -35,7 +34,6 @@ fun <T> makeNetworkCallHandler(
         }
         emit(UseCaseFlowStatus.Error(errorMessage))
     } catch (e: Exception) {
-
         val errorMessage = when (e.message) {
             ErrorMessages.SIGN_UP_ERROR -> R.string.sign_up_error
             ErrorMessages.SIGN_IN_ERROR -> R.string.sign_in_error
@@ -47,7 +45,6 @@ fun <T> makeNetworkCallHandler(
 
         emit(UseCaseFlowStatus.Error(errorMessage))
     }
-
 }
 
 /**
@@ -57,7 +54,7 @@ fun <T> Fragment.handleViewModelState(
     call: Flow<ViewModelNewsUiState<T>>,
     onSuccess: (T) -> Unit,
     onLoading: (Boolean) -> Unit,
-    onError: (Int) -> Unit
+    onError: (Int) -> Unit,
 ) {
     lifecycleScope.launch {
         viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
