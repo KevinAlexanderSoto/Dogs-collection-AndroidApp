@@ -14,6 +14,40 @@ dependencyResolutionManagement {
         google()
 
     }
+    versionCatalogs {
+        def camerax_version = "1.2.2"
+        create("libs") {
+            library("androidxCore", "androidx.core:core-ktx:1.9.0")
+            library("androidxAppcompat", "androidx.appcompat:appcompat:1.6.1")
+            library("googleMaterial", "com.google.android.material:material:1.8.0")
+            library("constraintlayout", "androidx.constraintlayout:constraintlayout:2.1.4")
+            library("navigationFragment", "androidx.navigation:navigation-fragment-ktx:2.5.3")
+            library("navigationUi", "androidx.navigation:navigation-ui-ktx:2.5.3")
+            library("splashscreen", "androidx.core:core-splashscreen:1.0.0")
+            library("daggerHilt", "com.google.dagger:hilt-android:2.44")
+            library("androidxPreference", "androidx.preference:preference:1.2.0")
+            library("daggerHiltCompiler", "com.google.dagger:hilt-compiler:2.44")
+            library("coilImgHandler", "io.coil-kt:coil:2.2.2")
+            library("epoxy", "com.airbnb.android:epoxy:5.1.1")
+            library("epoxyProcessor", "com.airbnb.android:epoxy-processor:5.1.1")
+            library("junit", "junit:junit:4.13.2")
+            library("androidxJunitTest", "androidx.test.ext:junit:1.1.5")
+            library("espressoCore", "androidx.test.espresso:espresso-core:3.5.1")
+            library("retrofit", "com.squareup.retrofit2:retrofit:2.9.0")
+            library("converterMoshi", "com.squareup.retrofit2:converter-moshi:2.9.0")
+            library("tensorflowLite", "org.tensorflow:tensorflow-lite:2.11.0")
+            library("tensorflowLiteSupport", "org.tensorflow:tensorflow-lite-support:0.4.3")
+            library("cameraCore", "androidx.camera:camera-core:${camerax_version}")
+            library("camera2", "androidx.camera:camera-camera2:${camerax_version}")
+            library("cameraLifecycle", "androidx.camera:camera-lifecycle:${camerax_version}")
+            library("cameraView", "androidx.camera:camera-view:${camerax_version}")
+            library("cameraExtensions", "androidx.camera:camera-extensions:${camerax_version}")
+            library("commons-lang3", "org.apache.commons", "commons-lang3").version {
+                strictly("[3.8, 4.0[")
+                prefer("3.9")
+            }
+        }
+    }
 }
 
 rootProject.name = "DogesCollection"

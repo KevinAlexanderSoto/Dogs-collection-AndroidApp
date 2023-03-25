@@ -14,7 +14,6 @@ android {
     defaultConfig {
         minSdk 26
         targetSdk 33
-        compileSdkPreview ="UpsideDownCake"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
@@ -37,42 +36,39 @@ kapt {
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.9.0'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.8.0'
+    implementation libs.androidxCore
+    implementation libs.androidxAppcompat
+    implementation libs.googleMaterial
 
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation libs.navigationFragment
+    implementation libs.navigationUi
+    implementation libs.constraintlayout
 
     //Hilt
-    implementation 'com.google.dagger:hilt-android:2.45'
-    implementation 'androidx.preference:preference:1.2.0'
-    implementation 'androidx.core:core-ktx:+'
-    kapt 'com.google.dagger:hilt-compiler:2.45'
+    implementation libs.daggerHilt
+    implementation libs.androidxPreference
+    kapt libs.daggerHiltCompiler
 
     //camera X
-    def camerax_version = "1.2.1"
-    implementation "androidx.camera:camera-core:${camerax_version}"
-    implementation "androidx.camera:camera-camera2:${camerax_version}"
-    implementation "androidx.camera:camera-lifecycle:${camerax_version}"
-
-    implementation "androidx.camera:camera-view:${camerax_version}"
-    implementation "androidx.camera:camera-extensions:${camerax_version}"
+    implementation libs.cameraCore
+    implementation libs.camera2
+    implementation libs.cameraLifecycle
+    implementation libs.cameraView
+    implementation libs.cameraExtensions
 
     //Coil-img handler
-    implementation "io.coil-kt:coil:2.2.2"
+    implementation libs.coilImgHandler
 
     //tensor flow
-    implementation 'org.tensorflow:tensorflow-lite:2.11.0'
-    implementation 'org.tensorflow:tensorflow-lite-support:0.4.3'
+    implementation libs.tensorflowLite
+    implementation libs.tensorflowLiteSupport
 
     //core module
     implementation project(path: ':core')
     //doglist module
     implementation project(path: ':doglist')
 
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    testImplementation libs.junit
+    androidTestImplementation libs.androidxJunitTest
+    androidTestImplementation libs.espressoCore
 }

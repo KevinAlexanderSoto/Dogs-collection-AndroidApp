@@ -1,6 +1,5 @@
 package com.kalex.dogescollection.core.api
 
-
 import com.kalex.dogescollection.core.common.Constants
 import com.kalex.dogescollection.core.model.data.alldogs.Dogs
 import com.kalex.dogescollection.core.model.data.alldogs.SingleDog
@@ -18,9 +17,11 @@ import retrofit2.http.Query
 interface DogsApi {
 
     @GET(Constants.GET_ALL_DOGS_URL)
-    suspend fun getAllDogs() : Dogs
+    suspend fun getAllDogs(): Dogs
+
     @POST(Constants.CREATE_ACCOUNT_URL)
     suspend fun createAccount(@Body signUpDTO: SignUpDTO): UserResponse
+
     @POST(Constants.LOGIN_URL)
     suspend fun logIn(@Body signInDTO: LogInDTO): UserResponse
 
@@ -33,6 +34,5 @@ interface DogsApi {
     suspend fun getDogCollection(): Dogs
 
     @GET(Constants.GET_DOG_BY_ML_ID)
-    suspend fun getDogPredicted(@Query(Constants.GET_PREDICTED_QUERY) id : String) : SingleDog
-
+    suspend fun getDogPredicted(@Query(Constants.GET_PREDICTED_QUERY) id: String): SingleDog
 }

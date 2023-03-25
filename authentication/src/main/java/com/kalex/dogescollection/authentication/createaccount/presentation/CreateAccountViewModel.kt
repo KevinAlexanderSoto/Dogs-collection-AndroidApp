@@ -14,19 +14,20 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 @HiltViewModel
 class CreateAccountViewModel @Inject constructor(
-    private val authenticationUseCase : AuthenticationUseCase
-): ViewModel() {
+    private val authenticationUseCase: AuthenticationUseCase,
+) : ViewModel() {
     private val _authenticationState = MutableStateFlow<ViewModelNewsUiState<User>>(
-        ViewModelNewsUiState.Loading(true))
+        ViewModelNewsUiState.Loading(true),
+    )
     val authenticationState: StateFlow<ViewModelNewsUiState<User>>
         get() = _authenticationState
 
-    fun createAccount(user : String,password : String,passwordConfirm : String) {
+    fun createAccount(user: String, password: String, passwordConfirm: String) {
         viewModelScope.launch {
-            authenticationUseCase.createAccount(user,password,passwordConfirm).collectLatest {
+            authenticationUseCase.createAccount(user, password, passwordConfirm).collectLatest {
                 when (it) {
                     is UseCaseFlowStatus.Success -> _authenticationState.value = ViewModelNewsUiState.Success(it.data)
-                    is UseCaseFlowStatus.Loading ->_authenticationState.value = ViewModelNewsUiState.Loading(true)
+                    is UseCaseFlowStatus.Loading -> _authenticationState.value = ViewModelNewsUiState.Loading(true)
                     is UseCaseFlowStatus.Error -> _authenticationState.value = ViewModelNewsUiState.Error(it.exception)
                 }
             }

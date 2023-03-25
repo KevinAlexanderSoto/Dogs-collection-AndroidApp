@@ -35,8 +35,6 @@ import androidx.annotation.RequiresApi;
 import androidx.camera.core.ExperimentalGetImage;
 import androidx.camera.core.ImageProxy;
 
-import com.kalex.dogescollection.camera.camera.camera.utils.FrameMetadata;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;

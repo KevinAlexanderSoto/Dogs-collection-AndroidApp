@@ -15,24 +15,24 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val authenticationUseCase : AuthenticationUseCase
+    private val authenticationUseCase: AuthenticationUseCase,
 ) : ViewModel() {
 
     private val _signInState = MutableStateFlow<ViewModelNewsUiState<User>>(
-        ViewModelNewsUiState.Loading(true))
+        ViewModelNewsUiState.Loading(true),
+    )
     val signInState: StateFlow<ViewModelNewsUiState<User>>
         get() = _signInState
 
-    fun signIn(user : String,password : String) {
+    fun signIn(user: String, password: String) {
         viewModelScope.launch {
-            authenticationUseCase.signIn(user,password).collectLatest {
+            authenticationUseCase.signIn(user, password).collectLatest {
                 when (it) {
                     is UseCaseFlowStatus.Success -> _signInState.value = ViewModelNewsUiState.Success(it.data)
-                    is UseCaseFlowStatus.Loading ->_signInState.value = ViewModelNewsUiState.Loading(true)
+                    is UseCaseFlowStatus.Loading -> _signInState.value = ViewModelNewsUiState.Loading(true)
                     is UseCaseFlowStatus.Error -> _signInState.value = ViewModelNewsUiState.Error(it.exception)
                 }
             }
         }
     }
-
 }

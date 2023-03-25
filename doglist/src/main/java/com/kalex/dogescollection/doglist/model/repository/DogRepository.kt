@@ -9,13 +9,15 @@ interface DogRepository {
      * Get all the dogs in the DB
      * **/
     suspend fun getDogs(): Dogs
-    suspend fun addDogToCollection(dogId : Long):AddDogCollectionResponse
+    suspend fun addDogToCollection(dogId: Long): AddDogCollectionResponse
+
     /**
      * Get the dog by user, if it is added to the use collection
      * **/
     suspend fun getDogCollection(): Dogs
+
     /**
      * Get the dog by id, using the machine learning id predicted
      * **/
-    suspend fun getDogByPredictedId(predictedId : String): SingleDog
+    suspend fun getDogByPredictedId(predictedId: String): SingleDog
 }

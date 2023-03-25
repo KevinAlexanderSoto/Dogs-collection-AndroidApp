@@ -3,7 +3,6 @@ package com.kalex.dogescollection.core.common.epoxyhelpers
 import android.view.View
 import com.airbnb.epoxy.EpoxyHolder
 import kotlin.properties.ReadOnlyProperty
-
 import kotlin.reflect.KProperty
 /**
  * A pattern for easier view binding with an [EpoxyHolder]
@@ -28,7 +27,7 @@ abstract class KotlinEpoxyHolder : EpoxyHolder() {
      * https://github.com/JakeWharton/kotterknife
      */
     private class Lazy<V>(
-        private val initializer: (KotlinEpoxyHolder, KProperty<*>) -> V
+        private val initializer: (KotlinEpoxyHolder, KProperty<*>) -> V,
     ) : ReadOnlyProperty<KotlinEpoxyHolder, V> {
         private object EMPTY
 

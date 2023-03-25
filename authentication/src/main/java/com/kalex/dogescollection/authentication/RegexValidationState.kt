@@ -10,27 +10,27 @@ class RegexValidationState @Inject constructor() {
     private var isPasswordField1Validate: Boolean = false
     private var isPasswordField2Validate: Boolean = false
 
-    private val fieldValues = mutableMapOf<FieldKey,String>()
+    private val fieldValues = mutableMapOf<FieldKey, String>()
 
     private val _regexState = MutableStateFlow(true)
     val regexState: StateFlow<Boolean>
         get() = _regexState
 
-    fun updateInputFieldState(enable: Boolean,fieldValue: String = "") {
+    fun updateInputFieldState(enable: Boolean, fieldValue: String = "") {
         isDataFieldValidate = enable
         fieldValues[DATA_FIELD] = fieldValue
         _regexState.value =
             isDataFieldValidate && isPasswordField1Validate && isPasswordField2Validate
     }
 
-    fun updateInputPasswordState(enable: Boolean,fieldValue: String = "") {
+    fun updateInputPasswordState(enable: Boolean, fieldValue: String = "") {
         isPasswordField1Validate = enable
         fieldValues[FieldKey.PASSWORD_ONE] = fieldValue
         _regexState.value =
             isDataFieldValidate && isPasswordField1Validate && isPasswordField2Validate
     }
 
-    fun updateInputPassword2State(enable: Boolean,fieldValue: String = "") {
+    fun updateInputPassword2State(enable: Boolean, fieldValue: String = "") {
         isPasswordField2Validate = enable
         fieldValues[FieldKey.PASSWORD_TWO] = fieldValue
         _regexState.value =
@@ -40,7 +40,7 @@ class RegexValidationState @Inject constructor() {
 }
 
 enum class FieldKey {
-     DATA_FIELD ,
-     PASSWORD_ONE ,
-      PASSWORD_TWO ,
+    DATA_FIELD,
+    PASSWORD_ONE,
+    PASSWORD_TWO,
 }

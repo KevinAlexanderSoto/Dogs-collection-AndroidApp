@@ -3,7 +3,7 @@ package com.kalex.dogescollection.camera.camera
 import android.app.Dialog
 import android.content.ContentValues
 import android.content.Context
-import android.graphics.*
+import android.graphics.* // ktlint-disable no-wildcard-imports
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -24,7 +24,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.kalex.dogescollection.camera.R
-import com.kalex.dogescollection.core.R as coreR
 import com.kalex.dogescollection.camera.tensorflow.ClassifierRepository
 import com.kalex.dogescollection.core.common.CameraSwitcherNavigator
 import com.kalex.dogescollection.core.common.networkstates.handleViewModelState
@@ -36,6 +35,7 @@ import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import javax.inject.Inject
+import com.kalex.dogescollection.core.R as coreR
 
 @AndroidEntryPoint
 class CameraFragment : BottomSheetDialogFragment(R.layout.fragment_camera) {
@@ -84,7 +84,6 @@ class CameraFragment : BottomSheetDialogFragment(R.layout.fragment_camera) {
         cameraExecutor = Executors.newSingleThreadExecutor()
 
         cameraPreviewUseCase()
-
     }
 
     private fun takePictureUseCase() {
@@ -98,7 +97,7 @@ class CameraFragment : BottomSheetDialogFragment(R.layout.fragment_camera) {
             .Builder(
                 requireContext().contentResolver,
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                contentValues
+                contentValues,
             )
             .build()
 
@@ -113,16 +112,16 @@ class CameraFragment : BottomSheetDialogFragment(R.layout.fragment_camera) {
                 }
 
                 override fun
-                        onImageSaved(output: ImageCapture.OutputFileResults) {
+                onImageSaved(output: ImageCapture.OutputFileResults) {
                     val msg = "Photo capture succeeded: ${output.savedUri}"
                     Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
                     val imageBitmap = MediaStore.Images.Media.getBitmap(
                         requireContext().contentResolver,
-                        output.savedUri
+                        output.savedUri,
                     )
                     // BitmapFactory.decodeFile(output.savedUri.toString().replace("content://",""))
                 }
-            }
+            },
         )
     }
 
@@ -141,8 +140,8 @@ class CameraFragment : BottomSheetDialogFragment(R.layout.fragment_camera) {
     }
 
     private fun handlePredictedViewModel() {
-
-        handleViewModelState(dogPredictViewModel.dogState,
+        handleViewModelState(
+            dogPredictViewModel.dogState,
             onSuccess = {
                 handleSuccessStatus(it)
             },
@@ -151,7 +150,7 @@ class CameraFragment : BottomSheetDialogFragment(R.layout.fragment_camera) {
             },
             onError = {
                 handleErrorStatus(getString(it))
-            }
+            },
         )
     }
 
@@ -161,7 +160,7 @@ class CameraFragment : BottomSheetDialogFragment(R.layout.fragment_camera) {
             .setTitle(resources.getString(coreR.string.ErrorTitle))
             .setMessage(exception)
             .setPositiveButton(resources.getString(coreR.string.ErrorButtonText)) { dialog, _ ->
-               dialog.dismiss()
+                dialog.dismiss()
             }
             .show()
     }
@@ -181,7 +180,7 @@ class CameraFragment : BottomSheetDialogFragment(R.layout.fragment_camera) {
 
     @androidx.annotation.OptIn(androidx.camera.core.ExperimentalGetImage::class)
     private fun imageAnalysisUseCase(): ImageAnalysis {
-        //ImageAnalysis UseCase Section
+        // ImageAnalysis UseCase Section
         val imageAnalysis = ImageAnalysis.Builder()
             .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
             .build()
@@ -231,15 +230,16 @@ class CameraFragment : BottomSheetDialogFragment(R.layout.fragment_camera) {
 
                 // Bind use cases to camera
                 cameraProvider.bindToLifecycle(
-                    this, cameraSelector, preview, imageCapture, imageAnalysis
+                    this,
+                    cameraSelector,
+                    preview,
+                    imageCapture,
+                    imageAnalysis,
                 )
-
             } catch (exc: Exception) {
                 Log.e("kevs", "Use case binding failed", exc)
             }
-
         }, ContextCompat.getMainExecutor(requireContext()))
-
     }
 
     override fun onDestroy() {
@@ -258,6 +258,5 @@ class CameraFragment : BottomSheetDialogFragment(R.layout.fragment_camera) {
 
     companion object {
         private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
-
     }
 }

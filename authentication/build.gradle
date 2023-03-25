@@ -14,7 +14,6 @@ android {
     defaultConfig {
         minSdk 26
         targetSdk 33
-        compileSdkPreview ="UpsideDownCake"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
@@ -35,34 +34,33 @@ kapt {
 }
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation libs.androidxCore
+    implementation libs.androidxAppcompat
 
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
+    implementation libs.constraintlayout
+    implementation libs.navigationFragment
+    implementation libs.navigationUi
 
     //Hilt
-    implementation "com.google.dagger:hilt-android:2.44"
-    implementation 'androidx.preference:preference:1.2.0'
-    implementation 'androidx.core:core-ktx:1.9.0'
-    implementation 'androidx.core:core-ktx:+'
-    kapt "com.google.dagger:hilt-compiler:2.44"
+    implementation libs.daggerHilt
+    implementation libs.androidxPreference
+    implementation libs.androidxCore
+    kapt libs.daggerHiltCompiler
 
     //Material3
-    implementation 'com.google.android.material:material:1.8.0'
+    implementation libs.googleMaterial
 
     //Epoxy
-    implementation "com.airbnb.android:epoxy:5.1.1"
+    implementation libs.epoxy
     // Add the annotation processor if you are using Epoxy's annotations (recommended)
-    kapt  "com.airbnb.android:epoxy-processor:5.1.1"
+    kapt  libs.epoxyProcessor
 
 //core module
     implementation project(path: ':core')
     implementation project(path: ':doglist')
     implementation project(path: ':navigation')
 
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    testImplementation libs.junit
+    androidTestImplementation libs.androidxJunitTest
+    androidTestImplementation libs.espressoCore
 }

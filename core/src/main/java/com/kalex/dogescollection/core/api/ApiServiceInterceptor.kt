@@ -3,7 +3,6 @@ package com.kalex.dogescollection.core.api
 import okhttp3.Interceptor
 import okhttp3.Response
 
-
 /**
  * this will help to add the Auth token if it is needed
  *
@@ -23,8 +22,7 @@ object ApiServiceInterceptor : Interceptor {
         }
         return chain.proceed(requestBuilder.build())
     }
-    fun setCurrentToken(token: String?){
+    fun setCurrentToken(token: String?) {
         currentToken = token
     }
-
 }

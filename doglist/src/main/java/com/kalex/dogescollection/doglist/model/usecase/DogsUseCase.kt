@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class DogsUseCase @Inject constructor(
-    private val dogRepository: DogRepository
+    private val dogRepository: DogRepository,
 ) {
     fun getAllDogs(): Flow<UseCaseFlowStatus<Data>> =
         makeNetworkCallHandler {
@@ -22,7 +22,7 @@ class DogsUseCase @Inject constructor(
         }
 
     fun addDogToCollection(dogId: Long): Flow<UseCaseFlowStatus<Boolean>> =
-       makeNetworkCallHandler {
+        makeNetworkCallHandler {
             val result = dogRepository.addDogToCollection(dogId)
             if (result.is_success) return@makeNetworkCallHandler true
             throw java.lang.Exception(result.message)
@@ -51,28 +51,22 @@ class DogsUseCase @Inject constructor(
                                     index = it.index,
                                     id = it.id,
                                     inCollection = false,
-                                    name_es = it.name_es
+                                    name_es = it.name_es,
                                 )
                             }
                         }.sorted()
                     }
                     return@coroutineScope listSorted.await()
-
                 } else {
                     throw Exception("dog_collection_error")
                 }
             }
         }
 
-    suspend fun getDogByPredictedId(predictedId : String): Flow<UseCaseFlowStatus<Dog>> =
+    suspend fun getDogByPredictedId(predictedId: String): Flow<UseCaseFlowStatus<Dog>> =
         makeNetworkCallHandler {
             val result = dogRepository.getDogByPredictedId(predictedId)
             if (result.is_success) return@makeNetworkCallHandler result.body_data.dog
             throw java.lang.Exception(result.message)
         }
 }
-
-
-
-
-

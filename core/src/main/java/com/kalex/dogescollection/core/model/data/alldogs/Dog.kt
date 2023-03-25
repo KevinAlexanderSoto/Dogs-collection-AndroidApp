@@ -10,7 +10,7 @@ data class Dog(
     val height_female: String = "",
     val height_male: String = "",
     val id: Int,
-    val image_url: String  = "",
+    val image_url: String = "",
     val index: Int,
     val life_expectancy: String = "",
     val ml_id: String = "",
@@ -22,7 +22,7 @@ data class Dog(
     val weight_female: String = "",
     val weight_male: String = "",
     var inCollection: Boolean = true
-):Parcelable,Comparable<Dog>{
+) : Parcelable, Comparable<Dog> {
     /**
      * To order the list of dogs
      * **/

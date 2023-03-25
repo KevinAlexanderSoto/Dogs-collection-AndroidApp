@@ -1,6 +1,5 @@
 package com.kalex.dogescollection.authentication.model
 
-
 import com.kalex.dogescollection.core.common.networkstates.UseCaseFlowStatus
 import com.kalex.dogescollection.core.common.networkstates.makeNetworkCallHandler
 import com.kalex.dogescollection.core.model.dto.User
@@ -9,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class AuthenticationUseCase @Inject constructor(
-    private val Repository: AuthenticationRepositoryImpl
+    private val Repository: AuthenticationRepositoryImpl,
 ) {
     fun createAccount(user: String, password: String, passwordConfirm: String): Flow<UseCaseFlowStatus<User>> =
         makeNetworkCallHandler {

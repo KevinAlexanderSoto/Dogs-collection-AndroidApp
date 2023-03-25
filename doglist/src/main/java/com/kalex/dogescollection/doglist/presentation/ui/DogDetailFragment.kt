@@ -1,19 +1,18 @@
 package com.kalex.dogescollection.doglist.presentation.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import coil.load
 import com.airbnb.epoxy.group
 import com.kalex.dogescollection.core.epoxy.dogDetailInfo
 import com.kalex.dogescollection.core.epoxy.dogDetailItem
-import com.kalex.dogescollection.doglist.R
 import com.kalex.dogescollection.core.model.data.alldogs.Dog
+import com.kalex.dogescollection.doglist.R
 import com.kalex.dogescollection.doglist.databinding.DogDetailFragmentBinding
-
 
 /**
  * A simple [Fragment] subclass for the Dog detail.
@@ -25,13 +24,12 @@ class DogDetailFragment : Fragment() {
     private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View {
-
         _binding = DogDetailFragmentBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,7 +41,6 @@ class DogDetailFragment : Fragment() {
             setUpViews(args.dog!!)
             setUpNavBar()
         }
-
     }
 
     private fun setUpNavBar() {
@@ -61,7 +58,7 @@ class DogDetailFragment : Fragment() {
             }
             dognametext.text = dog.name_es
             dogdescriptiontext.text = dog.temperament
-            //Epoxy SetUp
+            // Epoxy SetUp
             recyclerView.withModels {
                 group {
                     id("epoxyModelGroupDsl")

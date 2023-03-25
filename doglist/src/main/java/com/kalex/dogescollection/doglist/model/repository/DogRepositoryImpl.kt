@@ -7,25 +7,25 @@ import com.kalex.dogescollection.core.model.data.collection.AddDogCollectionResp
 import com.kalex.dogescollection.core.model.data.collection.DogCollectionItem
 import javax.inject.Inject
 
-class DogRepositoryImpl @Inject constructor (
-    private val dogApi : DogsApi
-        ): DogRepository {
+class DogRepositoryImpl @Inject constructor(
+    private val dogApi: DogsApi,
+) : DogRepository {
     override suspend fun getDogs(): Dogs {
         return dogApi.getAllDogs()
     }
 
-    override suspend fun addDogToCollection(dogId : Long): AddDogCollectionResponse {
+    override suspend fun addDogToCollection(dogId: Long): AddDogCollectionResponse {
         return dogApi.addDogToCollection(
             DogCollectionItem(
-                dogId
-            )
+                dogId,
+            ),
         )
     }
     override suspend fun getDogCollection(): Dogs {
         return dogApi.getDogCollection()
     }
 
-    override suspend fun getDogByPredictedId(predictedId : String): SingleDog {
-            return dogApi.getDogPredicted(predictedId)
+    override suspend fun getDogByPredictedId(predictedId: String): SingleDog {
+        return dogApi.getDogPredicted(predictedId)
     }
 }

@@ -7,15 +7,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.kalex.dogescollection.doglist.R
-import com.kalex.dogescollection.core.R as R_core
 import com.kalex.dogescollection.core.model.data.alldogs.Dog
+import com.kalex.dogescollection.doglist.R
 import com.kalex.dogescollection.doglist.databinding.DogListItemBinding
 import javax.inject.Inject
-
+import com.kalex.dogescollection.core.R as R_core
 
 class DogListAdapter @Inject constructor() : ListAdapter<Dog, DogListAdapter.ViewHolder>(
-    DiffUtilCallback
+    DiffUtilCallback,
 ) {
 
     var onItemClick: ((Dog) -> Unit)? = null
@@ -25,24 +24,23 @@ class DogListAdapter @Inject constructor() : ListAdapter<Dog, DogListAdapter.Vie
         fun bind(dog: Dog) {
             with(binding) {
                 dogName.text = dog.name_es
-                if(dog.inCollection){
-                    dogListCard.setCardBackgroundColor(ContextCompat.getColor(dogImage.context,R_core.color.white))
+                if (dog.inCollection) {
+                    dogListCard.setCardBackgroundColor(ContextCompat.getColor(dogImage.context, R_core.color.white))
                     dogImage.setImageDrawable(null)
                     dogImage.load(dog.image_url) { crossfade(true) }
-                    dogListCard.setOnClickListener{onItemClick?.invoke(dog)}
-                }else{
-                    dogImage.setImageDrawable(ContextCompat.getDrawable(dogImage.context,R.drawable.round_question_mark_24))
+                    dogListCard.setOnClickListener { onItemClick?.invoke(dog) }
+                } else {
+                    dogImage.setImageDrawable(ContextCompat.getDrawable(dogImage.context, R.drawable.round_question_mark_24))
                 }
             }
         }
     }
-    private object DiffUtilCallback : DiffUtil.ItemCallback<Dog>(){
+    private object DiffUtilCallback : DiffUtil.ItemCallback<Dog>() {
         override fun areItemsTheSame(oldItem: Dog, newItem: Dog): Boolean =
             oldItem.id == newItem.id
 
         override fun areContentsTheSame(oldItem: Dog, newItem: Dog): Boolean =
-             oldItem == newItem
-
+            oldItem == newItem
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -53,5 +51,4 @@ class DogListAdapter @Inject constructor() : ListAdapter<Dog, DogListAdapter.Vie
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         return holder.bind(getItem(position))
     }
-
 }

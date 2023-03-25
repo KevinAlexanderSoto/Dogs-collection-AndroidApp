@@ -3,8 +3,8 @@ package com.kalex.dogescollection.doglist.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kalex.dogescollection.core.common.networkstates.UseCaseFlowStatus
-import com.kalex.dogescollection.core.model.data.alldogs.Data
 import com.kalex.dogescollection.core.common.networkstates.ViewModelNewsUiState
+import com.kalex.dogescollection.core.model.data.alldogs.Data
 import com.kalex.dogescollection.doglist.model.usecase.DogsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,11 +15,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DogsViewModel @Inject constructor(
-    private val dogsUseCase: DogsUseCase
+    private val dogsUseCase: DogsUseCase,
 ) : ViewModel() {
 
     private val _dogState = MutableStateFlow<ViewModelNewsUiState<Data>>(
-        ViewModelNewsUiState.Loading(true))
+        ViewModelNewsUiState.Loading(true),
+    )
     val dogState: StateFlow<ViewModelNewsUiState<Data>>
         get() = _dogState
 
@@ -29,10 +30,9 @@ class DogsViewModel @Inject constructor(
                 when (it) {
                     is UseCaseFlowStatus.Error -> _dogState.value = ViewModelNewsUiState.Error(it.exception)
                     is UseCaseFlowStatus.Success -> _dogState.value = ViewModelNewsUiState.Success(it.data)
-                    is UseCaseFlowStatus.Loading ->_dogState.value = ViewModelNewsUiState.Loading(true)
+                    is UseCaseFlowStatus.Loading -> _dogState.value = ViewModelNewsUiState.Loading(true)
                 }
             }
         }
     }
-
 }
