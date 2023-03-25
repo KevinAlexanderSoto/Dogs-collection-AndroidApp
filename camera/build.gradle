@@ -63,8 +63,8 @@ dependencies {
     implementation libs.coilImgHandler
 
     //tensor flow
-    implementation 'org.tensorflow:tensorflow-lite:2.11.0'
-    implementation 'org.tensorflow:tensorflow-lite-support:0.4.3'
+    implementation libs.tensorflowLite
+    implementation libs.tensorflowLiteSupport
 
     //core module
     implementation project(path: ':core')

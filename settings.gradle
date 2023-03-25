@@ -31,6 +31,10 @@ dependencyResolutionManagement {
             library("junit", "junit:junit:4.13.2")
             library("androidxJunitTest", "androidx.test.ext:junit:1.1.5")
             library("espressoCore", "androidx.test.espresso:espresso-core:3.5.1")
+            library("retrofit", "com.squareup.retrofit2:retrofit:2.9.0")
+            library("converterMoshi", "com.squareup.retrofit2:converter-moshi:2.9.0")
+            library("tensorflowLite", "org.tensorflow:tensorflow-lite:2.11.0")
+            library("tensorflowLiteSupport", "org.tensorflow:tensorflow-lite-support:0.4.3")
             library("commons-lang3", "org.apache.commons", "commons-lang3").version {
                 strictly("[3.8, 4.0[")
                 prefer("3.9")

@@ -14,7 +14,6 @@ android {
     defaultConfig {
         minSdk 26
         targetSdk 33
-        compileSdkPreview ="UpsideDownCake"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
@@ -43,8 +42,8 @@ dependencies {
     implementation libs.navigationUi
 
     //Retrofit-moshi
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
+    implementation libs.retrofit
+    implementation libs.converterMoshi
 
     //Hilt
     implementation libs.daggerHilt
@@ -60,8 +59,8 @@ dependencies {
     kapt  libs.epoxyProcessor
 
     //tensor flow
-    implementation 'org.tensorflow:tensorflow-lite:2.11.0'
-    implementation 'org.tensorflow:tensorflow-lite-support:0.4.3'
+    implementation libs.tensorflowLite
+    implementation libs.tensorflowLiteSupport
 
     testImplementation libs.junit
     androidTestImplementation libs.androidxJunitTest
