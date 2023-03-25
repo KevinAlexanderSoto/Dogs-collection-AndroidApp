@@ -14,7 +14,6 @@ android {
     defaultConfig {
         minSdk 26
         targetSdk 33
-        compileSdkPreview ="UpsideDownCake"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
@@ -35,7 +34,7 @@ kapt {
 }
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation libs.androidxCore
     implementation libs.androidxAppcompat
 
     implementation libs.constraintlayout
@@ -46,7 +45,6 @@ dependencies {
     implementation libs.daggerHilt
     implementation libs.androidxPreference
     implementation libs.androidxCore
-    implementation 'androidx.core:core-ktx:+'
     kapt libs.daggerHiltCompiler
 
     //Material3

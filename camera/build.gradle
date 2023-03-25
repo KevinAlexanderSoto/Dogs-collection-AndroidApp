@@ -14,7 +14,6 @@ android {
     defaultConfig {
         minSdk 26
         targetSdk 33
-        compileSdkPreview ="UpsideDownCake"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
@@ -46,18 +45,16 @@ dependencies {
     implementation libs.constraintlayout
 
     //Hilt
-    implementation 'com.google.dagger:hilt-android:2.45'
+    implementation libs.daggerHilt
     implementation libs.androidxPreference
-    kapt 'com.google.dagger:hilt-compiler:2.45'
+    kapt libs.daggerHiltCompiler
 
     //camera X
-    def camerax_version = "1.2.1"
-    implementation "androidx.camera:camera-core:${camerax_version}"
-    implementation "androidx.camera:camera-camera2:${camerax_version}"
-    implementation "androidx.camera:camera-lifecycle:${camerax_version}"
-
-    implementation "androidx.camera:camera-view:${camerax_version}"
-    implementation "androidx.camera:camera-extensions:${camerax_version}"
+    implementation libs.cameraCore
+    implementation libs.camera2
+    implementation libs.cameraLifecycle
+    implementation libs.cameraView
+    implementation libs.cameraExtensions
 
     //Coil-img handler
     implementation libs.coilImgHandler

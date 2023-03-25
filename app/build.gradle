@@ -54,7 +54,7 @@ dependencies {
 
     implementation libs.androidxCore
     implementation libs.androidxAppcompat
-    implementation 'com.google.android.material:material:1.9.0-alpha01'
+    implementation libs.googleMaterial
     implementation libs.constraintlayout
     implementation libs.navigationFragment
     implementation libs.navigationUi
@@ -64,7 +64,6 @@ dependencies {
     implementation libs.daggerHilt
     implementation libs.androidxPreference
     implementation libs.androidxCore
-    implementation 'androidx.core:core-ktx:+'
 
     kapt libs.daggerHiltCompiler
 
@@ -77,7 +76,7 @@ dependencies {
     kapt  libs.epoxyProcessor
     
     // Splash Screen
-    implementation 'androidx.core:core-splashscreen:1.0.0'
+    implementation libs.splashscreen
 
     //core module
     implementation project(path: ':core')
