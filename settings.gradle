@@ -42,6 +42,33 @@ dependencyResolutionManagement {
             library("cameraLifecycle", "androidx.camera:camera-lifecycle:${camerax_version}")
             library("cameraView", "androidx.camera:camera-view:${camerax_version}")
             library("cameraExtensions", "androidx.camera:camera-extensions:${camerax_version}")
+            library("junit", "junit:junit:4.13.2")
+
+            library("androidxJunitTest", "androidx.test.ext:junit:1.1.5")
+            //Compose
+            library("composeUi", "androidx.compose.ui:ui:1.4.0-beta01")
+            library("composeMaterial3", "androidx.compose.material3:material3:1.1.0-alpha06")
+            // Compose Android Studio Preview support
+            library("composeUiPreview", "androidx.compose.ui:ui-tooling-preview:1.4.0-beta01")
+            library("composeUiTooling", "androidx.compose.ui:ui-tooling:1.4.0-beta01")
+
+            //optional for material icons
+            library("composeMaterialIcons", "androidx.compose.material:material-icons-core:1.1.0-alpha06")
+            // Optional - Add full set of material icons
+            library("composeMaterialIconsExtended", "androidx.compose.material:material-icons-extended:1.1.0-alpha06")
+            // Optional - Add window size utils
+            library("composeMaterial3WindowSizeClass", "androidx.compose.material3:material3-window-size-class:1.1.0-alpha06")
+
+            // Optional - Integration with activities
+            library("activityCompose", "androidx.activity:activity-compose:1.7.0")
+            // Optional - Integration with ViewModels
+            library("composeViewmodel", "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+
+            // UI Tests compose
+            library ("composeUiTest","androidx.compose.ui:ui-test-junit4:1.4.0-beta01")
+            library ("composeUiTestManifest","androidx.compose.ui:ui-test-manifest:1.4.0-beta01")
+
+            library("espressoCore", "androidx.test.espresso:espresso-core:3.5.1")
             library("commons-lang3", "org.apache.commons", "commons-lang3").version {
                 strictly("[3.8, 4.0[")
                 prefer("3.9")
