@@ -28,6 +28,10 @@ android {
     }
     buildFeatures {
         viewBinding true
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.2"
     }
 }
 kapt {
@@ -55,6 +59,14 @@ dependencies {
     implementation libs.epoxy
     // Add the annotation processor if you are using Epoxy's annotations (recommended)
     kapt  libs.epoxyProcessor
+
+    //Compose
+    implementation libs.composeUi
+    implementation libs.composeMaterial3
+    implementation libs.composeUiPreview
+    implementation libs.composeUiTooling
+    implementation libs.activityCompose
+    implementation libs.composeViewmodel
 
     //core module
     implementation project(path: ':core')

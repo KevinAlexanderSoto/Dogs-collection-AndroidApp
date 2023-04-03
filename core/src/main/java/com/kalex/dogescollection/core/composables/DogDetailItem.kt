@@ -15,7 +15,8 @@ fun DogDetailItem(
 ) {
     Row(
         Modifier
-            .height(IntrinsicSize.Min), // intrinsic measurements
+            .height(IntrinsicSize.Min)
+            .padding(24.dp), // intrinsic measurements
         horizontalArrangement = Arrangement.Center,
     ) {
         Divider(
