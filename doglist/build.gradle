@@ -54,6 +54,7 @@ dependencies {
 
     //Coil-img handler
     implementation libs.coilImgHandler
+    implementation libs.coilComposeImgHandler
 
     //Epoxy
     implementation libs.epoxy
