@@ -13,7 +13,7 @@ import com.kalex.dogescollection.doglist.presentation.ui.DogListFragmentDirectio
 @Composable
 fun DogList(
     dogList: List<Dog>,
-    navController: NavController
+    navController: NavController,
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),

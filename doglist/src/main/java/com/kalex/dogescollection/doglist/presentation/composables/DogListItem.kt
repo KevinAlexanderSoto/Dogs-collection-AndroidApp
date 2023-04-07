@@ -11,12 +11,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.kalex.dogescollection.core.model.data.alldogs.Dog
+import com.kalex.dogescollection.core.values.SecondaryContainer
 import com.kalex.dogescollection.doglist.R
 
 @Composable
@@ -26,9 +27,14 @@ fun DogListItem(
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.wrapContentWidth(),
+        modifier = Modifier.wrapContentWidth().padding(0.dp, 4.dp, 0.dp, 0.dp),
     ) {
-        Text(text = dog.name_es)
+        Text(
+            text = dog.name_es,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.padding(8.dp, 1.dp),
+        )
 
         if (dog.inCollection) {
             CardInCollection(dog, onItemClick)
@@ -47,10 +53,9 @@ fun CardInCollection(
         elevation = CardDefaults.elevatedCardElevation(),
         shape = RoundedCornerShape(8.dp),
         modifier = Modifier
-            .padding(4.dp)
+            .padding(8.dp)
             .height(110.dp)
             .fillMaxWidth()
-            .background(Color.White)
             .clickable { onItemClick?.invoke(dog) },
     ) {
         AsyncImage(
@@ -68,22 +73,21 @@ fun CardOutCollection() {
         elevation = CardDefaults.elevatedCardElevation(),
         shape = RoundedCornerShape(8.dp),
         modifier = Modifier
-            .padding(4.dp)
+            .padding(8.dp)
             .height(110.dp)
             .fillMaxWidth()
-            .background(Color.White)
             .clickable { },
     ) {
         Column(
             verticalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize().background(SecondaryContainer),
         ) {
             Image(
                 painterResource(R.drawable.round_question_mark_24),
                 contentDescription = "Dog img",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .fillMaxHeight(0.5f),
+                    .fillMaxHeight(0.2f),
                 contentScale = ContentScale.Fit,
             )
         }
