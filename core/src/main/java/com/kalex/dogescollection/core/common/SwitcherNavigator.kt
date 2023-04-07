@@ -9,7 +9,7 @@ interface AuthenticationSwitcherNavigator {
     fun onUserCreated()
 }
 
-interface CameraSwitcherNavigator{
+interface CameraSwitcherNavigator {
     fun onDogRecognised(foundDog: Dog)
     fun onDogAddToCollection()
     fun onRetryRecognizeDog()

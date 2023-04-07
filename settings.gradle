@@ -16,6 +16,8 @@ dependencyResolutionManagement {
     }
     versionCatalogs {
         def camerax_version = "1.2.2"
+        def composeUi_version = "1.4.0-beta01"
+        def composeMaterial_version = "1.1.0-alpha06"
         create("libs") {
             library("androidxCore", "androidx.core:core-ktx:1.9.0")
             library("androidxAppcompat", "androidx.appcompat:appcompat:1.6.1")
@@ -28,6 +30,7 @@ dependencyResolutionManagement {
             library("androidxPreference", "androidx.preference:preference:1.2.0")
             library("daggerHiltCompiler", "com.google.dagger:hilt-compiler:2.44")
             library("coilImgHandler", "io.coil-kt:coil:2.2.2")
+            library("coilComposeImgHandler", "io.coil-kt:coil-compose:2.3.0")
             library("epoxy", "com.airbnb.android:epoxy:5.1.1")
             library("epoxyProcessor", "com.airbnb.android:epoxy-processor:5.1.1")
             library("junit", "junit:junit:4.13.2")
@@ -42,6 +45,35 @@ dependencyResolutionManagement {
             library("cameraLifecycle", "androidx.camera:camera-lifecycle:${camerax_version}")
             library("cameraView", "androidx.camera:camera-view:${camerax_version}")
             library("cameraExtensions", "androidx.camera:camera-extensions:${camerax_version}")
+            library("junit", "junit:junit:4.13.2")
+
+            library("androidxJunitTest", "androidx.test.ext:junit:1.1.5")
+            //Compose
+            library("composeUi", "androidx.compose.ui:ui:${composeUi_version}")
+            library("composeMaterial3", "androidx.compose.material3:material3:${composeMaterial_version}")
+            //Paging
+            library("composePaging", "androidx.paging:paging-compose:${composeUi_version}")
+            // Compose Android Studio Preview support
+            library("composeUiPreview", "androidx.compose.ui:ui-tooling-preview:${composeUi_version}")
+            library("composeUiTooling", "androidx.compose.ui:ui-tooling:${composeUi_version}")
+
+            //optional for material icons
+            library("composeMaterialIcons", "androidx.compose.material:material-icons-core:${composeMaterial_version}")
+            // Optional - Add full set of material icons
+            library("composeMaterialIconsExtended", "androidx.compose.material:material-icons-extended:${composeMaterial_version}")
+            // Optional - Add window size utils
+            library("composeMaterial3WindowSizeClass", "androidx.compose.material3:material3-window-size-class:${composeMaterial_version}")
+
+            // Optional - Integration with activities
+            library("activityCompose", "androidx.activity:activity-compose:1.7.0")
+            // Optional - Integration with ViewModels
+            library("composeViewmodel", "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+
+            // UI Tests compose
+            library ("composeUiTest","androidx.compose.ui:ui-test-junit4:${composeUi_version}")
+            library ("composeUiTestManifest","androidx.compose.ui:ui-test-manifest:${composeUi_version}")
+
+            library("espressoCore", "androidx.test.espresso:espresso-core:3.5.1")
             library("commons-lang3", "org.apache.commons", "commons-lang3").version {
                 strictly("[3.8, 4.0[")
                 prefer("3.9")

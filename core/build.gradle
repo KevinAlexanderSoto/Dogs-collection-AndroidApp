@@ -27,6 +27,10 @@ android {
     }
     buildFeatures {
         viewBinding true
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.2"
     }
 }
 kapt {
@@ -61,6 +65,15 @@ dependencies {
     //tensor flow
     implementation libs.tensorflowLite
     implementation libs.tensorflowLiteSupport
+
+    //Compose
+    implementation libs.composeUi
+    implementation libs.composeMaterial3
+    implementation libs.composeUiPreview
+    implementation libs.composeUiTooling
+    implementation libs.activityCompose
+    implementation libs.composeViewmodel
+
 
     testImplementation libs.junit
     androidTestImplementation libs.androidxJunitTest
