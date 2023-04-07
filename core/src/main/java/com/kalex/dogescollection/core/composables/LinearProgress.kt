@@ -19,7 +19,7 @@ fun CustomLinearProgressBar(
             LinearProgressIndicator(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(15.dp)
+                    .height(8.dp)
                     .rotate(-270f),
 
             )
