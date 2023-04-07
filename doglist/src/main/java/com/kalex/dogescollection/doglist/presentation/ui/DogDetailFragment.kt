@@ -14,6 +14,7 @@ import coil.load
 import com.kalex.dogescollection.core.composables.DogDetailInfo
 import com.kalex.dogescollection.core.composables.DogDetailItem
 import com.kalex.dogescollection.core.model.data.alldogs.Dog
+import com.kalex.dogescollection.core.values.DogsCollectionTheme
 import com.kalex.dogescollection.doglist.R
 import com.kalex.dogescollection.doglist.databinding.DogDetailFragmentBinding
 
@@ -66,7 +67,7 @@ class DogDetailFragment : Fragment() {
                 setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
                 setContent {
                     // In Compose world
-                    MaterialTheme {
+                    DogsCollectionTheme {
                         Row(
                             Modifier
                                 .fillMaxWidth()

@@ -13,6 +13,7 @@ import com.kalex.dogescollection.doglist.databinding.DogListItemBinding
 import javax.inject.Inject
 import com.kalex.dogescollection.core.R as R_core
 
+// TODO : Delete this
 class DogListAdapter @Inject constructor() : ListAdapter<Dog, DogListAdapter.ViewHolder>(
     DiffUtilCallback,
 ) {
