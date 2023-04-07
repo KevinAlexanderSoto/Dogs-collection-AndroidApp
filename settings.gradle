@@ -51,6 +51,8 @@ dependencyResolutionManagement {
             //Compose
             library("composeUi", "androidx.compose.ui:ui:${composeUi_version}")
             library("composeMaterial3", "androidx.compose.material3:material3:${composeMaterial_version}")
+            //Paging
+            library("composePaging", "androidx.paging:paging-compose:${composeUi_version}")
             // Compose Android Studio Preview support
             library("composeUiPreview", "androidx.compose.ui:ui-tooling-preview:${composeUi_version}")
             library("composeUiTooling", "androidx.compose.ui:ui-tooling:${composeUi_version}")
