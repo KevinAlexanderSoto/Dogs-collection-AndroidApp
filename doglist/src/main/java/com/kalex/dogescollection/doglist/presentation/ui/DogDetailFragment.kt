@@ -4,13 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.layout.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import coil.load
-import com.airbnb.epoxy.group
-import com.kalex.dogescollection.core.epoxy.dogDetailInfo
-import com.kalex.dogescollection.core.epoxy.dogDetailItem
+import com.kalex.dogescollection.core.composables.DogDetailInfo
+import com.kalex.dogescollection.core.composables.DogDetailItem
 import com.kalex.dogescollection.core.model.data.alldogs.Dog
+import com.kalex.dogescollection.core.values.DogsCollectionTheme
 import com.kalex.dogescollection.doglist.R
 import com.kalex.dogescollection.doglist.databinding.DogDetailFragmentBinding
 
@@ -58,30 +61,36 @@ class DogDetailFragment : Fragment() {
             }
             dognametext.text = dog.name_es
             dogdescriptiontext.text = dog.temperament
-            // Epoxy SetUp
-            recyclerView.withModels {
-                group {
-                    id("epoxyModelGroupDsl")
-                    layout(R.layout.vertical_linear_group)
-                    dogDetailInfo {
-                        id(1)
-                        detailsTitle(resources.getString(R.string.dog_detail_famale_title))
-                        heightValue(dog.height_female)
-                        heightTitle(resources.getString(R.string.dog_detail_height_title))
-                        weightValue(dog.weight_female)
-                        weightTitle(getString(R.string.dog_detail_weight_title))
-                    }
-                    dogDetailItem {
-                        id(2)
-                        detailsTitle(dog.dog_type)
-                    }
-                    dogDetailInfo {
-                        id(3)
-                        detailsTitle(getString(R.string.dog_detail_male_title))
-                        heightValue(dog.height_male)
-                        heightTitle(resources.getString(R.string.dog_detail_height_title))
-                        weightValue(dog.weight_male)
-                        weightTitle(getString(R.string.dog_detail_weight_title))
+            // TODO : Interoperability example with Compose
+            composeview.apply {
+                setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+                setContent {
+                    // In Compose world
+                    DogsCollectionTheme {
+                        Row(
+                            Modifier
+                                .fillMaxWidth()
+                                .height(IntrinsicSize.Min), // intrinsic measurements
+                            horizontalArrangement = Arrangement.Center,
+                        ) {
+                            DogDetailInfo(
+                                detailsTitle = resources.getString(R.string.dog_detail_famale_title),
+                                heightValue = dog.height_female,
+                                heightTitle = resources.getString(R.string.dog_detail_height_title),
+                                weightTitle = getString(R.string.dog_detail_weight_title),
+                                weightValue = dog.weight_female,
+                            )
+                            DogDetailItem(
+                                detailsTitle = dog.dog_type,
+                            )
+                            DogDetailInfo(
+                                detailsTitle = getString(R.string.dog_detail_male_title),
+                                heightValue = dog.height_male,
+                                heightTitle = getString(R.string.dog_detail_height_title),
+                                weightTitle = getString(R.string.dog_detail_weight_title),
+                                weightValue = dog.weight_male,
+                            )
+                        }
                     }
                 }
             }
