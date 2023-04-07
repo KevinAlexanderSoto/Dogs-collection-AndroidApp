@@ -185,7 +185,7 @@ class CameraFragment : BottomSheetDialogFragment(R.layout.fragment_camera) {
             .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
             .build()
         imageAnalysis.setAnalyzer(cameraExecutor) { imageProxy ->
-            lifecycleScope.launch {
+            viewLifecycleOwner.lifecycleScope.launch {
                 val confidence = classifierRepository.recognizeImage(imageProxy)
 
                 if (confidence.confidence > 80.0) {
