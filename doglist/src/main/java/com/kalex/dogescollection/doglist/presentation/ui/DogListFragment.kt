@@ -14,6 +14,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kalex.dogescollection.core.common.networkstates.handleViewModelState
+import com.kalex.dogescollection.core.composables.CustomLinearProgressBar
 import com.kalex.dogescollection.core.model.data.alldogs.Dog
 import com.kalex.dogescollection.core.values.DogsCollectionTheme
 import com.kalex.dogescollection.doglist.presentation.composables.DogList
@@ -66,30 +67,30 @@ class DogListFragment : Fragment() {
 
     @Composable
     private fun HandleDogsByViewModel() {
-        val data = remember {
-            mutableStateListOf<Dog>()
-        }
+        val data = remember { mutableStateListOf<Dog>() }
+        var isLoading by remember { mutableStateOf(false) }
         handleViewModelState(
             collectionViewModel.getCollectionState,
             onSuccess = {
+                isLoading = false
                 data.clear()
                 data += it
             },
             onLoading = {
-                // handleLoadingStatus(it)
+                isLoading = it
             },
             onError = {
+                isLoading = false
                 handleErrorStatus(getString(it))
             },
         )
+        CustomLinearProgressBar(isLoading)
         if (data.isNotEmpty()) {
-            handleSuccessStatus(data)
+            DogList(data, findNavController())
         }
     }
-
     private fun handleErrorStatus(exception: String) {
         // TODO: set strings and styles
-        handleLoadingStatus(false)
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(resources.getString(coreR.string.ErrorTitle))
             .setMessage(exception)
@@ -98,19 +99,6 @@ class DogListFragment : Fragment() {
             }
             .show()
     }
-
-    @Composable
-    private fun handleSuccessStatus(dogList: List<Dog>) {
-        DogList(dogList, findNavController())
-        handleLoadingStatus(false)
-    }
-
-    private fun handleLoadingStatus(isLoading: Boolean) {
-        if (isLoading) {
-        } else {
-        }
-    }
-
     override fun onDestroyView() {
         // It is optional to remove since our dispatcher is lifecycle-aware. But it wouldn't hurt to just remove it to be on the safe side.
         backPressedDispatcher.remove()
