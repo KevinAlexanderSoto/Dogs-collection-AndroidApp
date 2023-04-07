@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.kalex.dogescollection.core.common.networkstates.handleViewModelState
 import com.kalex.dogescollection.core.model.data.alldogs.Dog
+import com.kalex.dogescollection.core.values.DogsCollectionTheme
 import com.kalex.dogescollection.doglist.presentation.composables.DogList
 import com.kalex.dogescollection.doglist.presentation.viewmodel.DogCollectionViewModel
 import com.kalex.dogescollection.doglist.presentation.viewmodel.DogsViewModel
@@ -45,8 +46,10 @@ class DogListFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
-                collectionViewModel.getDogCollection()
-                HandleDogsByViewModel()
+                DogsCollectionTheme {
+                    collectionViewModel.getDogCollection()
+                    HandleDogsByViewModel()
+                }
             }
         }
     }
