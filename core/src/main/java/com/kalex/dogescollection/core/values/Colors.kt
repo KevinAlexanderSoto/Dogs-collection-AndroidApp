@@ -1,8 +1,6 @@
 package com.kalex.dogescollection.core.values
 
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.lightColorScheme
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 val black = Color(0xffff000000)
@@ -32,7 +30,7 @@ val RedSalsa = Color(0xffF05D5E)
 val ColorOutline = Color(0xff73777f)
 val ColorOnBackground = Color(0xff1a1c1e)
 
-private val LightColors = lightColorScheme(
+val LightColors = lightColorScheme(
     primary = Primary,
     onPrimary = OnPrimary,
     primaryContainer = PrimaryContainer,
@@ -57,11 +55,3 @@ private val LightColors = lightColorScheme(
     outline = ColorOutline,
     outlineVariant = ColorOutline,
 )
-
-@Composable
-fun DogsCollectionTheme(content: @Composable () -> Unit) {
-    MaterialTheme(
-        colorScheme = LightColors,
-        content = content,
-    )
-}
